@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Room Designer v2</title>
+    <title>AIKEA - AI Room Design & Furniture Shop</title>
     <style>
         * {
             margin: 0;
@@ -12,624 +12,1189 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: #0a0e27;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 100px;
+            background: #0a0e27;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-login {
+            padding: 12px 32px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            background: transparent;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-signup {
+            padding: 12px 32px;
+            border: none;
+            background: #5B8DEF;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-signup:hover {
+            background: #4a7ddf;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 80px;
+            padding: 100px 100px 80px 100px;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(139, 195, 74, 0.15);
+            border: 1px solid rgba(139, 195, 74, 0.4);
+            border-radius: 6px;
+            color: #8BC34A;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            letter-spacing: 0.3px;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero-description {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 12px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .hero-description strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-upload {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 100%;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .upload-area {
-            border: 3px dashed #667eea;
-            border-radius: 16px;
-            padding: 60px 20px;
-            text-align: center;
+            gap: 10px;
+            padding: 20px 48px;
+            background: #5B8DEF;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-            margin-bottom: 30px;
+            margin-top: 40px;
+            transition: all 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            box-shadow: 0 4px 14px rgba(91, 141, 239, 0.4);
         }
 
-        .upload-area:hover {
-            border-color: #764ba2;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        .btn-upload:hover {
+            background: #4a7ddf;
             transform: translateY(-2px);
-        }
-
-        .upload-area.dragover {
-            border-color: #764ba2;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+            box-shadow: 0 6px 20px rgba(91, 141, 239, 0.5);
         }
 
         .upload-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            color: #667eea;
+            font-size: 20px;
         }
 
-        .upload-text {
-            color: #333;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            font-weight: 600;
+        .upload-note {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 16px;
+            font-weight: 500;
         }
 
-        .upload-subtext {
-            color: #999;
-            font-size: 0.9em;
+        /* Hero Image */
+        .hero-image {
+            position: relative;
+            perspective: 1000px;
         }
 
-        input[type="file"] {
-            display: none;
-        }
-
-        .preview-container {
-            display: none;
-            margin-bottom: 30px;
-        }
-
-        .preview-container.active {
+        .room-preview {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
             display: block;
         }
 
-        .image-preview {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        .dropdown-tag {
+            position: absolute;
+            background: white;
+            padding: 14px 22px;
+            border-radius: 10px;
+            color: #0a0e27;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn {
+        .style-dropdown {
+            bottom: 32px;
+            left: 32px;
+        }
+
+        .category-dropdown {
+            bottom: 32px;
+            right: 32px;
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            padding: 60px 100px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .checkmark {
+            color: #8BC34A;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 100px 120px 100px;
+            background: white;
+            width: 100%;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .testimonial {
+            background: #f5f7fa;
+            padding: 36px;
+            border-radius: 14px;
+            border: 1px solid #e8ecef;
+            transition: all 0.3s;
+        }
+
+        .testimonial:hover {
+            background: #edf1f5;
+            border-color: #d8dfe5;
+            transform: translateY(-4px);
+        }
+
+        .quote-icon {
+            font-size: 42px;
+            color: #5B8DEF;
+            margin-bottom: 18px;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            color: #1a1a1a;
+            font-size: 16px;
+            line-height: 1.65;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .author-logo {
+            font-weight: 800;
+            font-size: 17px;
+            color: #1a1a1a;
+            letter-spacing: -0.3px;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: white;
+            padding: 120px 100px;
+            width: 100%;
+        }
+
+        .how-it-works-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .how-it-works-header h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .how-it-works-header p {
+            font-size: 20px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .how-it-works-header p a {
+            color: #5B8DEF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .steps-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+
+        .step:nth-child(even) {
+            direction: rtl;
+        }
+
+        .step:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .step-content {
+            padding: 20px 0;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #5B8DEF;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .step-content h3 {
+            font-size: 40px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .step-content p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .step-image {
+            position: relative;
+        }
+
+        .step-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-features {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .step-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .step-feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #5B8DEF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Customer Reviews Section */
+        .customer-reviews {
+            background: #f8f9fb;
+            padding: 100px 100px;
+            width: 100%;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .reviews-header h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .reviews-header p {
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .reviewer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .reviewer-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .reviewer-info p {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .review-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: white;
+            padding: 100px 100px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(91, 141, 239, 0.1);
+            border-radius: 20px;
+            color: #5B8DEF;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .cta-content h2 {
+            font-size: 56px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .cta-content p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px 48px;
+            background: #1a1e3d;
             color: white;
             border: none;
-            padding: 16px 40px;
             border-radius: 12px;
-            font-size: 1.1em;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            width: 100%;
+            transition: all 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            box-shadow: 0 4px 14px rgba(26, 30, 61, 0.3);
         }
 
-        .btn:hover {
+        .btn-cta:hover {
+            background: #0f1229;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 20px rgba(26, 30, 61, 0.4);
         }
 
-        .btn:active {
-            transform: translateY(0);
+        .cta-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .stars {
+            color: #fbbf24;
+            font-size: 20px;
+            letter-spacing: 4px;
         }
 
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
+        .rating-text {
+            font-size: 16px;
+            color: #999;
+            font-weight: 600;
         }
 
-        .loading.active {
-            display: block;
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
         }
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .cta-feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #1a1e3d;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: #667eea;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        .result-container {
-            display: none;
-            margin-top: 30px;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-            border-radius: 16px;
-        }
-
-        .result-container.active {
-            display: block;
-        }
-
-        .result-title {
-            color: #333;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .result-image {
+        /* Footer */
+        footer {
+            background: #1a1e3d;
+            color: white;
+            padding: 60px 100px 40px 100px;
             width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
             margin-top: 20px;
         }
 
-        .btn-secondary:hover {
-            background: #667eea;
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
             color: white;
         }
 
-        .error-message {
-            display: none;
-            background: #fee;
-            color: #c33;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
+        .footer-links {
+            list-style: none;
         }
 
-        .error-message.active {
-            display: block;
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 32px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1400px) {
+            nav {
+                padding: 24px 60px;
+            }
+
+            .hero {
+                padding: 80px 60px;
+                gap: 60px;
+            }
+
+            .features {
+                padding: 60px 60px;
+            }
+
+            .testimonials {
+                padding: 80px 60px;
+            }
+
+            .how-it-works {
+                padding: 100px 60px;
+            }
+
+            .step {
+                gap: 60px;
+                margin-bottom: 100px;
+            }
+
+            .customer-reviews {
+                padding: 80px 60px;
+            }
+
+            .cta-section {
+                padding: 80px 60px;
+            }
+
+            footer {
+                padding: 50px 60px 30px 60px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 60px 40px;
+                gap: 60px;
+            }
+
+            h1 {
+                font-size: 58px;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav {
+                padding: 20px 40px;
+            }
+
+            .features {
+                padding: 50px 40px;
+            }
+
+            .testimonials {
+                padding: 70px 40px;
+            }
+
+            .how-it-works {
+                padding: 80px 40px;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                margin-bottom: 80px;
+            }
+
+            .step:nth-child(even) {
+                direction: ltr;
+            }
+
+            .how-it-works-header h2 {
+                font-size: 38px;
+            }
+
+            .step-content h3 {
+                font-size: 32px;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-header h2 {
+                font-size: 38px;
+            }
+
+            .cta-content h2 {
+                font-size: 42px;
+            }
+
+            .cta-features {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 44px;
+                letter-spacing: -1.5px;
+            }
+
+            .hero-description {
+                font-size: 18px;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 24px;
+                align-items: flex-start;
+            }
+
+            nav {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .features {
+                padding: 40px 20px;
+            }
+
+            .testimonials {
+                padding: 60px 20px;
+            }
+
+            .how-it-works {
+                padding: 60px 20px;
+            }
+
+            .how-it-works-header h2 {
+                font-size: 32px;
+            }
+
+            .step-content h3 {
+                font-size: 28px;
+            }
+
+            .step-content p {
+                font-size: 16px;
+            }
+
+            .customer-reviews {
+                padding: 60px 20px;
+            }
+
+            .reviews-header h2 {
+                font-size: 32px;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+            }
+
+            .cta-content h2 {
+                font-size: 34px;
+            }
+
+            .cta-content p {
+                font-size: 18px;
+            }
+
+            .cta-features {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            footer {
+                padding: 40px 20px 30px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>AI Room Designer</h1>
-            <p>Transform your empty room with elegant furniture and accessories</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">AIKEA</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#shop">Shop</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn-login">Log in</button>
+            <button class="btn-signup">Sign up</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">Powered by AI Technology</div>
+            <h1>AI Room Design with one click</h1>
+            <p class="hero-description">Upload a picture and our AI will <strong>design your room and show you where to buy the furniture.</strong></p>
+            <button class="btn-upload" onclick="window.location.href='design.html'">
+                <span class="upload-icon">📸</span>
+                Upload image for free
+            </button>
+            <p class="upload-note">No sign up | No credit card</p>
         </div>
 
-        <div class="error-message" id="errorMessage"></div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&h=650&fit=crop&q=90" alt="Designed bedroom" class="room-preview">
+            <div class="dropdown-tag style-dropdown">
+                Bedroom
+                <span>▼</span>
+            </div>
+            <div class="dropdown-tag category-dropdown">
+                Midcentury
+                <span>▼</span>
+            </div>
+        </div>
+    </section>
 
-        <div class="upload-area" id="uploadArea">
-            <div class="upload-icon">&#128247;</div>
-            <div class="upload-text">Click to upload or drag and drop</div>
-            <div class="upload-subtext">Upload a photo of your empty room (PNG, JPG, JPEG)</div>
-            <input type="file" id="fileInput" accept="image/*">
+    <!-- Features -->
+    <section class="features">
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Low cost</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Instant results</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Furniture removal</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Multi-view staging</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>10,000+ users</span>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="how-it-works-header">
+            <h2>As low as $10.5 per image</h2>
+            <p>AI room design with furniture shopping included. <a href="#how">Here's how it works ↓</a></p>
         </div>
 
-        <div class="preview-container" id="previewContainer">
-            <img id="imagePreview" class="image-preview" alt="Room preview">
-            <button class="btn" id="designBtn">Design My Room</button>
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-label">Step 1</div>
+                    <h3>Upload property images</h3>
+                    <p>Drag and drop any image: 2D or 360°, vacant or with furniture, taken by any device.</p>
+                </div>
+                <div class="step-image">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&h=500&fit=crop" alt="Upload interface">
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-label">Step 2</div>
+                    <h3>AI designs your room</h3>
+                    <p>Our AI will design your room with curated furniture pieces that match your style preferences.</p>
+                </div>
+                <div class="step-image">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&h=500&fit=crop" alt="Before and after room">
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-label">Step 3</div>
+                    <h3>Get photorealistic results</h3>
+                    <p>Receive beautifully designed renders with furniture perfectly placed in your room within seconds.</p>
+                    <div class="step-features">
+                        <div class="step-feature">
+                            <div class="step-feature-icon">✓</div>
+                            <span>Ready in 10 Secs</span>
+                        </div>
+                        <div class="step-feature">
+                            <div class="step-feature-icon">✓</div>
+                            <span>Fully Customizable</span>
+                        </div>
+                        <div class="step-feature">
+                            <div class="step-feature-icon">✓</div>
+                            <span>Download as PSD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-image">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700&h=500&fit=crop" alt="Designed living room">
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-label">Step 4</div>
+                    <h3>Shop the furniture</h3>
+                    <p>Click on any furniture piece in your designed room to purchase it directly from our curated marketplace.</p>
+                </div>
+                <div class="step-image">
+                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&h=500&fit=crop" alt="Shopping interface">
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-label">Step 5</div>
+                    <h3>Save and share designs</h3>
+                    <p>Save your favorite designs, share them with clients, or create multiple variations for the same space.</p>
+                    <div class="step-features">
+                        <div class="step-feature">
+                            <div class="step-feature-icon">✓</div>
+                            <span>Save Designs</span>
+                        </div>
+                        <div class="step-feature">
+                            <div class="step-feature-icon">✓</div>
+                            <span>Share with Clients</span>
+                        </div>
+                        <div class="step-feature">
+                            <div class="step-feature-icon">✓</div>
+                            <span>Multiple Variations</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-image">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&h=500&fit=crop" alt="Design variations">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="customer-reviews">
+        <div class="reviews-header">
+            <h2>What customers say about us</h2>
+            <p>Over 10,000 properties are designed with AIKEA every month</p>
         </div>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <div class="loading-text">AI is designing your room...</div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="reviewer">
+                    <div class="reviewer-avatar"></div>
+                    <div class="reviewer-info">
+                        <h4>Aaron Horne,</h4>
+                        <p>Real Estate Agency</p>
+                    </div>
+                </div>
+                <p class="review-text">"Even those who are not design-savvy can easily create realistic and inviting virtually staged spaces that attract potential buyers regularly. It has taken our real estate marketing to the next level!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer">
+                    <div class="reviewer-avatar"></div>
+                    <div class="reviewer-info">
+                        <h4>Troy Sinclair,</h4>
+                        <p>Real Estate Photographer</p>
+                    </div>
+                </div>
+                <p class="review-text">"The lighting, shadows, and reflections are on point, making my workflow so much easier. My clients are amazed at the end results, bringing their homes to life and most importantly attracting potential buyers."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer">
+                    <div class="reviewer-avatar"></div>
+                    <div class="reviewer-info">
+                        <h4>Nita Chyree,</h4>
+                        <p>Interior Designer & Virtual Stager</p>
+                    </div>
+                </div>
+                <p class="review-text">"AIKEA is the best virtual staging software we've used. Their team acts as a partner to ensure we consistently produce stunning results that our clients are thrilled with."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer">
+                    <div class="reviewer-avatar"></div>
+                    <div class="reviewer-info">
+                        <h4>Amy Lang,</h4>
+                        <p>Home Stager</p>
+                    </div>
+                </div>
+                <p class="review-text">"AIKEA is a huge time and money saver! I'm able to deliver high-quality virtually staged images in record time, and my clients are beyond impressed with the custom style and quick turnaround."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIY Banner -->
+    <section class="testimonials" style="padding: 60px 100px;">
+        <div style="max-width: 1200px; margin: 0 auto; background: white; border-radius: 16px; padding: 32px 48px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <div style="font-size: 13px; color: #5B8DEF; font-weight: 600; margin-bottom: 8px;">Our budget option</div>
+                <h3 style="font-size: 32px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px;">DIY Room Design ✨</h3>
+                <p style="font-size: 17px; color: #666;">Design stunning spaces with our drag-and-drop editor for just <strong style="color: #1a1a1a;">$7 per image</strong></p>
+            </div>
+            <button class="btn-cta" style="margin: 0;" onclick="window.location.href='index.html'">Try DIY design for free →</button>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <div class="cta-badge">Our budget option</div>
+            <h2>Transform your space with AI design today</h2>
+            <p>Join thousands of professionals enhancing their properties with AIKEA</p>
+            <button class="btn-cta" onclick="window.location.href='index.html'">Try for free →</button>
+
+            <div class="cta-rating">
+                <div class="stars">★★★★★</div>
+                <span class="rating-text">4.8 out of 5</span>
+            </div>
+
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <div class="cta-feature-icon">✓</div>
+                    <span>Get started in minutes</span>
+                </div>
+                <div class="cta-feature">
+                    <div class="cta-feature-icon">✓</div>
+                    <span>100% satisfaction guarantee</span>
+                </div>
+                <div class="cta-feature">
+                    <div class="cta-feature-icon">✓</div>
+                    <span>24/7 premium support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>AIKEA</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">📷</a>
+                </div>
+                <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.6); font-size: 14px;">© 2025 AIKEA Inc.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul class="footer-links">
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="result-container" id="resultContainer">
-            <h2 class="result-title">Your Designed Room</h2>
-            <img id="resultImage" class="result-image" alt="Designed room">
-            <button class="btn btn-secondary" id="newDesignBtn">Design Another Room</button>
+        <div class="footer-bottom">
+            <p>Made with ❤️ for designers and real estate professionals</p>
         </div>
-    </div>
-
-    <script>
-        const API_KEY = 'AIzaSyAuDcV1UZahjGHApZHrtpV6ndPXRLwKVaw';
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const imagePreview = document.getElementById('imagePreview');
-        const designBtn = document.getElementById('designBtn');
-        const loading = document.getElementById('loading');
-        const resultContainer = document.getElementById('resultContainer');
-        const resultImage = document.getElementById('resultImage');
-        const newDesignBtn = document.getElementById('newDesignBtn');
-        const errorMessage = document.getElementById('errorMessage');
-
-        let selectedFile = null;
-
-        // Upload area click
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        // Drag and drop
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        });
-
-        // File input change
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFile(e.target.files[0]);
-            }
-        });
-
-        // Handle file selection
-        function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
-                showError('Please upload an image file');
-                return;
-            }
-
-            selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result;
-                previewContainer.classList.add('active');
-                uploadArea.style.display = 'none';
-                hideError();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Design button click
-        designBtn.addEventListener('click', async () => {
-            if (!selectedFile) return;
-
-            designBtn.disabled = true;
-            loading.classList.add('active');
-            previewContainer.style.display = 'none';
-
-            try {
-                const base64Image = await fileToBase64(selectedFile);
-                const designedImage = await generateDesign(base64Image);
-
-                resultImage.src = designedImage;
-                resultContainer.classList.add('active');
-                loading.classList.remove('active');
-            } catch (error) {
-                console.error('Error:', error);
-                showError('Failed to design room. Please try again.');
-                loading.classList.remove('active');
-                previewContainer.style.display = 'block';
-                designBtn.disabled = false;
-            }
-        });
-
-        // New design button
-        newDesignBtn.addEventListener('click', () => {
-            resetUI();
-        });
-
-        // Convert file to base64
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // All available furniture organized by folder
-        // ADD YOUR FURNITURE FILES TO: furniture/[category]/filename.png
-        // If multiple items in a category, ONE will be picked randomly
-        const FURNITURE_LIBRARY = {
-            lamps: [
-                'furniture/lamps/Screenshot 2025-10-23 170022.png',
-                'furniture/lamps/Screenshot 2025-10-23 204912.png',
-                'furniture/lamps/Screenshot 2025-10-23 204944.png',
-                'furniture/lamps/Screenshot 2025-10-23 205013.png'
-            ],
-            sofas: [
-                'furniture/sofas/sofa.png',
-                'furniture/sofas/Screenshot 2025-10-23 205040.png',
-                'furniture/sofas/Screenshot 2025-10-23 205103.png',
-                'furniture/sofas/Screenshot 2025-10-23 205141.png'
-            ],
-            rugs: [
-                'furniture/rugs/rug1.png',
-                'furniture/rugs/Screenshot 2025-10-23 205231.png',
-                'furniture/rugs/Screenshot 2025-10-23 205425.png',
-                'furniture/rugs/Screenshot 2025-10-23 205454.png'
-            ],
-            chairs: ['furniture/chairs/chair.png'],
-            plants: ['furniture/plants/plant1.png'],
-            tables: ['furniture/tables/table.png']
-        };
-
-        // Load ONE random item from EACH category (lamp sent first for priority)
-        async function loadFurnitureImages() {
-            const furnitureImages = [];
-            const furnitureNames = [];
-
-            // Pick ONE random item from EACH category
-            for (const [category, items] of Object.entries(FURNITURE_LIBRARY)) {
-                // Randomly pick one item from this category
-                const randomItem = items[Math.floor(Math.random() * items.length)];
-
-                try {
-                    const response = await fetch(randomItem);
-                    const blob = await response.blob();
-                    const base64 = await blobToBase64(blob);
-                    furnitureImages.push({
-                        mime_type: 'image/png',
-                        data: base64
-                    });
-                    furnitureNames.push(category.slice(0, -1)); // Remove 's' from category name
-                    console.log(`Selected ${category}: ${randomItem}`);
-                } catch (error) {
-                    console.error(`Failed to load ${randomItem}:`, error);
-                }
-            }
-
-            console.log('Loaded furniture (1 per category):', furnitureNames.length, 'items -', furnitureNames);
-            return { images: furnitureImages, names: furnitureNames };
-        }
-
-        // Convert blob to base64
-        function blobToBase64(blob) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-        }
-
-        // Generate design using Nano Banana with furniture images
-        async function generateDesign(base64Image) {
-            // Use Gemini 2.5 Flash Image (Nano Banana) for image generation
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${API_KEY}`;
-
-            try {
-                // Load random furniture images
-                const furnitureData = await loadFurnitureImages();
-                const furnitureImages = furnitureData.images;
-                const furnitureNames = furnitureData.names;
-
-                // Build request with ROOM IMAGE TWICE (first and last)
-                const parts = [
-                    {
-                        text: "This is the target room - remember it exactly:"
-                    },
-                    {
-                        inline_data: {
-                            mime_type: selectedFile.type,
-                            data: base64Image
-                        }
-                    },
-                    {
-                        text: `Now here are ${furnitureImages.length} furniture pieces to add:`
-                    }
-                ];
-
-                // Add all selected furniture images
-                furnitureImages.forEach(furniture => {
-                    parts.push({
-                        inline_data: {
-                            mime_type: 'image/png',
-                            data: furniture.data
-                        }
-                    });
-                });
-
-                // Add room again and final instruction
-                parts.push({
-                    text: "And here is the room again - THIS is the base:"
-                });
-                parts.push({
-                    inline_data: {
-                        mime_type: selectedFile.type,
-                        data: base64Image
-                    }
-                });
-                parts.push({
-                    text: `Generate this exact room (shown twice above) with the furniture pieces shown (${furnitureNames.join(', ')}) placed inside it. IMPORTANT:
-1. Keep the room IDENTICAL - same walls, floor, windows, lighting
-2. Keep the furniture EXACTLY as shown - do not change their design, color, or style
-3. Position the furniture in ELEGANT, professional arrangements that maximize space and flow
-4. Add tasteful accessories like cushions, throws, small decor items, artwork, and styling elements to complete the look
-5. Ensure proper perspective, realistic lighting, and natural shadows
-Create a beautifully styled, magazine-worthy room design.`
-                });
-
-                const requestBody = {
-                    contents: [{
-                        parts: parts
-                    }]
-                };
-
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                const data = await response.json();
-                console.log('Full API Response:', JSON.stringify(data, null, 2));
-
-                if (!response.ok) {
-                    console.error('API Error:', data);
-                    throw new Error(`API failed: ${response.status} - ${data.error?.message || 'Unknown error'}`);
-                }
-
-                // Check if an image was generated
-                if (data.candidates?.[0]?.content?.parts) {
-                    for (const part of data.candidates[0].content.parts) {
-                        if (part.inline_data || part.inlineData) {
-                            const imageData = part.inline_data || part.inlineData;
-                            return `data:${imageData.mime_type || imageData.mimeType};base64,${imageData.data}`;
-                        }
-                    }
-                }
-
-                // If no image, get the text description and overlay it
-                let designText = 'AI Design Suggestions';
-                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                    designText = data.candidates[0].content.parts[0].text;
-                }
-
-                // Create a visualization with the design suggestions
-                return createDesignVisualization(designText, base64Image);
-
-            } catch (error) {
-                console.error('Generation Error:', error);
-                throw error;
-            }
-        }
-
-        // Create a visual representation with AI suggestions overlaid
-        function createDesignVisualization(designText, base64Image) {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const img = new Image();
-
-                img.onload = () => {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-
-                    // Draw original image
-                    ctx.drawImage(img, 0, 0);
-
-                    // Add overlay panel
-                    const panelHeight = Math.min(300, canvas.height * 0.4);
-                    const panelY = canvas.height - panelHeight;
-
-                    // Semi-transparent background
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-                    ctx.fillRect(0, panelY, canvas.width, panelHeight);
-
-                    // Border
-                    ctx.strokeStyle = '#667eea';
-                    ctx.lineWidth = 3;
-                    ctx.strokeRect(0, panelY, canvas.width, panelHeight);
-
-                    // Title
-                    ctx.fillStyle = '#667eea';
-                    ctx.font = 'bold 28px Segoe UI';
-                    ctx.fillText('AI Design Suggestions', 30, panelY + 40);
-
-                    // Design text
-                    ctx.fillStyle = '#333';
-                    ctx.font = '16px Segoe UI';
-
-                    const maxWidth = canvas.width - 60;
-                    const lines = wrapText(ctx, designText, maxWidth);
-                    const maxLines = Math.floor((panelHeight - 60) / 22);
-
-                    lines.slice(0, maxLines).forEach((line, i) => {
-                        ctx.fillText(line, 30, panelY + 70 + (i * 22));
-                    });
-
-                    resolve(canvas.toDataURL('image/png'));
-                };
-
-                img.src = `data:${selectedFile.type};base64,${base64Image}`;
-            });
-        }
-
-        // Helper to wrap text
-        function wrapText(ctx, text, maxWidth) {
-            const words = text.split(' ');
-            const lines = [];
-            let currentLine = '';
-
-            words.forEach(word => {
-                const testLine = currentLine + word + ' ';
-                const metrics = ctx.measureText(testLine);
-                if (metrics.width > maxWidth && currentLine !== '') {
-                    lines.push(currentLine.trim());
-                    currentLine = word + ' ';
-                } else {
-                    currentLine = testLine;
-                }
-            });
-            if (currentLine) {
-                lines.push(currentLine.trim());
-            }
-            return lines;
-        }
-
-        // Reset UI
-        function resetUI() {
-            uploadArea.style.display = 'block';
-            previewContainer.classList.remove('active');
-            resultContainer.classList.remove('active');
-            loading.classList.remove('active');
-            designBtn.disabled = false;
-            selectedFile = null;
-            fileInput.value = '';
-            hideError();
-        }
-
-        // Error handling
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('active');
-        }
-
-        function hideError() {
-            errorMessage.classList.remove('active');
-        }
-    </script>
+    </footer>
 </body>
 </html>
