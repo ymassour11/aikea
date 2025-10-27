@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Room Designer v2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .upload-text {
+            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .upload-subtext {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .preview-container {
+            display: none;
+            margin-bottom: 30px;
+        }
+
+        .preview-container.active {
+            display: block;
+        }
+
+        .image-preview {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #667eea;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-radius: 16px;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-title {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .result-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            margin-top: 20px;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .error-message {
+            display: none;
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Room Designer</h1>
+            <p>Transform your empty room with elegant furniture and accessories</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">&#128247;</div>
+            <div class="upload-text">Click to upload or drag and drop</div>
+            <div class="upload-subtext">Upload a photo of your empty room (PNG, JPG, JPEG)</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="preview-container" id="previewContainer">
+            <img id="imagePreview" class="image-preview" alt="Room preview">
+            <button class="btn" id="designBtn">Design My Room</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">AI is designing your room...</div>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <h2 class="result-title">Your Designed Room</h2>
+            <img id="resultImage" class="result-image" alt="Designed room">
+            <button class="btn btn-secondary" id="newDesignBtn">Design Another Room</button>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyAuDcV1UZahjGHApZHrtpV6ndPXRLwKVaw';
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const designBtn = document.getElementById('designBtn');
+        const loading = document.getElementById('loading');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultImage = document.getElementById('resultImage');
+        const newDesignBtn = document.getElementById('newDesignBtn');
+        const errorMessage = document.getElementById('errorMessage');
+
+        let selectedFile = null;
+
+        // Upload area click
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        // Handle file selection
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showError('Please upload an image file');
+                return;
+            }
+
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                previewContainer.classList.add('active');
+                uploadArea.style.display = 'none';
+                hideError();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Design button click
+        designBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            designBtn.disabled = true;
+            loading.classList.add('active');
+            previewContainer.style.display = 'none';
+
+            try {
+                const base64Image = await fileToBase64(selectedFile);
+                const designedImage = await generateDesign(base64Image);
+
+                resultImage.src = designedImage;
+                resultContainer.classList.add('active');
+                loading.classList.remove('active');
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to design room. Please try again.');
+                loading.classList.remove('active');
+                previewContainer.style.display = 'block';
+                designBtn.disabled = false;
+            }
+        });
+
+        // New design button
+        newDesignBtn.addEventListener('click', () => {
+            resetUI();
+        });
+
+        // Convert file to base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // All available furniture organized by folder
+        // ADD YOUR FURNITURE FILES TO: furniture/[category]/filename.png
+        // If multiple items in a category, ONE will be picked randomly
+        const FURNITURE_LIBRARY = {
+            lamps: [
+                'furniture/lamps/Screenshot 2025-10-23 170022.png',
+                'furniture/lamps/Screenshot 2025-10-23 204912.png',
+                'furniture/lamps/Screenshot 2025-10-23 204944.png',
+                'furniture/lamps/Screenshot 2025-10-23 205013.png'
+            ],
+            sofas: [
+                'furniture/sofas/sofa.png',
+                'furniture/sofas/Screenshot 2025-10-23 205040.png',
+                'furniture/sofas/Screenshot 2025-10-23 205103.png',
+                'furniture/sofas/Screenshot 2025-10-23 205141.png'
+            ],
+            rugs: [
+                'furniture/rugs/rug1.png',
+                'furniture/rugs/Screenshot 2025-10-23 205231.png',
+                'furniture/rugs/Screenshot 2025-10-23 205425.png',
+                'furniture/rugs/Screenshot 2025-10-23 205454.png'
+            ],
+            chairs: ['furniture/chairs/chair.png'],
+            plants: ['furniture/plants/plant1.png'],
+            tables: ['furniture/tables/table.png']
+        };
+
+        // Load ONE random item from EACH category (lamp sent first for priority)
+        async function loadFurnitureImages() {
+            const furnitureImages = [];
+            const furnitureNames = [];
+
+            // Pick ONE random item from EACH category
+            for (const [category, items] of Object.entries(FURNITURE_LIBRARY)) {
+                // Randomly pick one item from this category
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+
+                try {
+                    const response = await fetch(randomItem);
+                    const blob = await response.blob();
+                    const base64 = await blobToBase64(blob);
+                    furnitureImages.push({
+                        mime_type: 'image/png',
+                        data: base64
+                    });
+                    furnitureNames.push(category.slice(0, -1)); // Remove 's' from category name
+                    console.log(`Selected ${category}: ${randomItem}`);
+                } catch (error) {
+                    console.error(`Failed to load ${randomItem}:`, error);
+                }
+            }
+
+            console.log('Loaded furniture (1 per category):', furnitureNames.length, 'items -', furnitureNames);
+            return { images: furnitureImages, names: furnitureNames };
+        }
+
+        // Convert blob to base64
+        function blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        // Generate design using Nano Banana with furniture images
+        async function generateDesign(base64Image) {
+            // Use Gemini 2.5 Flash Image (Nano Banana) for image generation
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${API_KEY}`;
+
+            try {
+                // Load random furniture images
+                const furnitureData = await loadFurnitureImages();
+                const furnitureImages = furnitureData.images;
+                const furnitureNames = furnitureData.names;
+
+                // Build request with ROOM IMAGE TWICE (first and last)
+                const parts = [
+                    {
+                        text: "This is the target room - remember it exactly:"
+                    },
+                    {
+                        inline_data: {
+                            mime_type: selectedFile.type,
+                            data: base64Image
+                        }
+                    },
+                    {
+                        text: `Now here are ${furnitureImages.length} furniture pieces to add:`
+                    }
+                ];
+
+                // Add all selected furniture images
+                furnitureImages.forEach(furniture => {
+                    parts.push({
+                        inline_data: {
+                            mime_type: 'image/png',
+                            data: furniture.data
+                        }
+                    });
+                });
+
+                // Add room again and final instruction
+                parts.push({
+                    text: "And here is the room again - THIS is the base:"
+                });
+                parts.push({
+                    inline_data: {
+                        mime_type: selectedFile.type,
+                        data: base64Image
+                    }
+                });
+                parts.push({
+                    text: `Generate this exact room (shown twice above) with the furniture pieces shown (${furnitureNames.join(', ')}) placed inside it. IMPORTANT:
+1. Keep the room IDENTICAL - same walls, floor, windows, lighting
+2. Keep the furniture EXACTLY as shown - do not change their design, color, or style
+3. Position the furniture in ELEGANT, professional arrangements that maximize space and flow
+4. Add tasteful accessories like cushions, throws, small decor items, artwork, and styling elements to complete the look
+5. Ensure proper perspective, realistic lighting, and natural shadows
+Create a beautifully styled, magazine-worthy room design.`
+                });
+
+                const requestBody = {
+                    contents: [{
+                        parts: parts
+                    }]
+                };
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                console.log('Full API Response:', JSON.stringify(data, null, 2));
+
+                if (!response.ok) {
+                    console.error('API Error:', data);
+                    throw new Error(`API failed: ${response.status} - ${data.error?.message || 'Unknown error'}`);
+                }
+
+                // Check if an image was generated
+                if (data.candidates?.[0]?.content?.parts) {
+                    for (const part of data.candidates[0].content.parts) {
+                        if (part.inline_data || part.inlineData) {
+                            const imageData = part.inline_data || part.inlineData;
+                            return `data:${imageData.mime_type || imageData.mimeType};base64,${imageData.data}`;
+                        }
+                    }
+                }
+
+                // If no image, get the text description and overlay it
+                let designText = 'AI Design Suggestions';
+                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    designText = data.candidates[0].content.parts[0].text;
+                }
+
+                // Create a visualization with the design suggestions
+                return createDesignVisualization(designText, base64Image);
+
+            } catch (error) {
+                console.error('Generation Error:', error);
+                throw error;
+            }
+        }
+
+        // Create a visual representation with AI suggestions overlaid
+        function createDesignVisualization(designText, base64Image) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw original image
+                    ctx.drawImage(img, 0, 0);
+
+                    // Add overlay panel
+                    const panelHeight = Math.min(300, canvas.height * 0.4);
+                    const panelY = canvas.height - panelHeight;
+
+                    // Semi-transparent background
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                    ctx.fillRect(0, panelY, canvas.width, panelHeight);
+
+                    // Border
+                    ctx.strokeStyle = '#667eea';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(0, panelY, canvas.width, panelHeight);
+
+                    // Title
+                    ctx.fillStyle = '#667eea';
+                    ctx.font = 'bold 28px Segoe UI';
+                    ctx.fillText('AI Design Suggestions', 30, panelY + 40);
+
+                    // Design text
+                    ctx.fillStyle = '#333';
+                    ctx.font = '16px Segoe UI';
+
+                    const maxWidth = canvas.width - 60;
+                    const lines = wrapText(ctx, designText, maxWidth);
+                    const maxLines = Math.floor((panelHeight - 60) / 22);
+
+                    lines.slice(0, maxLines).forEach((line, i) => {
+                        ctx.fillText(line, 30, panelY + 70 + (i * 22));
+                    });
+
+                    resolve(canvas.toDataURL('image/png'));
+                };
+
+                img.src = `data:${selectedFile.type};base64,${base64Image}`;
+            });
+        }
+
+        // Helper to wrap text
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                const testLine = currentLine + word + ' ';
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && currentLine !== '') {
+                    lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine = testLine;
+                }
+            });
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        }
+
+        // Reset UI
+        function resetUI() {
+            uploadArea.style.display = 'block';
+            previewContainer.classList.remove('active');
+            resultContainer.classList.remove('active');
+            loading.classList.remove('active');
+            designBtn.disabled = false;
+            selectedFile = null;
+            fileInput.value = '';
+            hideError();
+        }
+
+        // Error handling
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('active');
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
