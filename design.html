@@ -258,7 +258,7 @@
     </div>
 
     <script>
-        const API_KEY = 'AIzaSyAuDcV1UZahjGHApZHrtpV6ndPXRLwKVaw';
+        // API key now stored securely in Vercel environment variables
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
@@ -432,93 +432,41 @@
             });
         }
 
-        // Generate design using Nano Banana with furniture images
+        // Generate design using secure serverless function
         async function generateDesign(base64Image) {
-            // Use Gemini 2.5 Flash Image (Nano Banana) for image generation
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${API_KEY}`;
-
             try {
-                // Load random furniture images
+                // Load furniture images
                 const furnitureData = await loadFurnitureImages();
-                const furnitureImages = furnitureData.images;
+                const furnitureImages = furnitureData.images.map(img => img.data);
                 const furnitureNames = furnitureData.names;
 
-                // Build request with ROOM IMAGE TWICE (first and last)
-                const parts = [
-                    {
-                        text: "This is the target room - remember it exactly:"
-                    },
-                    {
-                        inline_data: {
-                            mime_type: selectedFile.type,
-                            data: base64Image
-                        }
-                    },
-                    {
-                        text: `Now here are ${furnitureImages.length} furniture pieces to add:`
-                    }
-                ];
-
-                // Add all selected furniture images
-                furnitureImages.forEach(furniture => {
-                    parts.push({
-                        inline_data: {
-                            mime_type: 'image/png',
-                            data: furniture.data
-                        }
-                    });
-                });
-
-                // Add room again and final instruction
-                parts.push({
-                    text: "And here is the room again - THIS is the base:"
-                });
-                parts.push({
-                    inline_data: {
-                        mime_type: selectedFile.type,
-                        data: base64Image
-                    }
-                });
-                parts.push({
-                    text: `Generate this exact room (shown twice above) with the furniture pieces shown (${furnitureNames.join(', ')}) placed inside it. IMPORTANT:
-1. Keep the room IDENTICAL - same walls, floor, windows, lighting
-2. Keep the furniture EXACTLY as shown - do not change their design, color, or style
-3. Position the furniture in ELEGANT, professional arrangements that maximize space and flow
-4. Add tasteful accessories like cushions, throws, small decor items, artwork, and styling elements to complete the look
-5. Ensure proper perspective, realistic lighting, and natural shadows
-Create a beautifully styled, magazine-worthy room design.`
-                });
-
-                const requestBody = {
-                    contents: [{
-                        parts: parts
-                    }]
-                };
+                // Call our secure serverless function instead of direct API
+                const endpoint = '/api/design';
 
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(requestBody)
+                    body: JSON.stringify({
+                        roomImage: base64Image,
+                        furnitureImages: furnitureImages,
+                        furnitureNames: furnitureNames,
+                        mimeType: selectedFile.type
+                    })
                 });
 
                 const data = await response.json();
-                console.log('Full API Response:', JSON.stringify(data, null, 2));
+                console.log('API Response:', data);
 
                 if (!response.ok) {
                     console.error('API Error:', data);
-                    throw new Error(`API failed: ${response.status} - ${data.error?.message || 'Unknown error'}`);
+                    throw new Error(data.error || 'API request failed');
                 }
 
-                // Check if an image was generated
-                if (data.candidates?.[0]?.content?.parts) {
-                    for (const part of data.candidates[0].content.parts) {
-                        if (part.inline_data || part.inlineData) {
-                            const imageData = part.inline_data || part.inlineData;
-                            return `data:${imageData.mime_type || imageData.mimeType};base64,${imageData.data}`;
-                        }
-                    }
+                // Return the generated image
+                if (data.success && data.image) {
+                    return data.image;
                 }
 
                 // If no image, get the text description and overlay it
