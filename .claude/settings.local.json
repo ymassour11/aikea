@@ -21,7 +21,12 @@
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth login --web)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" repo create aikea --public --source=. --remote=origin --push)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npm install:*)",
+      "Bash(vercel login:*)",
+      "Bash(vercel:*)",
+      "Bash(printf \"AIzaSyAuDcV1UZahjGHApZHrtpV6ndPXRLwKVaw\")",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
