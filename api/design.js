@@ -26,8 +26,18 @@ export default async function handler(req, res) {
     // Get API key from environment variable (secure!)
     const API_KEY = process.env.GEMINI_API_KEY;
 
+    // Debug log (remove in production)
+    console.log('API_KEY exists:', !!API_KEY);
+    console.log('All env vars:', Object.keys(process.env).filter(k => k.includes('GEMINI')));
+
     if (!API_KEY) {
-      return res.status(500).json({ error: 'API key not configured' });
+      return res.status(500).json({
+        error: 'API key not configured',
+        debug: {
+          hasKey: !!API_KEY,
+          envKeys: Object.keys(process.env).filter(k => k.includes('GEMINI'))
+        }
+      });
     }
 
     // Build the request to Google Gemini API
