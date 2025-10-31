@@ -688,6 +688,201 @@
             font-size: 14px;
         }
 
+        /* Design Tool Styles */
+        .hero-image.design-mode {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+        }
+
+        .upload-area.active {
+            display: block;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: white;
+        }
+
+        .upload-area-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .upload-area-text {
+            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .upload-area-subtext {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .preview-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .preview-container.active {
+            display: block;
+        }
+
+        .image-preview {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-design {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .btn-design:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-design:active {
+            transform: translateY(0);
+        }
+
+        .btn-design:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #667eea;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .result-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-title {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .result-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            margin-top: 20px;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .error-message {
+            display: none;
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
         @media (max-width: 1400px) {
             nav {
                 padding: 24px 60px;
@@ -914,15 +1109,15 @@
             <div class="badge">Powered by AI Technology</div>
             <h1>AI Room Design with one click</h1>
             <p class="hero-description">Upload a picture and our AI will <strong>design your room and show you where to buy the furniture.</strong></p>
-            <button class="btn-upload" onclick="window.location.href='design.html'">
+            <button class="btn-upload" onclick="startDesign()">
                 <span class="upload-icon">📸</span>
                 Upload image for free
             </button>
             <p class="upload-note">No sign up | No credit card</p>
         </div>
 
-        <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&h=650&fit=crop&q=90" alt="Designed bedroom" class="room-preview">
+        <div class="hero-image" id="heroImage">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&h=650&fit=crop&q=90" alt="Designed bedroom" class="room-preview" id="heroRoomPreview">
             <div class="dropdown-tag style-dropdown">
                 Bedroom
                 <span>▼</span>
@@ -930,6 +1125,32 @@
             <div class="dropdown-tag category-dropdown">
                 Midcentury
                 <span>▼</span>
+            </div>
+
+            <!-- Design Tool Interface (Hidden by default) -->
+            <div class="error-message" id="errorMessage"></div>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-area-icon">&#128247;</div>
+                <div class="upload-area-text">Click to upload or drag and drop</div>
+                <div class="upload-area-subtext">Upload a photo of your empty room (PNG, JPG, JPEG)</div>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+                <img id="imagePreview" class="image-preview" alt="Room preview">
+                <button class="btn-design" id="designBtn">Design My Room</button>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div class="loading-text">AI is designing your room...</div>
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <h2 class="result-title">Your Designed Room</h2>
+                <img id="resultImage" class="result-image" alt="Designed room">
+                <button class="btn-secondary" id="newDesignBtn">Design Another Room</button>
             </div>
         </div>
     </section>
@@ -1196,5 +1417,254 @@
             <p>Made with ❤️ for designers and real estate professionals</p>
         </div>
     </footer>
+
+    <script>
+        // Design Tool JavaScript
+        const heroImage = document.getElementById('heroImage');
+        const heroRoomPreview = document.getElementById('heroRoomPreview');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const designBtn = document.getElementById('designBtn');
+        const loading = document.getElementById('loading');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultImage = document.getElementById('resultImage');
+        const newDesignBtn = document.getElementById('newDesignBtn');
+        const errorMessage = document.getElementById('errorMessage');
+
+        let selectedFile = null;
+
+        // Furniture library
+        const FURNITURE_LIBRARY = {
+            lamps: [
+                'furniture/lamps/Screenshot 2025-10-23 170022.png',
+                'furniture/lamps/Screenshot 2025-10-23 204912.png',
+                'furniture/lamps/Screenshot 2025-10-23 204944.png',
+                'furniture/lamps/Screenshot 2025-10-23 205013.png'
+            ],
+            sofas: [
+                'furniture/sofas/sofa.png',
+                'furniture/sofas/Screenshot 2025-10-23 205040.png',
+                'furniture/sofas/Screenshot 2025-10-23 205103.png',
+                'furniture/sofas/Screenshot 2025-10-23 205141.png'
+            ],
+            rugs: [
+                'furniture/rugs/rug1.png',
+                'furniture/rugs/Screenshot 2025-10-23 205231.png',
+                'furniture/rugs/Screenshot 2025-10-23 205425.png',
+                'furniture/rugs/Screenshot 2025-10-23 205454.png'
+            ],
+            chairs: ['furniture/chairs/chair.png'],
+            plants: ['furniture/plants/plant1.png'],
+            tables: ['furniture/tables/table.png']
+        };
+
+        // Start design mode
+        function startDesign() {
+            // Hide original preview and tags
+            heroRoomPreview.style.display = 'none';
+            document.querySelectorAll('.dropdown-tag').forEach(tag => tag.style.display = 'none');
+
+            // Show upload area
+            heroImage.classList.add('design-mode');
+            uploadArea.classList.add('active');
+        }
+
+        // Upload area click
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        // Handle file selection
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showError('Please upload an image file');
+                return;
+            }
+
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                previewContainer.classList.add('active');
+                uploadArea.classList.remove('active');
+                hideError();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Design button click
+        designBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            designBtn.disabled = true;
+            loading.classList.add('active');
+            previewContainer.classList.remove('active');
+
+            try {
+                const base64Image = await fileToBase64(selectedFile);
+                const designedImage = await generateDesign(base64Image);
+
+                resultImage.src = designedImage;
+                resultContainer.classList.add('active');
+                loading.classList.remove('active');
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to design room. Please try again.');
+                loading.classList.remove('active');
+                previewContainer.classList.add('active');
+                designBtn.disabled = false;
+            }
+        });
+
+        // New design button
+        newDesignBtn.addEventListener('click', () => {
+            resetUI();
+        });
+
+        // Convert file to base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Load ONE random item from EACH category
+        async function loadFurnitureImages() {
+            const furnitureImages = [];
+            const furnitureNames = [];
+
+            for (const [category, items] of Object.entries(FURNITURE_LIBRARY)) {
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+
+                try {
+                    const response = await fetch(randomItem);
+                    const blob = await response.blob();
+                    const base64 = await blobToBase64(blob);
+                    furnitureImages.push({
+                        mime_type: 'image/png',
+                        data: base64
+                    });
+                    furnitureNames.push(category.slice(0, -1));
+                    console.log(`Selected ${category}: ${randomItem}`);
+                } catch (error) {
+                    console.error(`Failed to load ${randomItem}:`, error);
+                }
+            }
+
+            console.log('Loaded furniture (1 per category):', furnitureNames.length, 'items -', furnitureNames);
+            return { images: furnitureImages, names: furnitureNames };
+        }
+
+        // Convert blob to base64
+        function blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        // Generate design using secure serverless function
+        async function generateDesign(base64Image) {
+            try {
+                const furnitureData = await loadFurnitureImages();
+                const furnitureImages = furnitureData.images.map(img => img.data);
+                const furnitureNames = furnitureData.names;
+
+                const endpoint = '/api/design';
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        roomImage: base64Image,
+                        furnitureImages: furnitureImages,
+                        furnitureNames: furnitureNames,
+                        mimeType: selectedFile.type
+                    })
+                });
+
+                const data = await response.json();
+                console.log('API Response:', data);
+
+                if (!response.ok) {
+                    console.error('API Error:', data);
+                    throw new Error(data.error || 'API request failed');
+                }
+
+                if (data.success && data.image) {
+                    return data.image;
+                }
+
+                throw new Error('No image generated');
+
+            } catch (error) {
+                console.error('Generation Error:', error);
+                throw error;
+            }
+        }
+
+        // Reset UI
+        function resetUI() {
+            uploadArea.classList.add('active');
+            previewContainer.classList.remove('active');
+            resultContainer.classList.remove('active');
+            loading.classList.remove('active');
+            designBtn.disabled = false;
+            selectedFile = null;
+            fileInput.value = '';
+            hideError();
+        }
+
+        // Error handling
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('active');
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('active');
+        }
+    </script>
 </body>
 </html>
