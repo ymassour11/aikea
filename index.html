@@ -885,79 +885,212 @@
 
         /* Furniture List Styles */
         .furniture-list {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 3px solid #f0f0f0;
         }
 
         .furniture-list-title {
-            color: #333;
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 20px;
+            color: #1a1a1a;
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 12px;
             text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .furniture-list-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 35px;
+            font-weight: 400;
         }
 
         .furniture-items {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 20px;
         }
 
         .furniture-item {
             background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 15px;
+            border: 2px solid #f0f0f0;
+            border-radius: 16px;
+            padding: 0;
             transition: all 0.3s ease;
             cursor: pointer;
+            overflow: hidden;
+            position: relative;
         }
 
         .furniture-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
             border-color: #667eea;
+        }
+
+        .furniture-item-image-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow: hidden;
         }
 
         .furniture-item-image {
             width: 100%;
-            height: 120px;
+            height: 100%;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            background: #f5f5f5;
+            transition: transform 0.4s ease;
         }
 
-        .furniture-item-name {
-            font-size: 0.95em;
+        .furniture-item:hover .furniture-item-image {
+            transform: scale(1.08);
+        }
+
+        .furniture-item-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 700;
+            color: #667eea;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .furniture-item-content {
+            padding: 18px;
+        }
+
+        .furniture-item-brand {
+            font-size: 0.75em;
+            color: #999;
             font-weight: 600;
-            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 6px;
         }
 
-        .furniture-item-price {
-            font-size: 1.1em;
+        .furniture-item-name {
+            font-size: 1em;
             font-weight: 700;
-            color: #667eea;
+            color: #1a1a1a;
             margin-bottom: 10px;
+            line-height: 1.3;
+            min-height: 2.6em;
+        }
+
+        .furniture-item-details {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .furniture-detail-tag {
+            background: #f5f7fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .furniture-item-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .furniture-item-price {
+            font-size: 1.4em;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .furniture-item-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85em;
+            color: #fbbf24;
+            font-weight: 600;
         }
 
         .btn-buy {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.9em;
-            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.95em;
+            font-weight: 700;
             cursor: pointer;
             width: 100%;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-buy:hover {
-            background: #5568d3;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #5568d3 0%, #6639a6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-buy:active {
+            transform: translateY(0);
+        }
+
+        .total-price-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .total-price-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .total-price-amount {
+            font-size: 2.2em;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        @media (max-width: 768px) {
+            .furniture-items {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 16px;
+            }
+
+            .furniture-item-image-container {
+                height: 140px;
+            }
+
+            .furniture-item-content {
+                padding: 14px;
+            }
+
+            .furniture-list-title {
+                font-size: 1.5em;
+            }
         }
 
         @media (max-width: 1400px) {
@@ -1231,7 +1364,12 @@
                 <!-- Furniture List with Affiliate Links -->
                 <div class="furniture-list" id="furnitureList">
                     <h3 class="furniture-list-title">Shop the furniture in this design</h3>
+                    <p class="furniture-list-subtitle">Click any item to purchase from our curated partners</p>
                     <div class="furniture-items" id="furnitureItems"></div>
+                    <div class="total-price-banner" id="totalPriceBanner">
+                        <div class="total-price-label">Complete this look for</div>
+                        <div class="total-price-amount" id="totalPrice">$0.00</div>
+                    </div>
                 </div>
 
                 <button class="btn-secondary" id="newDesignBtn">Design Another Room</button>
@@ -1745,21 +1883,61 @@
             const furnitureItemsContainer = document.getElementById('furnitureItems');
             furnitureItemsContainer.innerHTML = '';
 
+            let totalPrice = 0;
+
             selectedFurniture.forEach(furniture => {
+                totalPrice += furniture.price;
+
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'furniture-item';
 
+                // Build detail tags
+                let detailTags = '';
+                if (furniture.style) {
+                    detailTags += `<span class="furniture-detail-tag">${furniture.style}</span>`;
+                }
+                if (furniture.material) {
+                    detailTags += `<span class="furniture-detail-tag">${furniture.material}</span>`;
+                }
+                if (furniture.colors && furniture.colors.length > 0) {
+                    detailTags += `<span class="furniture-detail-tag">${furniture.colors[0]}</span>`;
+                }
+
+                // Build rating display
+                const stars = '⭐'.repeat(Math.floor(furniture.rating || 0));
+                const ratingDisplay = furniture.rating ?
+                    `<div class="furniture-item-rating">${stars} ${furniture.rating}</div>` : '';
+
+                // Build in-stock badge
+                const stockBadge = furniture.inStock ?
+                    `<div class="furniture-item-badge">✓ In Stock</div>` :
+                    `<div class="furniture-item-badge" style="color: #ff6b6b;">Out of Stock</div>`;
+
                 itemDiv.innerHTML = `
-                    <img src="${furniture.image}" alt="${furniture.name}" class="furniture-item-image">
-                    <div class="furniture-item-name">${furniture.name}</div>
-                    <div class="furniture-item-price">$${furniture.price.toFixed(2)}</div>
-                    <button class="btn-buy" onclick="window.open('${furniture.affiliateLink}', '_blank')">
-                        Buy Now →
-                    </button>
+                    <div class="furniture-item-image-container">
+                        <img src="${furniture.image}" alt="${furniture.name}" class="furniture-item-image">
+                        ${stockBadge}
+                    </div>
+                    <div class="furniture-item-content">
+                        <div class="furniture-item-brand">${furniture.brand || 'Brand'}</div>
+                        <div class="furniture-item-name">${furniture.name}</div>
+                        <div class="furniture-item-details">${detailTags}</div>
+                        <div class="furniture-item-price-row">
+                            <div class="furniture-item-price">$${furniture.price.toFixed(2)}</div>
+                            ${ratingDisplay}
+                        </div>
+                        <button class="btn-buy" onclick="window.open('${furniture.affiliateLink}', '_blank')">
+                            <span>Buy Now</span>
+                            <span>→</span>
+                        </button>
+                    </div>
                 `;
 
                 furnitureItemsContainer.appendChild(itemDiv);
             });
+
+            // Update total price
+            document.getElementById('totalPrice').textContent = `$${totalPrice.toFixed(2)}`;
         }
 
         // Error handling
