@@ -883,6 +883,83 @@
             display: block;
         }
 
+        /* Furniture List Styles */
+        .furniture-list {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .furniture-list-title {
+            color: #333;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .furniture-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .furniture-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .furniture-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .furniture-item-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: #f5f5f5;
+        }
+
+        .furniture-item-name {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .furniture-item-price {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .btn-buy {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .btn-buy:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+        }
+
         @media (max-width: 1400px) {
             nav {
                 padding: 24px 60px;
@@ -1150,6 +1227,13 @@
             <div class="result-container" id="resultContainer">
                 <h2 class="result-title">Your Designed Room</h2>
                 <img id="resultImage" class="result-image" alt="Designed room">
+
+                <!-- Furniture List with Affiliate Links -->
+                <div class="furniture-list" id="furnitureList">
+                    <h3 class="furniture-list-title">Shop the furniture in this design</h3>
+                    <div class="furniture-items" id="furnitureItems"></div>
+                </div>
+
                 <button class="btn-secondary" id="newDesignBtn">Design Another Room</button>
             </div>
         </div>
@@ -1434,31 +1518,7 @@
         const errorMessage = document.getElementById('errorMessage');
 
         let selectedFile = null;
-
-        // Furniture library
-        const FURNITURE_LIBRARY = {
-            lamps: [
-                'furniture/lamps/Screenshot 2025-10-23 170022.png',
-                'furniture/lamps/Screenshot 2025-10-23 204912.png',
-                'furniture/lamps/Screenshot 2025-10-23 204944.png',
-                'furniture/lamps/Screenshot 2025-10-23 205013.png'
-            ],
-            sofas: [
-                'furniture/sofas/sofa.png',
-                'furniture/sofas/Screenshot 2025-10-23 205040.png',
-                'furniture/sofas/Screenshot 2025-10-23 205103.png',
-                'furniture/sofas/Screenshot 2025-10-23 205141.png'
-            ],
-            rugs: [
-                'furniture/rugs/rug1.png',
-                'furniture/rugs/Screenshot 2025-10-23 205231.png',
-                'furniture/rugs/Screenshot 2025-10-23 205425.png',
-                'furniture/rugs/Screenshot 2025-10-23 205454.png'
-            ],
-            chairs: ['furniture/chairs/chair.png'],
-            plants: ['furniture/plants/plant1.png'],
-            tables: ['furniture/tables/table.png']
-        };
+        let selectedFurniture = []; // Store selected furniture with metadata
 
         // Start design mode
         function startDesign() {
@@ -1533,6 +1593,7 @@
                 const designedImage = await generateDesign(base64Image);
 
                 resultImage.src = designedImage;
+                displayFurnitureList(); // Show furniture with affiliate links
                 resultContainer.classList.add('active');
                 loading.classList.remove('active');
             } catch (error) {
@@ -1562,30 +1623,53 @@
             });
         }
 
+        // Load furniture catalog from JSON
+        async function loadFurnitureCatalog() {
+            try {
+                const response = await fetch('furniture-catalog.json');
+                return await response.json();
+            } catch (error) {
+                console.error('Failed to load furniture catalog:', error);
+                return null;
+            }
+        }
+
         // Load ONE random item from EACH category
         async function loadFurnitureImages() {
+            const catalog = await loadFurnitureCatalog();
+            if (!catalog) {
+                throw new Error('Failed to load furniture catalog');
+            }
+
             const furnitureImages = [];
             const furnitureNames = [];
+            selectedFurniture = []; // Reset
 
-            for (const [category, items] of Object.entries(FURNITURE_LIBRARY)) {
+            for (const [category, items] of Object.entries(catalog)) {
+                if (items.length === 0) continue;
+
+                // Pick random item from category
                 const randomItem = items[Math.floor(Math.random() * items.length)];
 
                 try {
-                    const response = await fetch(randomItem);
+                    const response = await fetch(randomItem.image);
                     const blob = await response.blob();
                     const base64 = await blobToBase64(blob);
+
                     furnitureImages.push({
                         mime_type: 'image/png',
                         data: base64
                     });
                     furnitureNames.push(category.slice(0, -1));
-                    console.log(`Selected ${category}: ${randomItem}`);
+                    selectedFurniture.push(randomItem); // Store with metadata
+
+                    console.log(`Selected ${category}:`, randomItem.name);
                 } catch (error) {
-                    console.error(`Failed to load ${randomItem}:`, error);
+                    console.error(`Failed to load ${randomItem.image}:`, error);
                 }
             }
 
-            console.log('Loaded furniture (1 per category):', furnitureNames.length, 'items -', furnitureNames);
+            console.log('Loaded furniture (1 per category):', furnitureNames.length, 'items');
             return { images: furnitureImages, names: furnitureNames };
         }
 
@@ -1654,6 +1738,28 @@
             selectedFile = null;
             fileInput.value = '';
             hideError();
+        }
+
+        // Display furniture list with affiliate links
+        function displayFurnitureList() {
+            const furnitureItemsContainer = document.getElementById('furnitureItems');
+            furnitureItemsContainer.innerHTML = '';
+
+            selectedFurniture.forEach(furniture => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'furniture-item';
+
+                itemDiv.innerHTML = `
+                    <img src="${furniture.image}" alt="${furniture.name}" class="furniture-item-image">
+                    <div class="furniture-item-name">${furniture.name}</div>
+                    <div class="furniture-item-price">$${furniture.price.toFixed(2)}</div>
+                    <button class="btn-buy" onclick="window.open('${furniture.affiliateLink}', '_blank')">
+                        Buy Now →
+                    </button>
+                `;
+
+                furnitureItemsContainer.appendChild(itemDiv);
+            });
         }
 
         // Error handling

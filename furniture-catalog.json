@@ -1,0 +1,134 @@
+{
+  "lamps": [
+    {
+      "id": "lamp-001",
+      "name": "Modern Floor Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 170022.png",
+      "affiliateLink": "https://example.com/lamp1",
+      "price": 89.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "lamp-002",
+      "name": "Desk Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 204912.png",
+      "affiliateLink": "https://example.com/lamp2",
+      "price": 49.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "lamp-003",
+      "name": "Table Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 204944.png",
+      "affiliateLink": "https://example.com/lamp3",
+      "price": 59.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "lamp-004",
+      "name": "Arc Floor Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 205013.png",
+      "affiliateLink": "https://example.com/lamp4",
+      "price": 129.99,
+      "brand": "Example Brand"
+    }
+  ],
+  "sofas": [
+    {
+      "id": "sofa-001",
+      "name": "Gray Sectional Sofa",
+      "image": "furniture/sofas/sofa.png",
+      "affiliateLink": "https://example.com/sofa1",
+      "price": 599.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "sofa-002",
+      "name": "Velvet Sofa",
+      "image": "furniture/sofas/Screenshot 2025-10-23 205040.png",
+      "affiliateLink": "https://example.com/sofa2",
+      "price": 699.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "sofa-003",
+      "name": "Modern Sofa",
+      "image": "furniture/sofas/Screenshot 2025-10-23 205103.png",
+      "affiliateLink": "https://example.com/sofa3",
+      "price": 549.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "sofa-004",
+      "name": "L-Shaped Sofa",
+      "image": "furniture/sofas/Screenshot 2025-10-23 205141.png",
+      "affiliateLink": "https://example.com/sofa4",
+      "price": 799.99,
+      "brand": "Example Brand"
+    }
+  ],
+  "rugs": [
+    {
+      "id": "rug-001",
+      "name": "Persian Rug",
+      "image": "furniture/rugs/rug1.png",
+      "affiliateLink": "https://example.com/rug1",
+      "price": 199.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "rug-002",
+      "name": "Modern Rug",
+      "image": "furniture/rugs/Screenshot 2025-10-23 205231.png",
+      "affiliateLink": "https://example.com/rug2",
+      "price": 149.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "rug-003",
+      "name": "Geometric Rug",
+      "image": "furniture/rugs/Screenshot 2025-10-23 205425.png",
+      "affiliateLink": "https://example.com/rug3",
+      "price": 179.99,
+      "brand": "Example Brand"
+    },
+    {
+      "id": "rug-004",
+      "name": "Shag Rug",
+      "image": "furniture/rugs/Screenshot 2025-10-23 205454.png",
+      "affiliateLink": "https://example.com/rug4",
+      "price": 229.99,
+      "brand": "Example Brand"
+    }
+  ],
+  "chairs": [
+    {
+      "id": "chair-001",
+      "name": "Accent Chair",
+      "image": "furniture/chairs/chair.png",
+      "affiliateLink": "https://example.com/chair1",
+      "price": 249.99,
+      "brand": "Example Brand"
+    }
+  ],
+  "plants": [
+    {
+      "id": "plant-001",
+      "name": "Indoor Plant",
+      "image": "furniture/plants/plant1.png",
+      "affiliateLink": "https://example.com/plant1",
+      "price": 29.99,
+      "brand": "Example Brand"
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "name": "Coffee Table",
+      "image": "furniture/tables/table.png",
+      "affiliateLink": "https://example.com/table1",
+      "price": 299.99,
+      "brand": "Example Brand"
+    }
+  ]
+}
