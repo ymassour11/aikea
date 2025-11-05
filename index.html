@@ -129,6 +129,79 @@
             display: flex;
         }
 
+        /* Preview Overlay */
+        .preview-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-overlay.active {
+            display: flex;
+        }
+
+        .preview-overlay-content {
+            text-align: center;
+            color: white;
+            max-width: 500px;
+            padding: 40px;
+        }
+
+        .preview-overlay-content h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .preview-overlay-content p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+        }
+
+        .btn-design-large {
+            background: #0066ff;
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .btn-design-large:hover {
+            background: #0052cc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-change-image {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-change-image:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
         .upload-overlay-content {
             text-align: center;
             color: white;
@@ -2094,6 +2167,20 @@
                 </div>
             </div>
 
+            <!-- Preview Overlay (after upload, before design) -->
+            <div class="preview-overlay" id="previewOverlay">
+                <div class="preview-overlay-content">
+                    <h3>Ready to design your room?</h3>
+                    <p>Click below to let AI design your room with furniture</p>
+                    <button class="btn-design-large" id="btnDesignLarge">
+                        🎨 Design My Room
+                    </button>
+                    <button class="btn-change-image" onclick="showUploadOverlay()">
+                        Change Image
+                    </button>
+                </div>
+            </div>
+
             <!-- Loading Overlay -->
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="loading-spinner"></div>
@@ -2475,31 +2562,51 @@
         const zillowFileInput = document.getElementById('zillowFileInput');
         const zillowRoomImage = document.getElementById('zillowRoomImage');
         const uploadOverlay = document.getElementById('uploadOverlay');
+        const previewOverlay = document.getElementById('previewOverlay');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const errorOverlay = document.getElementById('errorOverlay');
         const errorText = document.getElementById('errorText');
         const replaceImageBtn = document.getElementById('replaceImageBtn');
         const furnitureEmptyState = document.getElementById('furnitureEmptyState');
         const zillowFurnitureGrid = document.getElementById('zillowFurnitureGrid');
+        const btnDesignLarge = document.getElementById('btnDesignLarge');
+
+        let uploadedFile = null;
 
         // Show upload overlay initially
         uploadOverlay.classList.add('active');
 
-        // Handle file selection
-        zillowFileInput.addEventListener('change', async (e) => {
+        // Handle file selection - just show preview
+        zillowFileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
+
+            uploadedFile = file;
+
+            // Show uploaded image immediately
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                zillowRoomImage.src = e.target.result;
+                uploadOverlay.classList.remove('active');
+                previewOverlay.classList.add('active');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Handle "Design My Room" button click
+        btnDesignLarge.addEventListener('click', async () => {
+            if (!uploadedFile) return;
 
             try {
                 console.log('Starting design process...');
 
-                // Hide upload overlay, show loading
-                uploadOverlay.classList.remove('active');
+                // Hide preview overlay, show loading
+                previewOverlay.classList.remove('active');
                 loadingOverlay.classList.add('active');
 
                 // Compress and convert image to base64
                 console.log('Compressing image...');
-                const base64Image = await compressImage(file);
+                const base64Image = await compressImage(uploadedFile);
                 console.log('Image compressed, size:', base64Image.length);
 
                 // Load furniture catalog (just metadata, no API call)
@@ -2507,14 +2614,9 @@
                 await loadFurnitureCatalogForDisplay();
                 console.log('Furniture loaded!');
 
-                // For localhost: Use uploaded image as-is (no API call)
+                // For localhost: Keep uploaded image (no API call)
                 // In production, this would call Gemini API
                 console.log('Using uploaded image (localhost mode)');
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    zillowRoomImage.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
 
                 // Wait a bit to simulate processing
                 await new Promise(resolve => setTimeout(resolve, 2000));
@@ -2610,8 +2712,10 @@
 
         // Show upload overlay
         function showUploadOverlay() {
+            previewOverlay.classList.remove('active');
             uploadOverlay.classList.add('active');
             replaceImageBtn.classList.remove('active');
+            uploadedFile = null;
         }
 
         // Retry after error
