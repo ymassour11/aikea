@@ -2154,7 +2154,7 @@
             reader.readAsDataURL(file);
         }
 
-        // Design button click
+        // Design button click - DEMO MODE (skips API)
         designBtn.addEventListener('click', async () => {
             if (!selectedFile) return;
 
@@ -2162,21 +2162,14 @@
             loading.classList.add('active');
             previewContainer.classList.remove('active');
 
-            try {
-                const base64Image = await fileToBase64(selectedFile);
-                const designedImage = await generateDesign(base64Image);
-
-                resultImage.src = designedImage;
+            // Skip API and show demo result after 2 seconds
+            setTimeout(() => {
+                // Use the uploaded image as the result
+                resultImage.src = imagePreview.src;
                 displayFurnitureList(); // Show furniture with affiliate links
                 resultContainer.classList.add('active');
                 loading.classList.remove('active');
-            } catch (error) {
-                console.error('Error:', error);
-                showError('Failed to design room. Please try again.');
-                loading.classList.remove('active');
-                previewContainer.classList.add('active');
-                designBtn.disabled = false;
-            }
+            }, 2000);
         });
 
         // New design button
