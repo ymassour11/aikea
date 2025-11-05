@@ -2595,7 +2595,13 @@
 
         // Handle "Design My Room" button click
         btnDesignLarge.addEventListener('click', async () => {
-            if (!uploadedFile) return;
+            console.log('Design button clicked!');
+            console.log('Uploaded file:', uploadedFile);
+
+            if (!uploadedFile) {
+                console.error('No file uploaded!');
+                return;
+            }
 
             try {
                 console.log('Starting design process...');
