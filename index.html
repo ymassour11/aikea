@@ -780,33 +780,77 @@
             display: none;
             background: white;
             border-bottom: 1px solid #e5e7eb;
-            padding: 12px 20px;
-            align-items: center;
-            gap: 16px;
+            padding: 0;
+            flex-direction: column;
         }
 
         body.design-mode-active .design-header {
             display: flex;
         }
 
+        .design-header-top {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            gap: 32px;
+        }
+
         .design-header-logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
-            color: #0a0e27;
+            color: #0066ff;
+            margin-right: 16px;
+        }
+
+        .design-nav-menu {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .design-nav-menu li a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 0;
+            transition: color 0.2s;
+        }
+
+        .design-nav-menu li a:hover {
+            color: #0066ff;
+        }
+
+        .design-header-bottom {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            gap: 12px;
+            background: #f9fafb;
+        }
+
+        .search-input {
+            flex: 0 0 300px;
+            padding: 10px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
         }
 
         .design-filters {
             display: flex;
             gap: 8px;
             flex: 1;
-            margin-left: 20px;
         }
 
         .filter-btn {
-            padding: 8px 16px;
+            padding: 10px 16px;
             border: 1px solid #d1d5db;
             background: white;
-            color: #374151;
+            color: #1a1a1a;
             border-radius: 6px;
             font-size: 14px;
             font-weight: 500;
@@ -823,9 +867,25 @@
         }
 
         .filter-btn.active {
-            background: #1e3a8a;
+            background: #0066ff;
             color: white;
-            border-color: #1e3a8a;
+            border-color: #0066ff;
+        }
+
+        .save-search-btn {
+            padding: 10px 20px;
+            background: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .save-search-btn:hover {
+            background: #0052cc;
         }
 
         .upload-area {
@@ -1648,15 +1708,28 @@
 <body>
     <!-- Design Mode Header (Zillow-style) -->
     <div class="design-header">
-        <div class="design-header-logo">dikoora</div>
-        <div class="design-filters">
-            <button class="filter-btn">For Rent ▼</button>
-            <button class="filter-btn">Up to $1,8K ▼</button>
-            <button class="filter-btn">Beds & Baths ▼</button>
-            <button class="filter-btn">Home Type ▼</button>
-            <button class="filter-btn">More ▼</button>
+        <div class="design-header-top">
+            <div class="design-header-logo">dikoora</div>
+            <ul class="design-nav-menu">
+                <li><a href="#design">Design</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <button class="btn-signup">My Account</button>
         </div>
-        <button class="btn-signup">My Account</button>
+        <div class="design-header-bottom">
+            <input type="text" class="search-input" placeholder="Enter room type or furniture...">
+            <div class="design-filters">
+                <button class="filter-btn">For Rent ▼</button>
+                <button class="filter-btn">Up to $1,8K ▼</button>
+                <button class="filter-btn">Beds & Baths ▼</button>
+                <button class="filter-btn">Home Type ▼</button>
+                <button class="filter-btn">More ▼</button>
+            </div>
+            <button class="save-search-btn">Save search</button>
+        </div>
     </div>
 
     <!-- Navigation -->
