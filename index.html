@@ -110,6 +110,212 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Upload Overlay */
+        .upload-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+        }
+
+        .upload-overlay.active {
+            display: flex;
+        }
+
+        .upload-overlay-content {
+            text-align: center;
+            color: white;
+            max-width: 500px;
+            padding: 40px;
+        }
+
+        .upload-icon-large {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+
+        .upload-overlay-content h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .upload-overlay-content p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+        }
+
+        .btn-upload-large {
+            background: #0066ff;
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-upload-large:hover {
+            background: #0052cc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 30;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #0066ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text-overlay {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .loading-subtext {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        /* Error Overlay */
+        .error-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(220, 38, 38, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 25;
+        }
+
+        .error-overlay.active {
+            display: flex;
+        }
+
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .error-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .btn-try-again {
+            background: white;
+            color: #dc2626;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Replace Image Button */
+        .btn-replace-image {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .btn-replace-image.active {
+            display: flex;
+        }
+
+        .btn-replace-image:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Empty State */
+        .furniture-empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 40px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .furniture-empty-state.hidden {
+            display: none;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        .furniture-empty-state h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .furniture-empty-state p {
+            font-size: 14px;
+            color: #6b7280;
+            max-width: 300px;
         }
 
         .zillow-room-image {
@@ -1868,9 +2074,44 @@
 
     <!-- Zillow-style Main Content -->
     <div class="zillow-main-container">
-        <!-- Left: Large Room Image -->
-        <div class="zillow-room-viewer">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&h=900&fit=crop&q=90" alt="Designed living room" class="zillow-room-image">
+        <!-- Left: Large Room Image with Upload Overlay -->
+        <div class="zillow-room-viewer" id="zillowRoomViewer">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&h=900&fit=crop&q=90"
+                 alt="Designed living room"
+                 class="zillow-room-image"
+                 id="zillowRoomImage">
+
+            <!-- Upload Overlay -->
+            <div class="upload-overlay" id="uploadOverlay">
+                <div class="upload-overlay-content">
+                    <div class="upload-icon-large">📸</div>
+                    <h3>Upload Your Empty Room</h3>
+                    <p>AI will design it and show you where to buy furniture</p>
+                    <button class="btn-upload-large" onclick="document.getElementById('zillowFileInput').click()">
+                        Choose Image
+                    </button>
+                    <input type="file" id="zillowFileInput" accept="image/*" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <div class="loading-text-overlay">AI is designing your room...</div>
+                <div class="loading-subtext">This may take 10-20 seconds</div>
+            </div>
+
+            <!-- Error Overlay -->
+            <div class="error-overlay" id="errorOverlay">
+                <div class="error-icon">⚠️</div>
+                <div class="error-text" id="errorText"></div>
+                <button class="btn-try-again" onclick="retryUpload()">Try Again</button>
+            </div>
+
+            <!-- Replace Image Button (shows after successful design) -->
+            <button class="btn-replace-image" id="replaceImageBtn" onclick="showUploadOverlay()">
+                <span>📸</span> Replace Image
+            </button>
         </div>
 
         <!-- Right: Furniture Sidebar -->
@@ -1878,6 +2119,13 @@
             <div class="zillow-sidebar-header">
                 <h2>Featured Furniture & Decor</h2>
                 <div class="zillow-sort-dropdown">Sort: <span>⌄</span></div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="furniture-empty-state" id="furnitureEmptyState">
+                <div class="empty-icon">🛋️</div>
+                <h3>Upload a room to see furniture</h3>
+                <p>Our AI will design your room and show you exactly what furniture to buy</p>
             </div>
 
             <!-- Furniture Products -->
@@ -2223,38 +2471,153 @@
         let selectedFile = null;
         let selectedFurniture = []; // Store selected furniture with metadata
 
-        // Load Zillow furniture grid on page load
-        async function loadZillowFurniture() {
-            const catalog = await loadFurnitureCatalog();
-            if (!catalog) return;
+        // Zillow App - Complete Integration
+        const zillowFileInput = document.getElementById('zillowFileInput');
+        const zillowRoomImage = document.getElementById('zillowRoomImage');
+        const uploadOverlay = document.getElementById('uploadOverlay');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const errorOverlay = document.getElementById('errorOverlay');
+        const errorText = document.getElementById('errorText');
+        const replaceImageBtn = document.getElementById('replaceImageBtn');
+        const furnitureEmptyState = document.getElementById('furnitureEmptyState');
+        const zillowFurnitureGrid = document.getElementById('zillowFurnitureGrid');
 
-            const grid = document.getElementById('zillowFurnitureGrid');
-            const products = [
-                { image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=300&fit=crop&q=80', price: '$3,699', badge: '48 days ago' },
-                { image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?w=300&h=300&fit=crop&q=80', price: '$1,129', badge: null },
-                { image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=300&h=300&fit=crop&q=80', price: '$1,799/mo', badge: null },
-                { image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=300&h=300&fit=crop&q=80', price: '$79', badge: null },
-                { image: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=300&h=300&fit=crop&q=80', price: '$950', badge: '18 days ago' },
-                { image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=300&h=300&fit=crop&q=80', price: '$1,200', badge: '2 days ago' }
-            ];
+        // Show upload overlay initially
+        uploadOverlay.classList.add('active');
 
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'zillow-product-card';
-                card.innerHTML = `
-                    ${product.badge ? `<div class="zillow-product-badge">${product.badge}</div>` : ''}
-                    <img src="${product.image}" alt="Furniture" class="zillow-product-image">
-                    <div class="zillow-product-info">
-                        <div class="zillow-product-price">${product.price}</div>
-                        <button class="zillow-btn-buy">BUY NOW</button>
-                    </div>
-                `;
-                grid.appendChild(card);
+        // Handle file selection
+        zillowFileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                // Hide upload overlay, show loading
+                uploadOverlay.classList.remove('active');
+                loadingOverlay.classList.add('active');
+
+                // Compress and convert image to base64
+                const base64Image = await compressImage(file);
+
+                // Load furniture images
+                const furnitureData = await loadFurnitureImages();
+
+                // Call Gemini API
+                const designedImage = await callGeminiAPI(base64Image, furnitureData);
+
+                // Show designed room
+                zillowRoomImage.src = designedImage;
+                loadingOverlay.classList.remove('active');
+                replaceImageBtn.classList.add('active');
+
+                // Display furniture in sidebar
+                displayZillowFurniture();
+
+            } catch (error) {
+                console.error('Design error:', error);
+                loadingOverlay.classList.remove('active');
+                errorOverlay.classList.add('active');
+                errorText.textContent = error.message || 'Failed to design room. Please try again.';
+            }
+        });
+
+        // Compress image to avoid 413 error
+        async function compressImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const maxWidth = 1024;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Compress to 70% quality JPEG
+                        const base64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
+                        resolve(base64);
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
             });
         }
 
-        // Load furniture when page loads
-        window.addEventListener('DOMContentLoaded', loadZillowFurniture);
+        // Call Gemini API
+        async function callGeminiAPI(base64Image, furnitureData) {
+            const response = await fetch('/api/design', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    roomImage: base64Image,
+                    furnitureImages: furnitureData.images.map(img => img.data),
+                    furnitureNames: furnitureData.names,
+                    mimeType: 'image/jpeg'
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'API request failed');
+            }
+
+            if (!data.success || !data.image) {
+                throw new Error('No image generated');
+            }
+
+            return data.image;
+        }
+
+        // Display furniture in Zillow sidebar
+        function displayZillowFurniture() {
+            furnitureEmptyState.classList.add('hidden');
+            zillowFurnitureGrid.innerHTML = '';
+
+            selectedFurniture.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'zillow-product-card';
+                card.onclick = () => window.open(item.affiliateLink, '_blank');
+
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="zillow-product-image">
+                    <div class="zillow-product-info">
+                        <div class="zillow-product-price">$${item.price.toFixed(2)}</div>
+                        <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">${item.brand} - ${item.category}</div>
+                        <button class="zillow-btn-buy">BUY NOW</button>
+                    </div>
+                `;
+                zillowFurnitureGrid.appendChild(card);
+            });
+        }
+
+        // Show upload overlay
+        function showUploadOverlay() {
+            uploadOverlay.classList.add('active');
+            replaceImageBtn.classList.remove('active');
+        }
+
+        // Retry after error
+        function retryUpload() {
+            errorOverlay.classList.remove('active');
+            uploadOverlay.classList.add('active');
+        }
+
+        // Load furniture when page loads (empty state initially)
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Zillow app loaded - ready for upload');
+        });
 
         // Start design mode
         // Show Zillow layout directly with demo room
