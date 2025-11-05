@@ -2678,7 +2678,12 @@
 
         // Call Gemini API with room and furniture images
         async function callGeminiAPI(base64Image, furnitureData) {
-            const response = await fetch('/api/design', {
+            // Use Vercel dev server for API (port 3001)
+            const apiUrl = window.location.port === '8080'
+                ? 'http://localhost:3001/api/design'
+                : '/api/design';
+
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
