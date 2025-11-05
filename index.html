@@ -841,8 +841,32 @@
         }
 
         .upload-area.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             opacity: 1;
+        }
+
+        body.design-mode-active .upload-area {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 60px);
+            border: none;
+            border-radius: 0;
+            background: white;
+            max-width: none;
+            margin: 0;
+        }
+
+        body.design-mode-active .upload-area-icon {
+            font-size: 6em;
+        }
+
+        body.design-mode-active .upload-area-text {
+            font-size: 1.5em;
         }
 
         .upload-area:hover {
@@ -891,6 +915,27 @@
         .preview-container.active {
             display: block;
             opacity: 1;
+        }
+
+        body.design-mode-active .preview-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 60px);
+            border-radius: 0;
+            background: white;
+            max-width: none;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.design-mode-active .preview-container.active {
+            display: flex;
         }
 
         .image-preview {
@@ -942,6 +987,24 @@
 
         .loading.active {
             display: block;
+        }
+
+        body.design-mode-active .loading {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 60px);
+            border-radius: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.design-mode-active .loading.active {
+            display: flex;
         }
 
         .spinner {
