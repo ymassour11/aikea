@@ -927,33 +927,37 @@
 
         .result-layout {
             display: grid;
-            grid-template-columns: minmax(0, 72%) minmax(0, 28%);
-            gap: 36px;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
             align-items: stretch;
+            height: calc(100vh - 100px);
         }
 
         .result-image-wrapper {
-            border-radius: 24px;
-            padding: 14px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.25), rgba(118, 75, 162, 0.4));
-            box-shadow: 0 26px 55px rgba(10, 14, 39, 0.35);
+            border-radius: 0;
+            padding: 0;
+            background: #f5f5f5;
+            box-shadow: none;
+            overflow: hidden;
         }
 
         .result-image {
             width: 100%;
             height: 100%;
-            max-height: 70vh;
             object-fit: cover;
             display: block;
-            border-radius: 18px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+            border-radius: 0;
+            box-shadow: none;
         }
 
         .result-info {
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 0;
             height: 100%;
+            background: white;
+            overflow-y: auto;
+            border-left: 1px solid #e5e7eb;
         }
 
         .btn-secondary {
@@ -1001,14 +1005,14 @@
         /* Furniture List Styles */
         .furniture-list {
             margin-top: 0;
-            padding: 26px 26px 28px 26px;
-            border-radius: 20px;
-            border: 1px solid rgba(102, 126, 234, 0.18);
-            background: rgba(247, 248, 255, 0.96);
-            box-shadow: 0 16px 36px rgba(14, 21, 63, 0.18);
+            padding: 24px 20px;
+            border-radius: 0;
+            border: none;
+            background: white;
+            box-shadow: none;
             flex: 1;
             overflow-y: auto;
-            max-height: 66vh;
+            max-height: none;
         }
 
         .furniture-list::-webkit-scrollbar {
@@ -1027,52 +1031,56 @@
 
         .furniture-list-title {
             color: #1a1a1a;
-            font-size: 1.4em;
-            font-weight: 800;
-            margin-bottom: 6px;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 4px;
             text-align: left;
-            letter-spacing: -0.4px;
+            letter-spacing: -0.3px;
         }
 
         .furniture-list-subtitle {
             text-align: left;
-            color: rgba(15, 23, 61, 0.65);
-            font-size: 0.9em;
-            margin-bottom: 22px;
-            font-weight: 600;
+            color: #6b7280;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
 
         .furniture-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 0;
         }
 
         .furniture-item {
             background: white;
-            border: 1px solid rgba(102, 126, 234, 0.18);
-            border-radius: 14px;
-            padding: 0;
-            transition: all 0.25s ease;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.2s ease;
             cursor: pointer;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 8px 18px rgba(14, 21, 63, 0.12);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 12px;
         }
 
         .furniture-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 26px rgba(102, 126, 234, 0.22);
-            border-color: rgba(102, 126, 234, 0.5);
+            transform: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: #d1d5db;
         }
 
         .furniture-item-image-container {
             position: relative;
-            width: 100%;
-            height: 110px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.12));
+            width: 120px;
+            height: 120px;
+            background: #f9fafb;
             overflow: hidden;
+            border-radius: 6px;
+            flex-shrink: 0;
         }
 
         .furniture-item-image {
@@ -1101,7 +1109,12 @@
         }
 
         .furniture-item-content {
-            padding: 12px 14px 14px 14px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            justify-content: space-between;
         }
 
         .furniture-item-brand {
@@ -1191,17 +1204,20 @@
         }
 
         .total-price-banner {
-            background: linear-gradient(135deg, #1e3a8a 0%, #0a0e27 100%);
-            padding: 16px 20px;
-            border-radius: 12px;
+            background: white;
+            padding: 20px;
+            border-radius: 0;
             text-align: center;
-            color: white;
-            margin-top: 12px;
+            color: #1a1a1a;
+            margin-top: 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 12px 24px rgba(30, 58, 138, 0.35);
+            box-shadow: none;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 12px;
         }
 
         .total-price-label {
