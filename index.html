@@ -110,7 +110,11 @@
 
         .hero.design-active {
             display: grid;
-            grid-template-columns: 1fr 1.1fr;
+            grid-template-columns: 1fr;
+            align-items: flex-start;
+            padding: 30px 40px 60px 40px;
+            gap: 36px;
+            min-height: auto;
         }
 
         .hero-content {
@@ -122,6 +126,7 @@
             opacity: 0;
             pointer-events: none;
             visibility: hidden;
+            display: none;
         }
 
         .badge {
@@ -222,6 +227,11 @@
         .hero.design-active .room-preview {
             opacity: 0;
             pointer-events: none;
+            display: none;
+        }
+
+        .hero.design-active .dropdown-tag {
+            display: none;
         }
 
         .dropdown-tag {
@@ -730,8 +740,10 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
+            width: 100%;
+            align-items: center;
         }
 
         .upload-area {
@@ -873,12 +885,17 @@
 
         .result-container {
             display: none;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            padding: 30px;
+            position: relative;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.45), rgba(118, 75, 162, 0.55));
+            padding: 1px;
+            box-shadow: 0 32px 90px rgba(8, 13, 48, 0.45);
             opacity: 0;
             transition: opacity 0.6s ease-in;
-            position: relative;
+            overflow: hidden;
         }
 
         .result-container.active {
@@ -886,41 +903,83 @@
             opacity: 1;
         }
 
+        .result-surface {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 27px;
+            padding: 40px 44px;
+            position: relative;
+        }
+
         .result-title {
-            color: #333;
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.75em;
+            margin-bottom: 32px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 64%) minmax(0, 36%);
+            gap: 36px;
+            align-items: stretch;
+        }
+
+        .result-image-wrapper {
+            border-radius: 24px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.25), rgba(118, 75, 162, 0.4));
+            box-shadow: 0 26px 55px rgba(10, 14, 39, 0.35);
         }
 
         .result-image {
             width: 100%;
-            max-height: 700px;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
+            height: 100%;
+            max-height: 70vh;
+            object-fit: cover;
+            display: block;
+            border-radius: 18px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .result-info {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            height: 100%;
         }
 
         .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            background: rgba(255, 255, 255, 0.92);
+            color: #5b6ffb;
+            border: 2px solid rgba(102, 126, 234, 0.6);
             margin-top: 20px;
-            padding: 16px 40px;
-            border-radius: 12px;
-            font-size: 1.1em;
-            font-weight: 600;
+            padding: 16px 42px;
+            border-radius: 14px;
+            font-size: 1.05em;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.26s ease;
             width: 100%;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.18);
         }
 
         .btn-secondary:hover {
-            background: #667eea;
-            color: white;
+            background: linear-gradient(135deg, #5b8def 0%, #7448d6 100%);
+            color: #fff;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(91, 141, 239, 0.35);
+        }
+
+        .result-info .btn-secondary {
+            margin-top: auto;
         }
 
         .error-message {
@@ -939,57 +998,78 @@
 
         /* Furniture List Styles */
         .furniture-list {
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 2px solid #f0f0f0;
+            margin-top: 0;
+            padding: 26px 26px 28px 26px;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.18);
+            background: rgba(247, 248, 255, 0.96);
+            box-shadow: 0 16px 36px rgba(14, 21, 63, 0.18);
+            flex: 1;
+            overflow-y: auto;
+            max-height: 66vh;
+        }
+
+        .furniture-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .furniture-list::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.4);
+            border-radius: 999px;
+        }
+
+        .furniture-list::-webkit-scrollbar-track {
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 999px;
         }
 
         .furniture-list-title {
             color: #1a1a1a;
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-align: center;
-            letter-spacing: -0.3px;
+            font-size: 1.4em;
+            font-weight: 800;
+            margin-bottom: 6px;
+            text-align: left;
+            letter-spacing: -0.4px;
         }
 
         .furniture-list-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 0.85em;
-            margin-bottom: 20px;
-            font-weight: 400;
+            text-align: left;
+            color: rgba(15, 23, 61, 0.65);
+            font-size: 0.9em;
+            margin-bottom: 22px;
+            font-weight: 600;
         }
 
         .furniture-items {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
         .furniture-item {
             background: white;
-            border: 1px solid #e8e8e8;
-            border-radius: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.18);
+            border-radius: 14px;
             padding: 0;
             transition: all 0.25s ease;
             cursor: pointer;
             overflow: hidden;
             position: relative;
+            box-shadow: 0 8px 18px rgba(14, 21, 63, 0.12);
         }
 
         .furniture-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.12);
-            border-color: #667eea;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 26px rgba(102, 126, 234, 0.22);
+            border-color: rgba(102, 126, 234, 0.5);
         }
 
         .furniture-item-image-container {
             position: relative;
             width: 100%;
-            height: 90px;
-            background: #f8f9fa;
+            height: 110px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.12));
             overflow: hidden;
         }
 
@@ -1006,38 +1086,38 @@
 
         .furniture-item-badge {
             position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.65em;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 0.7em;
             font-weight: 700;
-            color: #667eea;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            color: #4f5ddb;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
         }
 
         .furniture-item-content {
-            padding: 8px;
+            padding: 12px 14px 14px 14px;
         }
 
         .furniture-item-brand {
-            font-size: 0.6em;
-            color: #999;
-            font-weight: 600;
+            font-size: 0.65em;
+            color: rgba(102, 126, 234, 0.9);
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
-            margin-bottom: 2px;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
         }
 
         .furniture-item-name {
-            font-size: 0.75em;
+            font-size: 0.9em;
             font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-            line-height: 1.15;
-            min-height: 1.8em;
+            color: #13183a;
+            margin-bottom: 6px;
+            line-height: 1.25;
+            min-height: 2.4em;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -1081,27 +1161,27 @@
         }
 
         .btn-buy {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #5b8def 0%, #7448d6 100%);
             color: white;
             border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
-            font-size: 0.7em;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.78em;
             font-weight: 700;
             cursor: pointer;
             width: 100%;
             transition: all 0.25s ease;
-            box-shadow: 0 1px 4px rgba(102, 126, 234, 0.25);
+            box-shadow: 0 6px 16px rgba(91, 141, 239, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 3px;
+            gap: 6px;
         }
 
         .btn-buy:hover {
-            background: linear-gradient(135deg, #5568d3 0%, #6639a6 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.35);
+            background: linear-gradient(135deg, #4a7ddf 0%, #6232c7 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(91, 141, 239, 0.45);
         }
 
         .btn-buy:active {
@@ -1109,28 +1189,29 @@
         }
 
         .total-price-banner {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 12px 16px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #5b8def 0%, #764ba2 100%);
+            padding: 16px 20px;
+            border-radius: 12px;
             text-align: center;
             color: white;
-            margin-top: 15px;
+            margin-top: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            box-shadow: 0 12px 24px rgba(91, 141, 239, 0.35);
         }
 
         .total-price-label {
-            font-size: 0.8em;
+            font-size: 0.85em;
             opacity: 0.95;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .total-price-amount {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.6px;
         }
 
         @media (max-width: 768px) {
@@ -1166,6 +1247,15 @@
             .hero {
                 padding: 80px 60px;
                 gap: 60px;
+            }
+
+            .result-surface {
+                padding: 36px 38px;
+            }
+
+            .result-layout {
+                grid-template-columns: minmax(0, 60%) minmax(0, 40%);
+                gap: 30px;
             }
 
             .features {
@@ -1270,6 +1360,33 @@
             }
         }
 
+        @media (max-width: 1100px) {
+            .result-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .result-image {
+                max-height: 60vh;
+            }
+
+            .result-surface {
+                padding: 32px 30px;
+            }
+
+            .furniture-list {
+                max-height: none;
+            }
+
+            .result-info .btn-secondary {
+                margin-top: 12px;
+            }
+
+            .furniture-items {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 44px;
@@ -1304,6 +1421,18 @@
 
             .features {
                 padding: 40px 20px;
+            }
+
+            .result-title {
+                font-size: 1.4em;
+            }
+
+            .result-surface {
+                padding: 28px 20px;
+            }
+
+            .furniture-items {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
 
             .testimonials {
@@ -1423,21 +1552,29 @@
             </div>
 
             <div class="result-container" id="resultContainer">
-                <h2 class="result-title">Your Designed Room</h2>
-                <img id="resultImage" class="result-image" alt="Designed room">
+                <div class="result-surface">
+                    <h2 class="result-title">Your Designed Room</h2>
+                    <div class="result-layout">
+                        <div class="result-image-wrapper">
+                            <img id="resultImage" class="result-image" alt="Designed room">
+                        </div>
 
-                <!-- Furniture List with Affiliate Links -->
-                <div class="furniture-list" id="furnitureList">
-                    <h3 class="furniture-list-title">Shop the furniture in this design</h3>
-                    <p class="furniture-list-subtitle">Click any item to purchase from our curated partners</p>
-                    <div class="furniture-items" id="furnitureItems"></div>
-                    <div class="total-price-banner" id="totalPriceBanner">
-                        <div class="total-price-label">Complete this look for</div>
-                        <div class="total-price-amount" id="totalPrice">$0.00</div>
+                        <div class="result-info">
+                            <!-- Furniture List with Affiliate Links -->
+                            <div class="furniture-list" id="furnitureList">
+                                <h3 class="furniture-list-title">Shop the furniture in this design</h3>
+                                <p class="furniture-list-subtitle">Click any item to purchase from our curated partners</p>
+                                <div class="furniture-items" id="furnitureItems"></div>
+                                <div class="total-price-banner" id="totalPriceBanner">
+                                    <div class="total-price-label">Complete this look for</div>
+                                    <div class="total-price-amount" id="totalPrice">$0.00</div>
+                                </div>
+                            </div>
+
+                            <button class="btn-secondary" id="newDesignBtn">Design Another Room</button>
+                        </div>
                     </div>
                 </div>
-
-                <button class="btn-secondary" id="newDesignBtn">Design Another Room</button>
             </div>
         </div>
     </section>
@@ -1819,13 +1956,34 @@
             resetUI();
         });
 
-        // Convert file to base64
+        // Convert file to base64 with compression
         function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => {
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
+                    const img = new Image();
+                    img.onload = () => {
+                        // Resize to max 1200px width for room image
+                        const maxWidth = 1200;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Convert to base64 with quality 0.85
+                        const base64 = canvas.toDataURL('image/jpeg', 0.85).split(',')[1];
+                        resolve(base64);
+                    };
+                    img.src = reader.result;
                 };
                 reader.onerror = reject;
                 reader.readAsDataURL(file);
@@ -1882,13 +2040,34 @@
             return { images: furnitureImages, names: furnitureNames };
         }
 
-        // Convert blob to base64
+        // Convert blob to base64 with compression
         function blobToBase64(blob) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => {
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
+                    const img = new Image();
+                    img.onload = () => {
+                        // Resize to max 800px width
+                        const maxWidth = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Convert to base64 with quality 0.8
+                        const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
+                        resolve(base64);
+                    };
+                    img.src = reader.result;
                 };
                 reader.onerror = reject;
                 reader.readAsDataURL(blob);
