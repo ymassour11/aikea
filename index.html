@@ -2615,17 +2615,18 @@
                 const base64Image = await compressImage(uploadedFile);
                 console.log('Image compressed, size:', base64Image.length);
 
-                // Load furniture catalog (just metadata, no API call)
-                console.log('Loading furniture catalog...');
-                await loadFurnitureCatalogForDisplay();
-                console.log('Furniture loaded!');
+                // Load furniture catalog and images for AI
+                console.log('Loading furniture images for AI...');
+                const furnitureData = await loadFurnitureImages();
+                console.log('Furniture loaded:', furnitureData);
 
-                // For localhost: Keep uploaded image (no API call)
-                // In production, this would call Gemini API
-                console.log('Using uploaded image (localhost mode)');
+                // Call Gemini API for REAL AI design
+                console.log('Calling Gemini API...');
+                const designedImage = await callGeminiAPI(base64Image, furnitureData);
+                console.log('AI design complete!');
 
-                // Wait a bit to simulate processing
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // Update room image with AI designed version
+                zillowRoomImage.src = designedImage;
                 loadingOverlay.classList.remove('active');
                 replaceImageBtn.classList.add('active');
 
@@ -2675,23 +2676,30 @@
             });
         }
 
-        // Load furniture catalog for display only
-        async function loadFurnitureCatalogForDisplay() {
-            const catalog = await loadFurnitureCatalog();
-            if (!catalog) {
-                throw new Error('Failed to load furniture catalog');
+        // Call Gemini API with room and furniture images
+        async function callGeminiAPI(base64Image, furnitureData) {
+            const response = await fetch('/api/design', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    roomImage: base64Image,
+                    furnitureImages: furnitureData.images.map(img => img.data),
+                    furnitureNames: furnitureData.names,
+                    mimeType: 'image/jpeg'
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'API request failed');
             }
 
-            selectedFurniture = []; // Reset
-
-            // Pick one random item from each category
-            for (const [category, items] of Object.entries(catalog)) {
-                if (items.length === 0) continue;
-                const randomItem = items[Math.floor(Math.random() * items.length)];
-                selectedFurniture.push(randomItem);
+            if (!data.success || !data.image) {
+                throw new Error('No image generated');
             }
 
-            console.log('Selected furniture:', selectedFurniture);
+            return data.image;
         }
 
         // Display furniture in Zillow sidebar
