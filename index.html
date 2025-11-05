@@ -105,11 +105,12 @@
             max-width: 1600px;
             margin: 0 auto;
             position: relative;
-            min-height: 600px;
+            min-height: 700px;
         }
 
         .hero.design-active {
-            display: block;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
         }
 
         .hero-content {
@@ -120,7 +121,7 @@
         .hero.design-active .hero-content {
             opacity: 0;
             pointer-events: none;
-            display: none;
+            visibility: hidden;
         }
 
         .badge {
@@ -198,10 +199,15 @@
             position: relative;
             perspective: 1000px;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
         }
 
         .hero.design-active .hero-image {
-            max-width: 900px;
+            grid-column: 1 / -1;
+            max-width: none;
             width: 100%;
         }
 
@@ -721,12 +727,11 @@
 
         /* Design Tool Styles */
         .hero-image.design-mode {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .upload-area {
