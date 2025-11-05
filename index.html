@@ -105,10 +105,13 @@
             max-width: 1600px;
             margin: 0 auto;
             position: relative;
+            min-height: 600px;
         }
 
         .hero.design-active {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-content {
@@ -196,11 +199,12 @@
         .hero-image {
             position: relative;
             perspective: 1000px;
+            width: 100%;
         }
 
         .hero.design-active .hero-image {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
         }
 
         .room-preview {
