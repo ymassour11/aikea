@@ -104,25 +104,28 @@
             align-items: center;
             max-width: 1600px;
             margin: 0 auto;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 80vh;
         }
 
         .hero.design-active {
             grid-template-columns: 1fr;
             max-width: 100%;
             padding: 60px 100px;
+            gap: 0;
         }
 
         .hero-content {
             max-width: 600px;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
 
         .hero.design-active .hero-content {
             opacity: 0;
-            transform: translateX(-30px);
+            transform: translateX(-50px);
             pointer-events: none;
-            position: absolute;
+            height: 0;
+            overflow: hidden;
         }
 
         .badge {
@@ -199,13 +202,20 @@
         .hero-image {
             position: relative;
             perspective: 1000px;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #0a0e27;
+            border-radius: 16px;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero.design-active .hero-image {
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
+            background: transparent;
         }
 
         .room-preview {
@@ -213,12 +223,14 @@
             border-radius: 16px;
             box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
             display: block;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
         .hero.design-active .room-preview {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.9);
+            position: absolute;
+            pointer-events: none;
         }
 
         .dropdown-tag {
@@ -233,12 +245,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
         }
 
         .hero.design-active .dropdown-tag {
             opacity: 0;
             transform: translateY(10px);
+            pointer-events: none;
         }
 
         .style-dropdown {
@@ -738,13 +751,15 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(255, 255, 255, 0.95);
             opacity: 0;
-            transform: scale(0.95) translateY(20px);
+            transform: scale(0.95) translateY(30px);
             display: none;
+            position: relative;
+            z-index: 1;
         }
 
         .upload-area.active {
             display: block;
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: fadeInUp 0.7s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         @keyframes fadeInUp {
@@ -1728,20 +1743,26 @@
         function startDesign() {
             const heroSection = document.querySelector('.hero');
 
-            // Add design-active class for full-width transition
-            heroSection.classList.add('design-active');
+            // Smooth scroll to design area first
+            heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // Wait for transition to start, then show upload area
+            // Start fade out of old content
+            setTimeout(() => {
+                // Add design-active class for full-width transition
+                heroSection.classList.add('design-active');
+                heroImage.classList.add('design-mode');
+            }, 100);
+
+            // After transitions complete, show upload area
+            setTimeout(() => {
+                uploadArea.classList.add('active');
+            }, 300);
+
+            // Clean up old elements after they're hidden
             setTimeout(() => {
                 heroRoomPreview.style.display = 'none';
                 document.querySelectorAll('.dropdown-tag').forEach(tag => tag.style.display = 'none');
-
-                heroImage.classList.add('design-mode');
-                uploadArea.classList.add('active');
-
-                // Smooth scroll to design area
-                heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 300);
+            }, 1000);
         }
 
         // Upload area click
