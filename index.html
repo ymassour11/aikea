@@ -1745,11 +1745,11 @@
             <div class="badge">Powered by AI Technology</div>
             <h1>AI Room Design with one click</h1>
             <p class="hero-description">Upload a picture and our AI will <strong>design your room and show you where to buy the furniture.</strong></p>
-            <button class="btn-upload" onclick="startDesign()">
-                <span class="upload-icon">📸</span>
-                Upload image for free
+            <button class="btn-upload" onclick="showDemoZillowLayout()">
+                <span class="upload-icon">🏠</span>
+                View Demo Room
             </button>
-            <p class="upload-note">No sign up | No credit card</p>
+            <p class="upload-note">See how it works - No sign up required</p>
         </div>
 
         <div class="hero-image" id="heroImage">
@@ -2089,6 +2089,21 @@
         let selectedFurniture = []; // Store selected furniture with metadata
 
         // Start design mode
+        // Show Zillow layout directly with demo room
+        function showDemoZillowLayout() {
+            // Activate full-page design mode
+            document.body.classList.add('design-mode-active');
+
+            // Set demo room image
+            resultImage.src = 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&h=800&fit=crop&q=90';
+
+            // Show furniture list
+            displayFurnitureList();
+
+            // Show result container immediately
+            resultContainer.classList.add('active');
+        }
+
         function startDesign() {
             const heroSection = document.querySelector('.hero');
 
