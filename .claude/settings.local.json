@@ -26,7 +26,11 @@
       "Bash(vercel login:*)",
       "Bash(vercel:*)",
       "Bash(printf \"AIzaSyAuDcV1UZahjGHApZHrtpV6ndPXRLwKVaw\")",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git revert:*)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []

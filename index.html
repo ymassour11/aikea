@@ -3,33 +3,573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dikoora - AI Room Design</title>
+    <title>Dikoora - Transform Your Space with AI-Powered Room Design</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: white; }
-        nav { display: flex; justify-content: space-between; padding: 24px 100px; border-bottom: 1px solid #e5e7eb; }
-        .logo { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero { max-width: 1400px; margin: 0 auto; padding: 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        h1 { font-size: 64px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: #0a0e27; }
-        .hero-description { font-size: 20px; color: #6b7280; margin-bottom: 40px; }
-        .btn-start { padding: 18px 48px; background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; text-decoration: none; display: inline-block; box-shadow: 0 8px 24px rgba(0, 102, 255, 0.3); }
-        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0, 102, 255, 0.4); }
-        .hero-image img { width: 100%; border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: white;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 60px;
+            background: white;
+            border-bottom: 1px solid #f3f4f6;
+            position: relative;
+            height: 70px;
+        }
+
+        .logo {
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 60px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: #111827;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .btn-upload {
+            padding: 14px 28px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-upload:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        /* How It Works */
+        .how-works {
+            background: white;
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .how-works h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #111827;
+        }
+
+        .steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* Why Choose */
+        .why-choose {
+            background: #f9fafb;
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .why-choose h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #111827;
+        }
+
+        .features {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #f97316;
+        }
+
+        .feature h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: white;
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #111827;
+        }
+
+        .testimonial-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .testimonial {
+            background: #f9fafb;
+            padding: 32px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: #374151;
+            font-style: italic;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+
+        .author-info p {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: #f9fafb;
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #111827;
+        }
+
+        .cta p {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-cta {
+            padding: 14px 28px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-cta:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid #f3f4f6;
+            padding: 40px 60px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #2563eb;
+        }
+
+        .made-with {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+                gap: 40px;
+                margin: 40px auto;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .steps, .features, .testimonial-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .how-works, .why-choose, .testimonials, .cta {
+                padding: 60px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
-        <div class="logo">dikoora</div>
+        <a href="/" class="logo">
+            <img src="logo.png" alt="Dikoora">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
-    <section class="hero">
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
         <div class="hero-content">
-            <h1>Design Your Room with AI</h1>
-            <p class="hero-description">Upload a photo of your empty room and let our AI instantly design it with beautiful furniture. Then shop the look!</p>
-            <a href="design.html" class="btn-start">Start Designing for Free</a>
+            <h1>Transform Your Space with AI-Powered Room Design</h1>
+            <p class="hero-description">
+                Dikoora helps you effortlessly visualize and design your ideal living spaces. Upload a photo, and let our AI create stunning interior concepts for free.
+            </p>
+            <a href="design.html" class="btn-upload">Upload Image for free</a>
         </div>
         <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop&q=90" alt="Room">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop&q=90" alt="Beautiful modern living room">
         </div>
     </section>
+
+    <!-- How Dikoora Works -->
+    <section class="how-works">
+        <h2>How Dikoora Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">📤</div>
+                <h3>Upload Your Image</h3>
+                <p>Start by uploading a photo of your current room. Our system handles various image formats.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">✨</div>
+                <h3>AI Generates Designs</h3>
+                <p>Our advanced AI instantly suggests stunning interior design concepts tailored to your space.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">⬇️</div>
+                <h3>Explore & Download</h3>
+                <p>Choose your favorite design, customize it further, and download high-quality renders.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Dikoora -->
+    <section class="why-choose" id="features">
+        <h2>Why Choose Dikoora?</h2>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">∞</div>
+                <h3>Unlimited Designs</h3>
+                <p>Generate as many variations as you need to find the perfect look for your space.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h3>Variety of Styles</h3>
+                <p>From minimalist to industrial, explore diverse interior design themes and aesthetics.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⏱️</div>
+                <h3>Instant Renders</h3>
+                <p>Get high-quality visualizations and photorealistic renders in seconds, not hours.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💡</div>
+                <h3>Easy to Use</h3>
+                <p>Intuitive interface designed for everyone, no prior design skills are required.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💲</div>
+                <h3>Cost-Effective</h3>
+                <p>Save on expensive designers with our powerful and completely free AI design tool.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💎</div>
+                <h3>Inspiring Ideas</h3>
+                <p>Discover new possibilities and spark your creativity with fresh design concepts.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2>Hear From Our Users</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <p class="testimonial-text">
+                    "Dikoora transformed my living room! The AI suggestions were incredible and so easy to implement. Highly recommend for anyone looking to refresh their space."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+J&background=e5e7eb&color=111827" alt="Sarah J">
+                    </div>
+                    <div class="author-info">
+                        <h4>Sarah J.</h4>
+                        <p>Homeowner</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">
+                    "As an interior designer, Dikoora is a game-changer for quick client proposals. The variety and speed are unmatched, allowing me to present more options efficiently."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Mark+T&background=e5e7eb&color=111827" alt="Mark T">
+                    </div>
+                    <div class="author-info">
+                        <h4>Mark T.</h4>
+                        <p>Interior Designer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Ready to Redesign Your Home?</h2>
+        <p>Join thousands of users transforming their spaces with Dikoora's intelligent design tools. It's free, fast, and inspiring!</p>
+        <a href="design.html" class="btn-cta">Start Designing Now</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                © 2025 Dikoora. All rights reserved.
+            </div>
+            <ul class="footer-links">
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="#sitemap">Sitemap</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <div class="made-with">
+        Made with Visily
+    </div>
 </body>
 </html>

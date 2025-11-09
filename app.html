@@ -18,51 +18,40 @@
             overflow-x: hidden;
         }
 
-        /* Navigation - matching homepage */
+        /* Navigation */
         nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 20px 60px;
+            padding: 24px 100px;
             background: white;
-            border-bottom: 1px solid #f3f4f6;
             position: relative;
             z-index: 100;
-            height: 70px;
         }
 
         .logo {
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            z-index: 10;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
+            font-size: 26px;
+            font-weight: 800;
+            color: #0a0e27;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 48px;
             list-style: none;
         }
 
         .nav-links a {
-            color: #6b7280;
+            color: rgba(10, 14, 39, 0.7);
             text-decoration: none;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             transition: color 0.2s;
         }
 
         .nav-links a:hover {
-            color: #2563eb;
+            color: #0a0e27;
         }
 
         .nav-buttons {
@@ -71,38 +60,38 @@
         }
 
         .btn-login {
-            padding: 10px 24px;
-            border: 1px solid #e5e7eb;
+            padding: 12px 32px;
+            border: 1.5px solid rgba(10, 14, 39, 0.3);
             background: transparent;
-            color: #374151;
-            border-radius: 8px;
+            color: #0a0e27;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 15px;
-            font-weight: 500;
-            font-family: inherit;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             transition: all 0.2s;
         }
 
         .btn-login:hover {
-            background: #f9fafb;
-            border-color: #d1d5db;
+            background: rgba(10, 14, 39, 0.05);
+            border-color: rgba(10, 14, 39, 0.5);
         }
 
         .btn-signup {
-            padding: 10px 24px;
+            padding: 12px 32px;
             border: none;
-            background: #2563eb;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0a0e27 100%);
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 15px;
-            font-weight: 500;
-            font-family: inherit;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             transition: all 0.2s;
         }
 
         .btn-signup:hover {
-            background: #1d4ed8;
+            background: linear-gradient(135deg, #1e40af 0%, #0f1629 100%);
             transform: translateY(-1px);
         }
 
@@ -144,12 +133,12 @@
         .preview-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.85);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 20;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .preview-overlay.active {
@@ -176,7 +165,7 @@
         }
 
         .btn-design-large {
-            background: #2563eb;
+            background: #0066ff;
             color: white;
             border: none;
             padding: 16px 48px;
@@ -190,9 +179,9 @@
         }
 
         .btn-design-large:hover {
-            background: #1d4ed8;
+            background: #0052cc;
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
         }
 
         .btn-change-image {
@@ -1291,7 +1280,7 @@
 
         .save-search-btn {
             padding: 10px 20px;
-            background: #2563eb;
+            background: #0066ff;
             color: white;
             border: none;
             border-radius: 6px;
@@ -1302,11 +1291,11 @@
         }
 
         .save-search-btn:hover {
-            background: #1d4ed8;
+            background: #0052cc;
         }
 
         .upload-area {
-            border: 3px dashed #2563eb;
+            border: 3px dashed #667eea;
             border-radius: 16px;
             padding: 60px 20px;
             text-align: center;
@@ -1347,31 +1336,31 @@
         }
 
         .upload-area:hover {
-            border-color: #1d4ed8;
+            border-color: #764ba2;
             background: white;
             transform: translateY(-2px);
         }
 
         .upload-area.dragover {
-            border-color: #1d4ed8;
+            border-color: #764ba2;
             background: white;
         }
 
         .upload-area-icon {
             font-size: 4em;
             margin-bottom: 20px;
-            color: #2563eb;
+            color: #667eea;
         }
 
         .upload-area-text {
-            color: #1f2937;
+            color: #333;
             font-size: 1.2em;
             margin-bottom: 10px;
             font-weight: 600;
         }
 
         .upload-area-subtext {
-            color: #6b7280;
+            color: #999;
             font-size: 0.9em;
         }
 
@@ -2143,15 +2132,17 @@
 
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="logo">
-            <img src="logo.png" alt="Dikoora">
-        </a>
+        <div class="logo">dikoora</div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#features">Features</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#shop">Shop</a></li>
         </ul>
+        <div class="nav-buttons">
+            <button class="btn-login">Log in</button>
+            <button class="btn-signup">Sign up</button>
+        </div>
     </nav>
 
     <!-- Zillow-style Main Content -->
@@ -2287,6 +2278,28 @@
     </section>
 
     <!-- Features -->
+    <section class="features">
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Low cost</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Instant results</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Furniture removal</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>Multi-view staging</span>
+        </div>
+        <div class="feature">
+            <span class="checkmark">✓</span>
+            <span>10,000+ users</span>
+        </div>
+    </section>
 
     <!-- How It Works Section -->
     <section class="how-it-works">
@@ -2452,6 +2465,35 @@
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <div class="cta-badge">Our budget option</div>
+            <h2>Transform your space with AI design today</h2>
+            <p>Join thousands of professionals enhancing their properties with dikoora</p>
+            <button class="btn-cta" onclick="window.location.href='index.html'">Try for free →</button>
+
+            <div class="cta-rating">
+                <div class="stars">★★★★★</div>
+                <span class="rating-text">4.8 out of 5</span>
+            </div>
+
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <div class="cta-feature-icon">✓</div>
+                    <span>Get started in minutes</span>
+                </div>
+                <div class="cta-feature">
+                    <div class="cta-feature-icon">✓</div>
+                    <span>100% satisfaction guarantee</span>
+                </div>
+                <div class="cta-feature">
+                    <div class="cta-feature-icon">✓</div>
+                    <span>24/7 premium support</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
