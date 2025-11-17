@@ -1,0 +1,272 @@
+{
+  "lamps": [
+    {
+      "id": "lamp-001",
+      "name": "Elegant Arc Floor Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 170022.png",
+      "affiliateLink": "https://www.amazon.com/dp/B08EXAMPLE1?tag=dikoora-20",
+      "price": 129.99,
+      "brand": "West Elm",
+      "colors": ["Gold", "Brass"],
+      "material": "Metal & Marble",
+      "dimensions": "80\" H x 65\" W",
+      "style": "Modern",
+      "inStock": true,
+      "rating": 4.7
+    },
+    {
+      "id": "lamp-002",
+      "name": "Minimalist Desk Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 204912.png",
+      "affiliateLink": "https://www.wayfair.com/lighting/pdp/example-lamp-2.html?piid=12345",
+      "price": 64.99,
+      "brand": "CB2",
+      "colors": ["Black", "White", "Brass"],
+      "material": "Metal",
+      "dimensions": "18\" H x 8\" W",
+      "style": "Scandinavian",
+      "inStock": true,
+      "rating": 4.5
+    },
+    {
+      "id": "lamp-003",
+      "name": "Classic Table Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 204944.png",
+      "affiliateLink": "https://www.potterybarn.com/products/classic-table-lamp/?pkey=example3",
+      "price": 89.99,
+      "brand": "Pottery Barn",
+      "colors": ["Ivory", "Navy", "Gray"],
+      "material": "Ceramic & Linen",
+      "dimensions": "24\" H x 14\" W",
+      "style": "Traditional",
+      "inStock": true,
+      "rating": 4.8
+    },
+    {
+      "id": "lamp-004",
+      "name": "Industrial Floor Lamp",
+      "image": "furniture/lamps/Screenshot 2025-10-23 205013.png",
+      "affiliateLink": "https://www.target.com/p/industrial-floor-lamp/-/A-example4",
+      "price": 149.99,
+      "brand": "Threshold",
+      "colors": ["Black", "Bronze"],
+      "material": "Iron & Glass",
+      "dimensions": "72\" H x 16\" W",
+      "style": "Industrial",
+      "inStock": true,
+      "rating": 4.6
+    }
+  ],
+  "sofas": [
+    {
+      "id": "sofa-001",
+      "name": "Modern Gray Sectional",
+      "image": "furniture/sofas/sofa.png",
+      "affiliateLink": "https://www.article.com/product/example-sectional-sofa?artcl_id=ex1",
+      "price": 1299.99,
+      "brand": "Article",
+      "colors": ["Dove Gray", "Charcoal", "Navy"],
+      "material": "Velvet Upholstery",
+      "dimensions": "98\" W x 65\" D x 32\" H",
+      "seating": "5-6 people",
+      "style": "Contemporary",
+      "inStock": true,
+      "rating": 4.9
+    },
+    {
+      "id": "sofa-002",
+      "name": "Luxe Velvet Sofa",
+      "image": "furniture/sofas/Screenshot 2025-10-23 205040.png",
+      "affiliateLink": "https://www.westelm.com/products/luxe-velvet-sofa/?sku=example2",
+      "price": 1599.99,
+      "brand": "West Elm",
+      "colors": ["Emerald Green", "Blush Pink", "Navy"],
+      "material": "Performance Velvet",
+      "dimensions": "84\" W x 38\" D x 34\" H",
+      "seating": "3-4 people",
+      "style": "Glam",
+      "inStock": true,
+      "rating": 4.7
+    },
+    {
+      "id": "sofa-003",
+      "name": "Mid-Century Modern Sofa",
+      "image": "furniture/sofas/Screenshot 2025-10-23 205103.png",
+      "affiliateLink": "https://www.allmodern.com/furniture/pdp/mid-century-sofa-example3.html",
+      "price": 899.99,
+      "brand": "Rivet",
+      "colors": ["Caramel Leather", "Charcoal", "Storm Gray"],
+      "material": "Top-grain Leather",
+      "dimensions": "79\" W x 35\" D x 31\" H",
+      "seating": "3 people",
+      "style": "Mid-Century",
+      "inStock": true,
+      "rating": 4.8
+    },
+    {
+      "id": "sofa-004",
+      "name": "L-Shaped Sectional",
+      "image": "furniture/sofas/Screenshot 2025-10-23 205141.png",
+      "affiliateLink": "https://www.ikea.com/us/en/p/l-shaped-sectional-example4/",
+      "price": 1799.99,
+      "brand": "IKEA",
+      "colors": ["Light Gray", "Beige", "Dark Gray"],
+      "material": "Polyester Blend",
+      "dimensions": "110\" W x 88\" D x 33\" H",
+      "seating": "6-7 people",
+      "style": "Scandinavian",
+      "inStock": true,
+      "rating": 4.6
+    }
+  ],
+  "rugs": [
+    {
+      "id": "rug-001",
+      "name": "Vintage Persian Rug",
+      "image": "furniture/rugs/rug1.png",
+      "affiliateLink": "https://www.overstock.com/home-garden/vintage-persian-rug/example1.html",
+      "price": 349.99,
+      "brand": "Safavieh",
+      "colors": ["Red", "Navy", "Cream", "Gold"],
+      "material": "Polypropylene",
+      "dimensions": "8' x 10'",
+      "pattern": "Traditional Persian",
+      "style": "Vintage",
+      "inStock": true,
+      "rating": 4.7
+    },
+    {
+      "id": "rug-002",
+      "name": "Modern Abstract Rug",
+      "image": "furniture/rugs/Screenshot 2025-10-23 205231.png",
+      "affiliateLink": "https://www.rugsusa.com/modern-abstract-rug-example2.aspx",
+      "price": 279.99,
+      "brand": "nuLOOM",
+      "colors": ["Gray", "White", "Black"],
+      "material": "Synthetic",
+      "dimensions": "9' x 12'",
+      "pattern": "Abstract",
+      "style": "Contemporary",
+      "inStock": true,
+      "rating": 4.5
+    },
+    {
+      "id": "rug-003",
+      "name": "Geometric Pattern Rug",
+      "image": "furniture/rugs/Screenshot 2025-10-23 205425.png",
+      "affiliateLink": "https://www.wayfair.com/rugs/pdp/geometric-rug-example3.html",
+      "price": 229.99,
+      "brand": "Bungalow Rose",
+      "colors": ["Ivory", "Blue", "Gold"],
+      "material": "Cotton & Jute",
+      "dimensions": "5' x 7'",
+      "pattern": "Geometric",
+      "style": "Bohemian",
+      "inStock": true,
+      "rating": 4.6
+    },
+    {
+      "id": "rug-004",
+      "name": "Plush Shag Rug",
+      "image": "furniture/rugs/Screenshot 2025-10-23 205454.png",
+      "affiliateLink": "https://www.target.com/p/plush-shag-rug/-/A-example4",
+      "price": 189.99,
+      "brand": "Project 62",
+      "colors": ["Cream", "Gray", "Blush"],
+      "material": "Polyester",
+      "dimensions": "7' x 10'",
+      "pattern": "Solid",
+      "style": "Modern",
+      "inStock": true,
+      "rating": 4.8
+    }
+  ],
+  "chairs": [
+    {
+      "id": "chair-001",
+      "name": "Velvet Accent Chair",
+      "image": "furniture/chairs/chair.png",
+      "affiliateLink": "https://www.amazon.com/dp/B08CHAIREX1?tag=dikoora-20",
+      "price": 329.99,
+      "brand": "Homelegance",
+      "colors": ["Navy Blue", "Emerald Green", "Blush Pink"],
+      "material": "Velvet & Wood",
+      "dimensions": "31\" W x 33\" D x 36\" H",
+      "style": "Mid-Century",
+      "inStock": true,
+      "rating": 4.7
+    }
+  ],
+  "plants": [
+    {
+      "id": "plant-001",
+      "name": "Faux Fiddle Leaf Fig Tree",
+      "image": "furniture/plants/plant1.png",
+      "affiliateLink": "https://www.nearly-natural.com/fiddle-leaf-fig-tree-example1",
+      "price": 89.99,
+      "brand": "Nearly Natural",
+      "colors": ["Green"],
+      "material": "Silk & Plastic",
+      "dimensions": "6' H",
+      "potIncluded": true,
+      "style": "Tropical",
+      "inStock": true,
+      "rating": 4.6
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "name": "Modern Coffee Table",
+      "image": "furniture/tables/table.png",
+      "affiliateLink": "https://www.cb2.com/modern-coffee-table/s-example-table1",
+      "price": 449.99,
+      "brand": "CB2",
+      "colors": ["Walnut", "White Marble", "Black Oak"],
+      "material": "Solid Wood & Marble",
+      "dimensions": "48\" W x 28\" D x 16\" H",
+      "style": "Contemporary",
+      "inStock": true,
+      "rating": 4.8
+    }
+  ],
+  "tvstands": [
+    {
+      "id": "tvstand-001",
+      "name": "Mopio Mid-Century TV Stand",
+      "image": "furniture/tvstands/mopio-tv-stand.jpg",
+      "affiliateLink": "https://www.amazon.com/mopio-Century-Entertainment-Storage-Television/dp/B08SM25Y9C/?tag=dikoora-20",
+      "price": 179.00,
+      "brand": "Mopio",
+      "colors": ["Walnut Brown"],
+      "material": "Engineered Wood",
+      "dimensions": "46\" W x 13.7\" D x 17\" H",
+      "style": "Mid-Century Modern",
+      "inStock": true,
+      "rating": 4.4,
+      "features": ["2 Open Shelves", "Sliding Door Storage", "Cable Management", "Supports up to 50\" TV"],
+      "maxLoad": "75 lbs top shelf, 10 lbs each shelf"
+    },
+    {
+      "id": "tvstand-002",
+      "name": "BELLEZE Fireplace TV Stand",
+      "image": "furniture/tvstands/belleze-fireplace-stand.jpg",
+      "affiliateLink": "https://www.amazon.com/BELLEZE-Console-Shelves-Fireplace-Control/dp/B08H58JNX7/?tag=dikoora-20",
+      "price": 275.49,
+      "brand": "BELLEZE",
+      "colors": ["Gray Wash"],
+      "material": "Engineered Wood",
+      "dimensions": "58\" W x 16\" D x 25\" H",
+      "style": "Modern Farmhouse",
+      "inStock": true,
+      "rating": 4.3,
+      "features": ["Electric Fireplace Insert", "Remote Control", "2 Cabinet Storage", "2 Open Shelves", "Supports up to 65\" TV", "Heater Function"],
+      "maxLoad": "120 lbs",
+      "fireplace": {
+        "btuOutput": "5000 BTU",
+        "heatingArea": "400 sq ft",
+        "flameEffect": "Realistic LED"
+      }
+    }
+  ]
+}

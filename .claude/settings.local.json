@@ -30,7 +30,14 @@
       "Bash(git revert:*)",
       "Bash(taskkill:*)",
       "Bash(netstat:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(mkdir:*)",
+      "Bash(printf \"y\\n\")",
+      "Bash(printf \"AIzaSyBja8z2-LBmGJAOr0ziCR2vv8ZxxD0VPsw\\n\")",
+      "Bash(rmdir:*)",
+      "Bash(powershell:*)",
+      "Bash(npx vercel:*)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []

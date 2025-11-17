@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { roomImage, furnitureImages, furnitureNames, mimeType } = req.body;
+    const { compositeImage, roomImage, furnitureGridImage, furnitureImages, furnitureNames, mimeType, roomType = 'livingRoom' } = req.body;
 
     // Get API key from environment variable (secure!)
     const API_KEY = process.env.GEMINI_API_KEY;
@@ -40,62 +40,86 @@ export default async function handler(req, res) {
       });
     }
 
-    // Build the request to Google Gemini API
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${API_KEY}`;
+    // Build the request to Gemini 2.5 Flash (supports image input + output)
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${API_KEY}`;
 
-    // Build request with ROOM IMAGE TWICE (first and last)
-    const parts = [
-      {
-        text: "This is the target room - remember it exactly:"
-      },
-      {
-        inline_data: {
-          mime_type: mimeType,
-          data: roomImage
-        }
-      },
-      {
-        text: `Now here are ${furnitureImages.length} furniture pieces to add:`
-      }
-    ];
+    let parts = [];
 
-    // Add all furniture images
-    furnitureImages.forEach(furniture => {
-      parts.push({
-        inline_data: {
-          mime_type: 'image/png',
-          data: furniture
+    // Two-image approach: room + furniture grid (SEPARATE images)
+    if (furnitureGridImage) {
+      parts = [
+        {
+          inline_data: {
+            mime_type: mimeType,
+            data: roomImage
+          }
+        },
+        {
+          inline_data: {
+            mime_type: 'image/png',
+            data: furnitureGridImage
+          }
+        },
+        {
+          text: `Place all the furniture items from the second image into the empty room shown in the first image. Generate the complete furnished room with realistic feel and realistic furniture well positioned in the room. Show only the final furnished room image.`
         }
+      ];
+    }
+    // If composite image is provided, use simple approach
+    else if (compositeImage) {
+      parts = [
+        {
+          inline_data: {
+            mime_type: mimeType,
+            data: compositeImage
+          }
+        },
+        {
+          text: `Place the furniture into the empty room. Show the complete furnished room with realistic placement. Output only the final furnished room image.`
+        }
+      ];
+    } else {
+      // Old approach - send room image BEFORE each furniture piece
+      parts = [
+        {
+          text: "This is the EMPTY ROOM:"
+        },
+        {
+          inline_data: {
+            mime_type: mimeType,
+            data: roomImage
+          }
+        }
+      ];
+
+      // Add furniture images
+      furnitureImages.forEach((furniture, index) => {
+        parts.push({
+          text: `Furniture piece ${index + 1}:`
+        });
+        parts.push({
+          inline_data: {
+            mime_type: 'image/png',
+            data: furniture
+          }
+        });
       });
-    });
 
-    // Add room again and final instruction
-    parts.push({
-      text: "And here is the room again - THIS is the base:"
-    });
-    parts.push({
-      inline_data: {
-        mime_type: mimeType,
-        data: roomImage
-      }
-    });
-    parts.push({
-      text: `Generate this exact room (shown twice above) with the furniture pieces shown (${furnitureNames.join(', ')}) placed inside it. IMPORTANT:
-1. Keep the room IDENTICAL - same walls, floor, windows, lighting
-2. Keep the furniture EXACTLY as shown - do not change their design, color, or style
-3. Position the furniture in ELEGANT, professional arrangements that maximize space and flow
-4. Add tasteful accessories like cushions, throws, small decor items, artwork, and styling elements to complete the look
-5. Ensure proper perspective, realistic lighting, and natural shadows
-Create a beautifully styled, magazine-worthy room design.`
-    });
+      parts.push({
+        text: `Place all the furniture pieces into the empty room. Show the complete furnished room with realistic lighting and shadows. Output only the final furnished room image.`
+      });
+    }
 
     const requestBody = {
       contents: [{
         parts: parts
-      }]
+      }],
+      generationConfig: {
+        responseModalities: ["IMAGE", "TEXT"]
+      }
     };
 
-    // Call Google Gemini API
+    // Call Gemini API
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -113,7 +137,7 @@ Create a beautifully styled, magazine-worthy room design.`
       });
     }
 
-    // Extract image from response
+    // Extract image from Gemini response
     if (data.candidates?.[0]?.content?.parts) {
       for (const part of data.candidates[0].content.parts) {
         if (part.inline_data || part.inlineData) {

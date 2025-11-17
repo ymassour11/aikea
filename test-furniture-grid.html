@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Grid Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        canvas {
+            border: 2px solid #333;
+            background: white;
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Furniture Grid Image Example</h1>
+    <button onclick="generateFurnitureGrid()">Generate Furniture Grid</button>
+    <canvas id="furnitureCanvas"></canvas>
+
+    <script>
+        async function generateFurnitureGrid() {
+            // Sample furniture data from bedroom
+            const furnitureData = [
+                { image: "furniture/bedroom/beds/B0DR5SK428.jpg", name: "DICTAC Corner Full Bed" },
+                { image: "furniture/bedroom/nightstands/B0FD9TRBGG.jpg", name: "Huuger Night Stand" },
+                { image: "furniture/bedroom/dressers/B095PF22B8.jpg", name: "WLIVE 9-Drawer Dresser" },
+                { image: "furniture/bedroom/mirrors/811QB6cHbDL._AC_SL1500_.jpg", name: "DUMOS Full Length Mirror" },
+                { image: "furniture/bedroom/lamps/B08Z36X6B4.jpg", name: "SUNMORY Floor Lamp" },
+                { image: "furniture/bedroom/benches/B0BRYZV953.jpg", name: "SONGMICS Storage Ottoman" }
+            ];
+
+            const canvas = document.getElementById('furnitureCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const furnitureSize = 200;
+            const gap = 30;
+            const plusWidth = 80;
+            const cols = 2;
+            const padding = 20;
+
+            // Calculate grid dimensions
+            const rows = Math.ceil(furnitureData.length / cols);
+            const gridWidth = (furnitureSize * cols) + (plusWidth * (cols - 1)) + (gap * (cols - 1)) + (padding * 2);
+            const gridHeight = (furnitureSize * rows) + (gap * (rows - 1)) + (padding * 2);
+
+            canvas.width = gridWidth;
+            canvas.height = gridHeight;
+
+            // Fill background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, gridWidth, gridHeight);
+
+            // Load and draw furniture images
+            const furnitureImgs = [];
+            let loadedCount = 0;
+
+            for (let i = 0; i < furnitureData.length; i++) {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === furnitureData.length) {
+                        drawGrid();
+                    }
+                };
+                img.onerror = () => {
+                    console.error(`Failed to load: ${furnitureData[i].image}`);
+                    loadedCount++;
+                    if (loadedCount === furnitureData.length) {
+                        drawGrid();
+                    }
+                };
+                img.src = furnitureData[i].image;
+                furnitureImgs.push(img);
+            }
+
+            function drawGrid() {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, gridWidth, gridHeight);
+
+                // Draw furniture items with + signs
+                furnitureImgs.forEach((img, index) => {
+                    const col = index % cols;
+                    const row = Math.floor(index / cols);
+
+                    const x = padding + col * (furnitureSize + plusWidth + gap);
+                    const y = padding + row * (furnitureSize + gap);
+
+                    // Draw furniture image (fit to square)
+                    if (img.complete && img.naturalWidth > 0) {
+                        const scale = Math.min(furnitureSize / img.width, furnitureSize / img.height);
+                        const scaledW = img.width * scale;
+                        const scaledH = img.height * scale;
+                        const offsetX = (furnitureSize - scaledW) / 2;
+                        const offsetY = (furnitureSize - scaledH) / 2;
+
+                        ctx.drawImage(img, x + offsetX, y + offsetY, scaledW, scaledH);
+
+                        // Draw border around furniture
+                        ctx.strokeStyle = '#e0e0e0';
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(x, y, furnitureSize, furnitureSize);
+                    } else {
+                        // Draw placeholder if image failed
+                        ctx.fillStyle = '#f0f0f0';
+                        ctx.fillRect(x, y, furnitureSize, furnitureSize);
+                        ctx.strokeStyle = '#ccc';
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(x, y, furnitureSize, furnitureSize);
+
+                        ctx.fillStyle = '#999';
+                        ctx.font = '14px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('Image not found', x + furnitureSize / 2, y + furnitureSize / 2);
+                    }
+
+                    // Draw + sign between columns (not after last column)
+                    if (col < cols - 1) {
+                        const plusX = x + furnitureSize + gap + plusWidth / 2;
+                        const plusY = y + furnitureSize / 2;
+
+                        ctx.fillStyle = '#333';
+                        ctx.font = 'bold 60px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('+', plusX, plusY);
+                    }
+                });
+
+                console.log('Furniture grid generated!');
+            }
+        }
+
+        // Auto-generate on load
+        window.addEventListener('load', () => {
+            setTimeout(() => generateFurnitureGrid(), 500);
+        });
+    </script>
+</body>
+</html>

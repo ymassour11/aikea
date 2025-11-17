@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Kids Room Furniture Grid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333;
+        }
+        #gridImage {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            margin-top: 20px;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .furniture-list {
+            margin: 20px 0;
+        }
+        .furniture-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kids Room Furniture Grid Test</h1>
+
+        <div class="info">
+            <p><strong>This shows the furniture grid image that gets sent to the AI API</strong></p>
+            <p>It should contain: 1 bed + 1 desk + 1 storage item with + signs between them</p>
+        </div>
+
+        <div class="furniture-list" id="furnitureList">
+            <p class="loading">Loading furniture items...</p>
+        </div>
+
+        <h2>Generated Grid Image:</h2>
+        <canvas id="gridCanvas" style="border: 2px solid #ddd; max-width: 100%;"></canvas>
+
+        <div id="error" style="color: red; margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        // Load furniture catalog from JSON
+        async function loadFurnitureCatalog() {
+            try {
+                const response = await fetch('furniture-catalog.json');
+                return await response.json();
+            } catch (error) {
+                console.error('Failed to load furniture catalog:', error);
+                return null;
+            }
+        }
+
+        // Load furniture for kids room
+        async function loadKidsRoomFurniture() {
+            const catalog = await loadFurnitureCatalog();
+            if (!catalog || !catalog.kidsRoom) {
+                throw new Error('Failed to load kids room furniture');
+            }
+
+            const selectedFurniture = [];
+            const roomFurniture = catalog.kidsRoom;
+
+            // Load one random item from each category
+            for (const [category, items] of Object.entries(roomFurniture)) {
+                if (!items || items.length === 0) {
+                    console.log(`Skipping empty category: ${category}`);
+                    continue;
+                }
+
+                // Pick random item
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                selectedFurniture.push({
+                    category: category,
+                    item: randomItem
+                });
+
+                console.log(`Selected ${category}:`, randomItem.name, randomItem.image);
+            }
+
+            return selectedFurniture;
+        }
+
+        // Create furniture grid image
+        async function createFurnitureGrid(furnitureItems) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    // Load all furniture images
+                    const furnitureImgs = await Promise.all(
+                        furnitureItems.map(({ item }) => {
+                            return new Promise((res, rej) => {
+                                const fImg = new Image();
+                                fImg.onload = () => res(fImg);
+                                fImg.onerror = () => {
+                                    console.error('Failed to load furniture image:', item.image);
+                                    rej(new Error(`Failed to load ${item.image}`));
+                                };
+                                fImg.src = item.image;
+                            });
+                        })
+                    );
+
+                    console.log(`Loaded ${furnitureImgs.length} furniture images`);
+
+                    // Canvas dimensions
+                    const canvasWidth = 800;
+                    const canvasHeight = 600;
+
+                    // Calculate furniture size and layout
+                    const gap = 30;
+                    const plusWidth = 80;
+                    const cols = 2;
+                    const rows = Math.ceil(furnitureImgs.length / cols);
+
+                    const furnitureSize = Math.min(
+                        (canvasWidth - (gap * (cols + 1)) - plusWidth) / cols,
+                        (canvasHeight - (gap * (rows + 1))) / rows
+                    );
+
+                    // Create canvas
+                    const canvas = document.getElementById('gridCanvas');
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasHeight;
+                    const ctx = canvas.getContext('2d');
+
+                    // Fill background white
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // Draw furniture grid with + signs
+                    furnitureImgs.forEach((img, index) => {
+                        const col = index % cols;
+                        const row = Math.floor(index / cols);
+                        const x = gap + (col * (furnitureSize + plusWidth));
+                        const y = gap + (row * (furnitureSize + gap));
+
+                        // Draw furniture image
+                        const scale = Math.min(furnitureSize / img.width, furnitureSize / img.height);
+                        const scaledWidth = img.width * scale;
+                        const scaledHeight = img.height * scale;
+                        const offsetX = (furnitureSize - scaledWidth) / 2;
+                        const offsetY = (furnitureSize - scaledHeight) / 2;
+
+                        ctx.drawImage(img, x + offsetX, y + offsetY, scaledWidth, scaledHeight);
+
+                        // Draw + sign to the right (except last column)
+                        if (col < cols - 1) {
+                            ctx.fillStyle = '#000000';
+                            ctx.font = 'bold 60px Arial';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillText('+', x + furnitureSize + (plusWidth / 2), y + (furnitureSize / 2));
+                        }
+                    });
+
+                    resolve(canvas);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        // Display furniture list
+        function displayFurnitureList(furnitureItems) {
+            const listDiv = document.getElementById('furnitureList');
+            listDiv.innerHTML = '<h3>Selected Furniture Items:</h3>';
+
+            furnitureItems.forEach(({ category, item }) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'furniture-item';
+                itemDiv.innerHTML = `
+                    <strong>${category}:</strong> ${item.name}<br>
+                    <small>Image: ${item.image}</small>
+                `;
+                listDiv.appendChild(itemDiv);
+            });
+        }
+
+        // Main function
+        async function init() {
+            try {
+                console.log('Loading kids room furniture...');
+                const furniture = await loadKidsRoomFurniture();
+
+                console.log('Furniture loaded:', furniture);
+                displayFurnitureList(furniture);
+
+                console.log('Creating furniture grid...');
+                await createFurnitureGrid(furniture);
+
+                console.log('Grid created successfully!');
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('error').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Run on page load
+        init();
+    </script>
+</body>
+</html>

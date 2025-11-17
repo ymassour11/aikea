@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Bedroom Furniture Grid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h1 { color: #333; }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .furniture-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bedroom Furniture Grid Test</h1>
+
+        <div class="info">
+            <p><strong>This shows the furniture grid image that gets sent to the AI API for BEDROOM</strong></p>
+        </div>
+
+        <div id="furnitureList">
+            <p>Loading furniture items...</p>
+        </div>
+
+        <h2>Generated Grid Image:</h2>
+        <canvas id="gridCanvas" style="border: 2px solid #ddd; max-width: 100%;"></canvas>
+
+        <div id="error" style="color: red; margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        async function loadFurnitureCatalog() {
+            const response = await fetch('furniture-catalog.json');
+            return await response.json();
+        }
+
+        async function loadBedroomFurniture() {
+            const catalog = await loadFurnitureCatalog();
+            const selectedFurniture = [];
+            const roomFurniture = catalog.bedroom || {};
+
+            for (const [category, items] of Object.entries(roomFurniture)) {
+                if (!items || items.length === 0) continue;
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                selectedFurniture.push({
+                    category: category.slice(0, -1), // Remove 's' (beds -> bed)
+                    item: randomItem
+                });
+                console.log(`Selected ${category}:`, randomItem.name);
+            }
+            return selectedFurniture;
+        }
+
+        async function createFurnitureGrid(furnitureItems) {
+            const furnitureImgs = await Promise.all(
+                furnitureItems.map(({ item }) => {
+                    return new Promise((res, rej) => {
+                        const fImg = new Image();
+                        fImg.onload = () => res(fImg);
+                        fImg.onerror = () => rej(new Error(`Failed to load ${item.image}`));
+                        fImg.src = item.image;
+                    });
+                })
+            );
+
+            const canvasWidth = 1600;
+            const canvasHeight = 1200;
+            const gap = 8;
+            const plusWidth = 20;
+            const labelHeight = 12;
+            const cols = 3;
+            const rows = Math.ceil(furnitureImgs.length / cols);
+
+            const furnitureSize = Math.min(
+                (canvasWidth - (gap * (cols + 1)) - (plusWidth * (cols - 1))) / cols,
+                (canvasHeight - (gap * (rows + 1)) - (labelHeight * rows)) / rows,
+                450
+            );
+
+            const canvas = document.getElementById('gridCanvas');
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            furnitureImgs.forEach((img, index) => {
+                const col = index % cols;
+                const row = Math.floor(index / cols);
+                const x = gap + (col * (furnitureSize + plusWidth));
+                const y = gap + (row * (furnitureSize + gap + labelHeight));
+
+                const scale = Math.min(furnitureSize / img.width, furnitureSize / img.height, 1);
+                const scaledWidth = img.width * scale;
+                const scaledHeight = img.height * scale;
+                const offsetX = (furnitureSize - scaledWidth) / 2;
+                const offsetY = (furnitureSize - scaledHeight) / 2;
+
+                ctx.drawImage(img, x + offsetX, y + offsetY, scaledWidth, scaledHeight);
+
+                // Draw category label
+                const categoryLabel = furnitureItems[index].category;
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText(categoryLabel.toUpperCase(), x + (furnitureSize / 2), y + furnitureSize + 2);
+
+                // Draw + sign
+                if (col < cols - 1 && index < furnitureImgs.length - 1) {
+                    ctx.fillStyle = '#999999';
+                    ctx.font = '14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('+', x + furnitureSize + (plusWidth / 2), y + (furnitureSize / 2));
+                }
+            });
+        }
+
+        function displayFurnitureList(furnitureItems) {
+            const listDiv = document.getElementById('furnitureList');
+            listDiv.innerHTML = '<h3>Selected Furniture Items:</h3>';
+            furnitureItems.forEach(({ category, item }) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'furniture-item';
+                itemDiv.innerHTML = `<strong>${category}:</strong> ${item.name}<br><small>Image: ${item.image}</small>`;
+                listDiv.appendChild(itemDiv);
+            });
+        }
+
+        async function init() {
+            try {
+                const furniture = await loadBedroomFurniture();
+                displayFurnitureList(furniture);
+                await createFurnitureGrid(furniture);
+                console.log('Grid created with', furniture.length, 'items');
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('error').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
