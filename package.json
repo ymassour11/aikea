@@ -1,0 +1,9 @@
+{
+  "name": "dikoora",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Dikoora - AI-powered room design with real, shoppable furniture",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {}
+}
