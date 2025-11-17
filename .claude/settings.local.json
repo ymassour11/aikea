@@ -37,7 +37,8 @@
       "Bash(rmdir:*)",
       "Bash(powershell:*)",
       "Bash(npx vercel:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(curl -X POST https://www.dikoora.com/api/design -H \"Content-Type: application/json\" -d \"{\"\"roomImage\"\":\"\"test\"\",\"\"furnitureGridImage\"\":\"\"test\"\"}\")"
     ],
     "deny": [],
     "ask": []
