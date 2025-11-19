@@ -19,55 +19,111 @@
         }
 
         /* Navigation - matching homepage */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
         nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 60px;
             background: white;
             border-bottom: 1px solid #f3f4f6;
             position: relative;
             z-index: 100;
-            height: 70px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
         }
 
         .logo {
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
             display: flex;
             align-items: center;
             text-decoration: none;
-            z-index: 10;
         }
 
         .logo img {
-            height: 50px;
+            height: 40px;
             width: auto;
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 40px;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
             color: #6b7280;
             text-decoration: none;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: 600;
             transition: color 0.2s;
         }
 
         .nav-links a:hover {
-            color: #2563eb;
+            color: #4F46E5;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: #111827;
+            color: white !important;
+            border-radius: 9999px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-1px);
+            background: #000;
+            color: white !important;
         }
 
         .nav-buttons {
             display: flex;
             gap: 12px;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                height: 60px;
+            }
+
+            .logo {
+                left: 20px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-buttons {
+                position: absolute;
+                right: 20px;
+                gap: 8px;
+            }
+
+            .btn-login, .btn-signup {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
 
         .btn-login {
@@ -116,12 +172,27 @@
         }
 
         .zillow-room-viewer {
-            background: #111;
+            background: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             position: relative;
+            padding: 20px;
+        }
+
+        /* Mobile Main Container */
+        @media (max-width: 768px) {
+            .zillow-main-container {
+                grid-template-columns: 1fr;
+                height: auto;
+                min-height: calc(100vh - 60px);
+            }
+
+            .zillow-room-viewer {
+                min-height: 50vh;
+                padding: 15px;
+            }
         }
 
         /* Upload Overlay */
@@ -211,6 +282,30 @@
         .btn-change-image:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .preview-overlay-content, .upload-overlay-content {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            .preview-overlay-content h3, .upload-overlay-content h3 {
+                font-size: 22px;
+            }
+
+            .preview-overlay-content p, .upload-overlay-content p {
+                font-size: 14px;
+            }
+
+            .btn-design-large, .btn-upload-large {
+                padding: 14px 32px;
+                font-size: 16px;
+            }
+
+            .upload-icon-large {
+                font-size: 60px;
+            }
         }
 
         .upload-overlay-content {
@@ -403,9 +498,20 @@
         }
 
         .zillow-room-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .zillow-room-image {
+                max-height: 50vh;
+                max-width: 100%;
+            }
         }
 
         .zillow-furniture-sidebar {
@@ -413,6 +519,12 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .zillow-furniture-sidebar {
+                max-height: 60vh;
+            }
         }
 
         .zillow-sidebar-header {
@@ -445,6 +557,14 @@
             grid-template-columns: 1fr 1fr;
             gap: 16px;
             padding: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .zillow-furniture-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 12px;
+            }
         }
 
         .zillow-product-card {
@@ -482,6 +602,16 @@
 
         .zillow-product-info {
             padding: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .zillow-product-info {
+                padding: 10px;
+            }
+
+            .zillow-product-image {
+                height: 180px;
+            }
         }
 
         .zillow-product-price {
@@ -1328,6 +1458,13 @@
             flex: 1;
         }
 
+        @media (max-width: 768px) {
+            .design-filters {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+        }
+
         .filter-btn {
             padding: 10px 16px;
             border: 1px solid #d1d5db;
@@ -1341,6 +1478,13 @@
             display: flex;
             align-items: center;
             gap: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .filter-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
         }
 
         .filter-btn:hover {
@@ -1732,6 +1876,22 @@
             padding: 16px;
         }
 
+        @media (max-width: 768px) {
+            .furniture-items {
+                grid-template-columns: 1fr;
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .sidebar-header-result {
+                padding: 16px 20px;
+            }
+
+            .sidebar-header-result h2 {
+                font-size: 16px;
+            }
+        }
+
         .sidebar-header-result {
             padding: 20px 24px;
             border-bottom: 1px solid #e5e7eb;
@@ -1804,6 +1964,16 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .furniture-item-content {
+                padding: 10px;
+            }
+
+            .furniture-item-image-container {
+                height: 180px;
+            }
         }
 
         .furniture-item-brand {
@@ -2214,15 +2384,17 @@
 
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="logo">
-            <img src="logo.png" alt="Dikoora">
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="features.html">Features</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html" class="nav-btn">Get Started</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Room Type Selector Bar -->
@@ -2742,7 +2914,9 @@
                                     console.error('Failed to load furniture image:', item.image);
                                     rej(new Error(`Failed to load ${item.image}`));
                                 };
-                                fImg.src = item.image;
+                                // Properly encode the image path by encoding each segment
+                                const pathParts = item.image.split('/');
+                                fImg.src = pathParts.map(part => encodeURIComponent(part)).join('/');
                             });
                         })
                     );
@@ -2886,8 +3060,11 @@
                 card.className = 'zillow-product-card';
                 card.onclick = () => window.open(item.affiliateLink, '_blank');
 
+                const pathParts = item.image.split('/');
+                const encodedImageSrc = pathParts.map(part => encodeURIComponent(part)).join('/');
+
                 card.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="zillow-product-image">
+                    <img src="${encodedImageSrc}" alt="${item.name}" class="zillow-product-image">
                     <div class="zillow-product-info">
                         <div class="zillow-product-price">$${item.price.toFixed(2)}</div>
                         <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">${item.brand} - ${item.category}</div>
@@ -3091,7 +3268,10 @@
                 const randomItem = items[Math.floor(Math.random() * items.length)];
 
                 try {
-                    const response = await fetch(randomItem.image);
+                    // Properly encode the image path by encoding each segment
+                    const pathParts = randomItem.image.split('/');
+                    const encodedImagePath = pathParts.map(part => encodeURIComponent(part)).join('/');
+                    const response = await fetch(encodedImagePath);
                     const blob = await response.blob();
                     const base64 = await blobToBase64(blob);
 

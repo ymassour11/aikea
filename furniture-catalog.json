@@ -4,7 +4,7 @@
       {
         "id": "lamp-001",
         "name": "Elegant Arc Floor Lamp",
-        "image": "furniture/living-room/lamps/Screenshot 2025-10-23 170022.png",
+        "image": "furniture/living-room/lamps/lamp-1.png",
         "affiliateLink": "https://www.amazon.com/dp/B08EXAMPLE1?tag=dikoora-20",
         "price": 129.99,
         "brand": "West Elm",
@@ -18,7 +18,7 @@
       {
         "id": "lamp-002",
         "name": "Minimalist Desk Lamp",
-        "image": "furniture/living-room/lamps/Screenshot 2025-10-23 204912.png",
+        "image": "furniture/living-room/lamps/lamp-2.png",
         "affiliateLink": "https://www.wayfair.com/lighting/pdp/example-lamp-2.html?piid=12345",
         "price": 64.99,
         "brand": "CB2",
@@ -32,7 +32,7 @@
       {
         "id": "lamp-003",
         "name": "Classic Table Lamp",
-        "image": "furniture/living-room/lamps/Screenshot 2025-10-23 204944.png",
+        "image": "furniture/living-room/lamps/lamp-3.png",
         "affiliateLink": "https://www.potterybarn.com/products/classic-table-lamp/?pkey=example3",
         "price": 89.99,
         "brand": "Pottery Barn",
@@ -46,7 +46,7 @@
       {
         "id": "lamp-004",
         "name": "Industrial Floor Lamp",
-        "image": "furniture/living-room/lamps/Screenshot 2025-10-23 205013.png",
+        "image": "furniture/living-room/lamps/lamp-4.png",
         "affiliateLink": "https://www.target.com/p/industrial-floor-lamp/-/A-example4",
         "price": 149.99,
         "brand": "Threshold",
@@ -77,7 +77,7 @@
       {
         "id": "sofa-002",
         "name": "Luxe Velvet Sofa",
-        "image": "furniture/living-room/sofas/Screenshot 2025-10-23 205040.png",
+        "image": "furniture/living-room/sofas/sofa-1.png",
         "affiliateLink": "https://www.westelm.com/products/luxe-velvet-sofa/?sku=example2",
         "price": 1599.99,
         "brand": "West Elm",
@@ -92,7 +92,7 @@
       {
         "id": "sofa-003",
         "name": "Mid-Century Modern Sofa",
-        "image": "furniture/living-room/sofas/Screenshot 2025-10-23 205103.png",
+        "image": "furniture/living-room/sofas/sofa-2.png",
         "affiliateLink": "https://www.allmodern.com/furniture/pdp/mid-century-sofa-example3.html",
         "price": 899.99,
         "brand": "Rivet",
@@ -107,7 +107,7 @@
       {
         "id": "sofa-004",
         "name": "L-Shaped Sectional",
-        "image": "furniture/living-room/sofas/Screenshot 2025-10-23 205141.png",
+        "image": "furniture/living-room/sofas/sofa-3.png",
         "affiliateLink": "https://www.ikea.com/us/en/p/l-shaped-sectional-example4/",
         "price": 1799.99,
         "brand": "IKEA",
@@ -139,7 +139,7 @@
       {
         "id": "rug-002",
         "name": "Modern Abstract Rug",
-        "image": "furniture/living-room/rugs/Screenshot 2025-10-23 205231.png",
+        "image": "furniture/living-room/rugs/rug-1.png",
         "affiliateLink": "https://www.rugsusa.com/modern-abstract-rug-example2.aspx",
         "price": 279.99,
         "brand": "nuLOOM",
@@ -154,7 +154,7 @@
       {
         "id": "rug-003",
         "name": "Geometric Pattern Rug",
-        "image": "furniture/living-room/rugs/Screenshot 2025-10-23 205425.png",
+        "image": "furniture/living-room/rugs/rug-2.png",
         "affiliateLink": "https://www.wayfair.com/rugs/pdp/geometric-rug-example3.html",
         "price": 229.99,
         "brand": "Bungalow Rose",
@@ -169,7 +169,7 @@
       {
         "id": "rug-004",
         "name": "Plush Shag Rug",
-        "image": "furniture/living-room/rugs/Screenshot 2025-10-23 205454.png",
+        "image": "furniture/living-room/rugs/rug-3.png",
         "affiliateLink": "https://www.target.com/p/plush-shag-rug/-/A-example4",
         "price": 189.99,
         "brand": "Project 62",

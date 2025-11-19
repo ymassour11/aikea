@@ -4,344 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Dikoora | Get in Touch</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            background: white;
-            color: #1f2937;
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 60px;
-            background: white;
-            border-bottom: 1px solid #f3f4f6;
-            position: relative;
-            height: 70px;
-        }
-
-        .logo {
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            z-index: 10;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #2563eb;
-        }
-
-        /* Contact Hero */
-        .contact-hero {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .contact-hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 20px;
-        }
-
-        .contact-hero p {
-            font-size: 20px;
-            color: #475569;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Contact Container */
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-        }
-
-        /* Contact Form */
-        .contact-form-section {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 40px;
-        }
-
-        .form-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 10px;
-        }
-
-        .form-subtitle {
-            font-size: 15px;
-            color: #64748b;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-button {
-            width: 100%;
-            padding: 14px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .form-button:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-
-        /* Contact Info */
-        .contact-info-section {
-            padding: 40px;
-        }
-
-        .info-card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 24px;
-        }
-
-        .info-icon {
-            font-size: 28px;
-            margin-bottom: 16px;
-        }
-
-        .info-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 8px;
-        }
-
-        .info-content {
-            font-size: 15px;
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .info-content a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .info-content a:hover {
-            text-decoration: underline;
-        }
-
-        /* Quick Links */
-        .quick-links {
-            margin-top: 40px;
-        }
-
-        .quick-links h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 20px;
-        }
-
-        .link-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .quick-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            color: #475569;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .quick-link:hover {
-            background: #f0f9ff;
-            border-color: #2563eb;
-            color: #2563eb;
-        }
-
-        /* Support Hours */
-        .support-hours {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 30px;
-            margin-top: 24px;
-        }
-
-        .support-hours h3 {
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-
-        .hours-list {
-            list-style: none;
-        }
-
-        .hours-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .hours-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* Footer */
-        footer {
-            background: #f8fafc;
-            padding: 40px 60px;
-            text-align: center;
-            color: #64748b;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        footer a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .contact-hero h1 {
-                font-size: 32px;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-
-            .link-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="logo">
-            <img src="logo.png" alt="Dikoora">
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="features.html">Features</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="contact.html" class="active">Contact</a></li>
-        </ul>
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Contact Hero -->
-    <section class="contact-hero">
-        <h1>Get in Touch</h1>
-        <p>Have questions about Dikoora? We're here to help you transform your spaces.</p>
+    <section class="hero hero-centered" style="padding-bottom: 40px;">
+        <div class="container hero-content-wrapper">
+            <div class="hero-text">
+                <h1>Get in Touch</h1>
+                <p>Have questions about Dikoora? We're here to help you transform your spaces.</p>
+            </div>
+        </div>
     </section>
 
     <!-- Contact Container -->
-    <div class="contact-container">
+    <div class="container contact-container">
         <!-- Contact Form -->
         <div class="contact-form-section">
-            <h2 class="form-title">Send Us a Message</h2>
-            <p class="form-subtitle">Fill out the form below and we'll get back to you within 24 hours.</p>
+            <h2 class="form-title" style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">Send Us a Message</h2>
+            <p class="form-subtitle" style="color: var(--text-muted); margin-bottom: 30px;">Fill out the form below and we'll get back to you within 24 hours.</p>
 
             <form id="contactForm">
                 <div class="form-group">
@@ -379,72 +79,97 @@
         <div class="contact-info-section">
             <!-- Email Card -->
             <div class="info-card">
-                <div class="info-icon">✉️</div>
-                <h3 class="info-title">Email Us</h3>
-                <p class="info-content">
-                    General: <a href="mailto:hello@dikoora.com">hello@dikoora.com</a><br>
-                    Support: <a href="mailto:support@dikoora.com">support@dikoora.com</a><br>
-                    Sales: <a href="mailto:sales@dikoora.com">sales@dikoora.com</a>
-                </p>
+                <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <h3 class="info-title">Email Us</h3>
+                    <p class="info-content">
+                        General: <a href="mailto:hello@dikoora.com">hello@dikoora.com</a><br>
+                        Support: <a href="mailto:support@dikoora.com">support@dikoora.com</a><br>
+                        Sales: <a href="mailto:sales@dikoora.com">sales@dikoora.com</a>
+                    </p>
+                </div>
             </div>
 
             <!-- Phone Card -->
             <div class="info-card">
-                <div class="info-icon">📞</div>
-                <h3 class="info-title">Call Us</h3>
-                <p class="info-content">
-                    Sales: +1 (555) 123-4567<br>
-                    Support: +1 (555) 987-6543<br>
-                    Monday - Friday, 9am - 6pm EST
-                </p>
+                <div class="info-icon"><i class="fas fa-phone"></i></div>
+                <div>
+                    <h3 class="info-title">Call Us</h3>
+                    <p class="info-content">
+                        Sales: +1 (555) 123-4567<br>
+                        Support: +1 (555) 987-6543<br>
+                        Monday - Friday, 9am - 6pm EST
+                    </p>
+                </div>
             </div>
 
             <!-- Address Card -->
             <div class="info-card">
-                <div class="info-icon">📍</div>
-                <h3 class="info-title">Visit Us</h3>
-                <p class="info-content">
-                    Dikoora Inc.<br>
-                    123 Design Street<br>
-                    San Francisco, CA 94102<br>
-                    United States
-                </p>
+                <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                    <h3 class="info-title">Visit Us</h3>
+                    <p class="info-content">
+                        Dikoora Inc.<br>
+                        123 Design Street<br>
+                        San Francisco, CA 94102<br>
+                        United States
+                    </p>
+                </div>
             </div>
 
             <!-- Support Hours -->
             <div class="support-hours">
-                <h3>Support Hours</h3>
+                <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">Support Hours</h3>
                 <ul class="hours-list">
                     <li><span>Monday - Friday</span><span>9:00 AM - 6:00 PM EST</span></li>
                     <li><span>Saturday</span><span>10:00 AM - 4:00 PM EST</span></li>
                     <li><span>Sunday</span><span>Closed</span></li>
                 </ul>
             </div>
-
-            <!-- Quick Links -->
-            <div class="quick-links">
-                <h3>Quick Links</h3>
-                <div class="link-grid">
-                    <a href="features.html" class="quick-link">
-                        <span>→</span> View Features
-                    </a>
-                    <a href="pricing.html" class="quick-link">
-                        <span>→</span> See Pricing
-                    </a>
-                    <a href="design.html" class="quick-link">
-                        <span>→</span> Try Dikoora
-                    </a>
-                    <a href="#" class="quick-link">
-                        <span>→</span> FAQs
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Dikoora. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>
+                        <i class="fas fa-shapes"></i> Dikoora
+                    </h3>
+                    <p>AI-powered interior design that helps you visualize and furnish your empty spaces instantly.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Showcase</a></li>
+                        <li><a href="#">For Realtors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dikoora. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script>

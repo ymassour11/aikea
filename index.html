@@ -4,572 +4,337 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dikoora - Transform Your Space with AI-Powered Room Design</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            background: white;
-            color: #1f2937;
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 60px;
-            background: white;
-            border-bottom: 1px solid #f3f4f6;
-            position: relative;
-            height: 70px;
-        }
-
-        .logo {
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            z-index: 10;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #2563eb;
-        }
-
-        /* Hero Section */
-        .hero {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 60px;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 24px;
-            color: #111827;
-        }
-
-        .hero-description {
-            font-size: 16px;
-            color: #6b7280;
-            margin-bottom: 32px;
-            line-height: 1.7;
-        }
-
-        .btn-upload {
-            padding: 14px 28px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-
-        .btn-upload:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        .hero-image {
-            position: relative;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-        }
-
-        /* How It Works */
-        .how-works {
-            background: white;
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .how-works h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: #111827;
-        }
-
-        .steps {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .step {
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .step-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .step h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #111827;
-        }
-
-        .step p {
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.6;
-            max-width: 280px;
-            margin: 0 auto;
-        }
-
-        /* Why Choose */
-        .why-choose {
-            background: #f9fafb;
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .why-choose h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: #111827;
-        }
-
-        .features {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .feature {
-            background: white;
-            padding: 32px 24px;
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .feature:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: #f97316;
-        }
-
-        .feature h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #111827;
-        }
-
-        .feature p {
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background: white;
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .testimonials h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: #111827;
-        }
-
-        .testimonial-grid {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-
-        .testimonial {
-            background: #f9fafb;
-            padding: 32px;
-            border-radius: 12px;
-            text-align: left;
-        }
-
-        .testimonial-text {
-            font-size: 14px;
-            color: #374151;
-            font-style: italic;
-            margin-bottom: 24px;
-            line-height: 1.7;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .author-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #e5e7eb;
-            overflow: hidden;
-        }
-
-        .author-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .author-info h4 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 2px;
-        }
-
-        .author-info p {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        /* CTA Section */
-        .cta {
-            background: #f9fafb;
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #111827;
-        }
-
-        .cta p {
-            font-size: 16px;
-            color: #6b7280;
-            margin-bottom: 32px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn-cta {
-            padding: 14px 28px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-
-        .btn-cta:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: white;
-            border-top: 1px solid #f3f4f6;
-            padding: 40px 60px;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-left {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: #2563eb;
-        }
-
-        .made-with {
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #9ca3af;
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 16px 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 0 20px;
-                gap: 40px;
-                margin: 40px auto;
-            }
-
-            .hero-content h1 {
-                font-size: 36px;
-            }
-
-            .steps, .features, .testimonial-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .how-works, .why-choose, .testimonials, .cta {
-                padding: 60px 20px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo">
-            <img src="logo.png" alt="Dikoora">
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="features.html">Features</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="design.html" class="nav-btn">Get Started</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Instantly Design Your Room with Real, Shoppable Furniture</h1>
-            <p class="hero-description">
-                Upload a photo of your empty room and get it instantly staged with real furniture you can buy. Our AI shows you exactly how products from top brands will look in your space - then shop what you love directly through our platform.
-            </p>
-            <a href="design.html" class="btn-upload">Upload Image for free</a>
-        </div>
-        <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop&q=90" alt="Beautiful modern living room">
+        <div class="container hero-content-wrapper">
+            <div class="hero-text">
+                <h1>Design Your Dream Room Instantly with AI</h1>
+                <p>Upload a photo of your empty room and get it professionally staged with real, shoppable furniture from top brands in seconds.</p>
+                <div class="hero-buttons">
+                    <a href="design.html" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Design My Room
+                    </a>
+                    <a href="#how-it-works" class="btn btn-secondary">
+                        See How It Works
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <div class="comparison-slider">
+                    <div class="comparison-slider-container" id="comparisonContainer">
+                        <!-- Background Image (AFTER) - Always fully visible -->
+                        <img src="images/room-after.jpg" alt="Designed Room" class="comparison-after">
+
+                        <!-- Foreground Image (BEFORE) - Clipped based on slider position -->
+                        <div class="comparison-before-container" id="beforeContainer">
+                            <img src="images/room-before.jpg" alt="Empty Room" class="comparison-before">
+                        </div>
+
+                        <div class="comparison-slider-handle">
+                            <div class="handle-line"></div>
+                            <div class="handle-circle">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                            <div class="handle-line"></div>
+                        </div>
+                    </div>
+                    <div class="comparison-labels">
+                        <span class="label-before">Before</span>
+                        <span class="label-after">After</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- How Dikoora Works -->
-    <section class="how-works">
-        <h2>How Dikoora Works</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-icon">📸</div>
-                <h3>Upload Your Empty Room</h3>
-                <p>Snap a photo of your empty space - our AI works with any room, any angle, any lighting condition.</p>
+    <!-- How It Works -->
+    <section class="steps-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Dikoora Works</h2>
+                <p>Transform your space in three simple steps</p>
             </div>
-            <div class="step">
-                <div class="step-icon">🛋️</div>
-                <h3>AI Stages with Real Products</h3>
-                <p>Instantly see your room furnished with actual products from partner brands - not generic renders, real furniture you can buy.</p>
-            </div>
-            <div class="step">
-                <div class="step-icon">🛒</div>
-                <h3>Shop What You See</h3>
-                <p>Love that sofa? Click to buy it. Every item in your design links directly to purchase from trusted retailers.</p>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Upload Photo</h3>
+                    <p>Take a photo of your empty room. Our AI analyzes the dimensions and lighting instantly.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>AI Design</h3>
+                    <p>Watch as AI furnishes your room with style-matched pieces that fit perfectly.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Shop the Look</h3>
+                    <p>Love the result? Click any item to buy it directly from our partner retailers.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Dikoora -->
-    <section class="why-choose" id="features">
-        <h2>Why Choose Dikoora?</h2>
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🛍️</div>
-                <h3>Real Products, Real Prices</h3>
-                <p>Every piece of furniture is an actual product from partner brands with current pricing and availability.</p>
+    <!-- Features -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Dikoora?</h2>
+                <p>The only interior design tool that connects imagination with reality.</p>
             </div>
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <h3>Instant Staging</h3>
-                <p>See your room transformed in seconds - no waiting, no appointments, just instant results.</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🛒</div>
-                <h3>Buy What You See</h3>
-                <p>Click any item to purchase directly from trusted retailers - seamless shopping experience.</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🏠</div>
-                <h3>Perfect for Any Space</h3>
-                <p>Works with bedrooms, living rooms, offices, or any empty space that needs furnishing.</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">💰</div>
-                <h3>Free to Try</h3>
-                <p>Start designing immediately - no credit card required. Premium features available for professionals.</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🎯</div>
-                <h3>Curated Collections</h3>
-                <p>Furniture from West Elm, CB2, Wayfair, and other top brands matched perfectly to your space.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <h3>Real Furniture</h3>
+                    <p>No fake 3D models. Every item you see is a real product you can purchase today.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Results</h3>
+                    <p>Get professional interior design results in seconds, not days. No appointments needed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Best Prices</h3>
+                    <p>We automatically find the best prices for the furniture pieces in your generated design.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Any Room Type</h3>
+                    <p>Works perfectly for living rooms, bedrooms, offices, dining areas, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Multiple Styles</h3>
+                    <p>Switch between Modern, Bohemian, Industrial, or Scandinavian styles with one click.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Design on the go. Our platform is fully optimized for all mobile devices.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials">
-        <h2>Hear From Our Users</h2>
-        <div class="testimonial-grid">
-            <div class="testimonial">
-                <p class="testimonial-text">
-                    "I uploaded a photo of my empty apartment and instantly saw it furnished! Best part - I clicked and bought the exact sofa and coffee table I saw. Everything fit perfectly when it arrived!"
-                </p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Sarah+J&background=e5e7eb&color=111827" alt="Sarah J">
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Loved by Homeowners</h2>
+                <p>See what people are creating with Dikoora</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <div class="author-info">
-                        <h4>Sarah J.</h4>
-                        <p>Homeowner</p>
+                    <p class="quote">"I couldn't visualize how to furnish my new apartment. Dikoora showed me exactly what to buy. I bought the whole room set!"</p>
+                    <div class="author">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+J&background=e0e7ff&color=4F46E5" alt="Sarah">
+                        <div class="author-info">
+                            <h4>Sarah Jenkins</h4>
+                            <p>Homeowner</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial">
-                <p class="testimonial-text">
-                    "As a real estate agent, I use Dikoora daily for virtual staging. Showing empty homes with real, purchasable furniture has increased my sales by 40%. Buyers love being able to buy what they see!"
-                </p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Mark+T&background=e5e7eb&color=111827" alt="Mark T">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <div class="author-info">
-                        <h4>Mark T.</h4>
-                        <p>Interior Designer</p>
+                    <p class="quote">"As a realtor, this helps me sell empty homes so much faster. The virtual staging looks incredibly realistic."</p>
+                    <div class="author">
+                        <img src="https://ui-avatars.com/api/?name=Mike+T&background=dcfce7&color=10b981" alt="Mike">
+                        <div class="author-info">
+                            <h4>Mike Thompson</h4>
+                            <p>Real Estate Agent</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <h2>Ready to Furnish Your Empty Room?</h2>
-        <p>See your space transformed instantly with real furniture you can buy. Upload a photo and start shopping your perfectly designed room in seconds!</p>
-        <a href="design.html" class="btn-cta">Upload Your Room - It's Free</a>
-    </section>
+    <!-- CTA -->
+    <div class="container">
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Space?</h2>
+                <p>Join thousands of users designing their dream homes today. No credit card required.</p>
+                <a href="design.html" class="btn-white">Start Designing for Free</a>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-left">
-                © 2025 Dikoora. All rights reserved.
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>
+                        <i class="fas fa-shapes"></i> Dikoora
+                    </h3>
+                    <p>AI-powered interior design that helps you visualize and furnish your empty spaces instantly.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Showcase</a></li>
+                        <li><a href="#">For Realtors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="footer-links">
-                <li><a href="#privacy">Privacy Policy</a></li>
-                <li><a href="#terms">Terms of Service</a></li>
-                <li><a href="#sitemap">Sitemap</a></li>
-            </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dikoora. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
-    <div class="made-with">
-        Made with Visily
-    </div>
+    <script>
+        // Comparison Slider Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.comparison-slider');
+            const container = document.getElementById('comparisonContainer');
+            const handle = document.querySelector('.comparison-slider-handle');
+            const beforeContainer = document.getElementById('beforeContainer');
+            const beforeImage = beforeContainer.querySelector('.comparison-before');
+
+            if (!slider || !handle || !beforeContainer || !beforeImage) return;
+
+            let isMouseDown = false;
+            let currentX = 0;
+            let initialX = 0;
+            let sliderRect = null;
+
+            // Set initial width of before image to match container
+            function setBeforeImageWidth() {
+                if (container) {
+                    beforeImage.style.width = container.offsetWidth + 'px';
+                }
+            }
+
+            // Initialize
+            setBeforeImageWidth();
+            window.addEventListener('resize', setBeforeImageWidth);
+
+            // Function to update slider position
+            function updateSliderPosition(x) {
+                sliderRect = slider.getBoundingClientRect();
+                const offsetX = x - sliderRect.left;
+                const percentage = (offsetX / sliderRect.width) * 100;
+
+                // Limit percentage between 0 and 100
+                const clampedPercentage = Math.max(0, Math.min(100, percentage));
+
+                // Update the before container width (clipping mask) and handle position
+                beforeContainer.style.width = clampedPercentage + '%';
+                handle.style.left = clampedPercentage + '%';
+            }
+
+            // Mouse events
+            handle.addEventListener('mousedown', function(e) {
+                isMouseDown = true;
+                initialX = e.clientX;
+                e.preventDefault();
+                document.body.style.cursor = 'col-resize';
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isMouseDown) return;
+                currentX = e.clientX;
+                updateSliderPosition(currentX);
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (!isMouseDown) return;
+                isMouseDown = false;
+                document.body.style.cursor = 'default';
+            });
+
+            // Touch events for mobile
+            handle.addEventListener('touchstart', function(e) {
+                isMouseDown = true;
+                initialX = e.touches[0].clientX;
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchmove', function(e) {
+                if (!isMouseDown) return;
+                currentX = e.touches[0].clientX;
+                updateSliderPosition(currentX);
+            });
+
+            document.addEventListener('touchend', function() {
+                if (!isMouseDown) return;
+                isMouseDown = false;
+            });
+
+            // Optional: Click anywhere on the slider to move handle
+            slider.addEventListener('click', function(e) {
+                if (e.target === handle || handle.contains(e.target)) return;
+                updateSliderPosition(e.clientX);
+            });
+        });
+    </script>
 </body>
 </html>

@@ -4,268 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Features - Dikoora | AI Room Design with Shoppable Furniture</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            background: white;
-            color: #1f2937;
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 60px;
-            background: white;
-            border-bottom: 1px solid #f3f4f6;
-            position: relative;
-            height: 70px;
-        }
-
-        .logo {
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            z-index: 10;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #2563eb;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .hero-section h1 {
-            font-size: 48px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 20px;
-        }
-
-        .hero-section p {
-            font-size: 20px;
-            color: #475569;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Features Grid */
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .feature-category {
-            margin-bottom: 80px;
-        }
-
-        .category-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transform: translateY(-4px);
-        }
-
-        .feature-icon {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 15px;
-        }
-
-        .feature-description {
-            font-size: 15px;
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .feature-tag {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-top: 15px;
-            font-weight: 500;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: #0f172a;
-            color: white;
-            padding: 80px 60px;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
-        .btn-cta {
-            display: inline-block;
-            padding: 16px 40px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-cta:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            background: #f8fafc;
-            padding: 40px 60px;
-            text-align: center;
-            color: #64748b;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        footer a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero-section h1 {
-                font-size: 32px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .features-container {
-                padding: 60px 20px;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="logo">
-            <img src="logo.png" alt="Dikoora">
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="features.html" class="active">Features</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html" class="active">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html" class="nav-btn">Get Started</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <h1>Powerful Features for Every User</h1>
-        <p>From homeowners to real estate professionals, Dikoora provides the tools you need to transform empty spaces into beautifully furnished rooms with real, shoppable products.</p>
+    <section class="hero hero-centered">
+        <div class="container hero-content-wrapper">
+            <div class="hero-text">
+                <h1>Powerful Features for Every User</h1>
+                <p>From homeowners to real estate professionals, Dikoora provides the tools you need to transform empty spaces into beautifully furnished rooms with real, shoppable products.</p>
+            </div>
+        </div>
     </section>
 
     <!-- Features Container -->
-    <div class="features-container">
+    <div class="container">
         <!-- Core Features -->
         <div class="feature-category">
             <h2 class="category-title">Core Features</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
                     <h3 class="feature-title">AI-Powered Staging</h3>
                     <p class="feature-description">Advanced AI analyzes your room's dimensions, lighting, and architecture to place furniture perfectly. Every item is sized correctly and positioned naturally.</p>
                     <span class="feature-tag">Powered by Gemini 2.0</span>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🛍️</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
                     <h3 class="feature-title">Real Products Only</h3>
                     <p class="feature-description">Every piece of furniture is an actual product available for purchase. See real prices, availability, and shipping times from trusted retailers.</p>
                     <span class="feature-tag">10,000+ Products</span>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
                     <h3 class="feature-title">Instant Results</h3>
                     <p class="feature-description">No waiting for designers or rendering queues. Upload your photo and see your furnished room in under 5 seconds.</p>
                     <span class="feature-tag">5 Second Processing</span>
@@ -278,17 +74,23 @@
             <h2 class="category-title">Shopping Experience</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🛒</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
                     <h3 class="feature-title">One-Click Purchase</h3>
                     <p class="feature-description">Click any item in your design to buy it directly from the retailer. No searching, no guessing - just click and buy.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💰</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
                     <h3 class="feature-title">Price Transparency</h3>
                     <p class="feature-description">See total room costs upfront. Filter by budget, compare alternatives, and find the best deals from multiple retailers.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📦</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
                     <h3 class="feature-title">Shopping List Export</h3>
                     <p class="feature-description">Download a complete shopping list with product names, prices, dimensions, and direct purchase links for every item.</p>
                 </div>
@@ -297,15 +99,57 @@
     </div>
 
     <!-- CTA Section -->
-    <section class="cta-section">
-        <h2>Ready to See These Features in Action?</h2>
-        <p>Transform your empty room with real, shoppable furniture in seconds.</p>
-        <a href="design.html" class="btn-cta">Try Dikoora Free</a>
-    </section>
+    <div class="container">
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to See These Features in Action?</h2>
+                <p>Transform your empty room with real, shoppable furniture in seconds.</p>
+                <a href="design.html" class="btn-white">Try Dikoora Free</a>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Dikoora. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>
+                        <i class="fas fa-shapes"></i> Dikoora
+                    </h3>
+                    <p>AI-powered interior design that helps you visualize and furnish your empty spaces instantly.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Showcase</a></li>
+                        <li><a href="#">For Realtors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dikoora. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
