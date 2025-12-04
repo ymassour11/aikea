@@ -2333,53 +2333,76 @@
                 useCurrentFurnitureBtn.disabled = true;
                 updateLoadingStep(1);
 
-                // Step 1: Search for furniture with STREAMING (products appear as they're found)
+                // Step 1: Search for furniture (try streaming first, fallback to regular API)
                 resetProductDisplay();
                 currentFurniture = [];
 
-                const streamUrl = `/api/search-room-stream?roomType=${encodeURIComponent(roomType)}&color=${encodeURIComponent(color)}&priceFilters=${encodeURIComponent(JSON.stringify(priceFilters))}`;
+                let useStreaming = true;
 
-                await new Promise((resolve, reject) => {
-                    const eventSource = new EventSource(streamUrl);
+                // Try streaming first
+                try {
+                    const streamUrl = `/api/search-room-stream?roomType=${encodeURIComponent(roomType)}&color=${encodeURIComponent(color)}&priceFilters=${encodeURIComponent(JSON.stringify(priceFilters))}`;
 
-                    eventSource.onmessage = (event) => {
-                        const data = JSON.parse(event.data);
+                    await new Promise((resolve, reject) => {
+                        const eventSource = new EventSource(streamUrl);
 
-                        if (data.type === 'start') {
-                            console.log(`🚀 Streaming started: ${data.total} categories`);
-                        } else if (data.type === 'product') {
-                            // Add product immediately as it arrives
-                            currentFurniture.push(data.item);
-                            addSingleProduct(data.item);
-                            console.log(`📦 [${data.progress}/${data.total}] ${data.item.category}`);
-                        } else if (data.type === 'complete') {
-                            console.log(`✅ Streaming complete: ${data.count} products`);
-                            originalFurniture = [...currentFurniture];
-                            eventSource.close();
-                            resolve();
-                        }
-                    };
+                        eventSource.onmessage = (event) => {
+                            const data = JSON.parse(event.data);
 
-                    eventSource.onerror = (error) => {
-                        console.error('SSE Error:', error);
-                        eventSource.close();
-                        // Fallback to regular API if streaming fails
-                        reject(new Error('Streaming failed, falling back...'));
-                    };
-
-                    // Timeout after 60 seconds
-                    setTimeout(() => {
-                        if (eventSource.readyState !== EventSource.CLOSED) {
-                            eventSource.close();
-                            if (currentFurniture.length > 0) {
+                            if (data.type === 'start') {
+                                console.log(`🚀 Streaming started: ${data.total} categories`);
+                            } else if (data.type === 'product') {
+                                // Add product immediately as it arrives
+                                currentFurniture.push(data.item);
+                                addSingleProduct(data.item);
+                                console.log(`📦 [${data.progress}/${data.total}] ${data.item.category}`);
+                            } else if (data.type === 'complete') {
+                                console.log(`✅ Streaming complete: ${data.count} products`);
                                 originalFurniture = [...currentFurniture];
+                                eventSource.close();
                                 resolve();
-                            } else {
-                                reject(new Error('Search timeout'));
                             }
-                        }
-                    }, 60000);
-                });
+                        };
+
+                        eventSource.onerror = (error) => {
+                            console.error('SSE Error:', error);
+                            eventSource.close();
+                            useStreaming = false;
+                            reject(new Error('Streaming not available'));
+                        };
+
+                        // Timeout after 60 seconds
+                        setTimeout(() => {
+                            if (eventSource.readyState !== EventSource.CLOSED) {
+                                eventSource.close();
+                                if (currentFurniture.length > 0) {
+                                    originalFurniture = [...currentFurniture];
+                                    resolve();
+                                } else {
+                                    useStreaming = false;
+                                    reject(new Error('Search timeout'));
+                                }
+                            }
+                        }, 60000);
+                    });
+                } catch (streamError) {
+                    // Fallback to regular API
+                    console.log('📦 Falling back to regular API...');
+                    const searchResponse = await fetch('/api/search-room', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ roomType, color, priceFilters })
+                    });
+
+                    const searchData = await searchResponse.json();
+                    if (!searchData.success) throw new Error(searchData.error || 'Search failed');
+
+                    currentFurniture = searchData.furniture || [];
+                    originalFurniture = [...currentFurniture];
+
+                    // Display products from regular API
+                    displayProducts(currentFurniture);
+                }
 
                 if (currentFurniture.length === 0) throw new Error('No furniture found');
                 updateLoadingStep(2);
