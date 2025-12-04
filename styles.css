@@ -25,7 +25,7 @@
 
 body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg-white);
+    background: transparent;
     color: var(--text-main);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -50,7 +50,7 @@ nav {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
@@ -73,7 +73,7 @@ nav {
 }
 
 .logo img {
-    height: 40px;
+    height: 60px;
     width: auto;
 }
 
@@ -98,24 +98,61 @@ nav {
     color: var(--primary);
 }
 
-.nav-btn {
-    padding: 10px 20px;
-    background: var(--text-main);
-    color: white !important;
-    border-radius: var(--radius-full);
-    transition: transform 0.2s, background-color 0.2s;
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
-.nav-btn:hover {
+.btn-login {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: var(--radius-full);
+    transition: all 0.2s;
+}
+
+.btn-login:hover {
+    color: var(--primary);
+    background: var(--bg-light);
+}
+
+.nav-buttons .nav-btn,
+a.nav-btn,
+button.nav-btn {
+    padding: 10px 20px !important;
+    background: #4F46E5 !important;
+    background-color: #4F46E5 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 0.75rem !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3) !important;
+    cursor: pointer !important;
+}
+
+.nav-buttons .nav-btn:hover,
+a.nav-btn:hover,
+button.nav-btn:hover {
     transform: translateY(-1px);
-    background: #000;
+    background: #4338ca !important;
+    background-color: #4338ca !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4) !important;
 }
 
 /* Hero Section Common */
 .hero {
     padding-top: 140px;
     padding-bottom: 100px;
-    background: radial-gradient(circle at 50% 0%, #f0f9ff 0%, #ffffff 100%);
+    background: transparent;
     overflow: hidden;
     position: relative;
 }
@@ -250,7 +287,8 @@ nav {
 .comparison-slider-container {
     position: relative;
     width: 100%;
-    padding-bottom: 75%; /* 4:3 aspect ratio */
+    padding-bottom: 75%;
+    /* 4:3 aspect ratio */
     overflow: hidden;
     background: #f0f0f0;
 }
@@ -380,9 +418,17 @@ nav {
 }
 
 @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
 .hero-badge-icon {
@@ -431,7 +477,7 @@ section {
     background: white;
     padding: 32px;
     border-radius: 20px;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -545,7 +591,7 @@ section {
     background: white;
     border-radius: 50%;
     transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .toggle-switch.active .toggle-slider {
@@ -571,7 +617,7 @@ section {
 
 .pricing-card {
     background: white;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 24px;
     padding: 40px;
     position: relative;
@@ -617,7 +663,8 @@ section {
     font-size: 15px;
     color: var(--text-muted);
     margin-bottom: 32px;
-    height: 48px; /* Fixed height for alignment */
+    height: 48px;
+    /* Fixed height for alignment */
 }
 
 .plan-price {
@@ -721,7 +768,7 @@ section {
 
 /* Steps Section */
 .steps-section {
-    background: #f8fafc;
+    background: transparent;
 }
 
 .steps-container {
@@ -778,7 +825,7 @@ section {
     padding: 40px;
     border-radius: 24px;
     box-shadow: var(--shadow-md);
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .stars {
@@ -838,7 +885,7 @@ section {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+    background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
 }
 
 .cta-content {
@@ -875,7 +922,7 @@ section {
 
 .btn-white:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
@@ -892,6 +939,23 @@ footer {
     margin-bottom: 60px;
 }
 
+.footer-logo {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.footer-logo-img {
+    height: 50px;
+    width: auto;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+    filter: brightness(0) invert(1);
+}
+
+.footer-logo:hover .footer-logo-img {
+    opacity: 1;
+}
+
 .footer-brand h3 {
     font-size: 24px;
     font-weight: 800;
@@ -905,6 +969,32 @@ footer {
     color: #9ca3af;
     font-size: 15px;
     max-width: 300px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.footer-social a:hover {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    transform: translateY(-2px);
 }
 
 .footer-col h4 {
@@ -939,6 +1029,16 @@ footer {
     text-align: center;
     color: #6b7280;
     font-size: 14px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.footer-tagline {
+    margin-top: 8px !important;
+    font-size: 13px;
+    color: #4b5563;
 }
 
 /* Form Styles */
@@ -1010,7 +1110,7 @@ footer {
 
 .contact-form-section {
     background: white;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 24px;
     padding: 40px;
     box-shadow: var(--shadow-lg);
@@ -1110,7 +1210,10 @@ footer {
         display: none;
     }
 
-    .features-grid, .testimonials-grid, .steps-container, .pricing-grid {
+    .features-grid,
+    .testimonials-grid,
+    .steps-container,
+    .pricing-grid {
         grid-template-columns: 1fr;
         gap: 40px;
     }
@@ -1123,12 +1226,649 @@ footer {
     .hero-text h1 {
         font-size: 40px;
     }
-    
+
     .pricing-card.popular {
         transform: scale(1);
     }
-    
+
     .contact-container {
         grid-template-columns: 1fr;
     }
+}
+
+/* Interactive Background */
+#interactive-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: var(--bg-white);
+}
+
+/* Design Page Specific Styles */
+
+/* Zillow Main Container */
+.zillow-main-container {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    height: calc(100vh - 60px);
+    background: #f9fafb;
+    position: relative;
+    z-index: 10;
+}
+
+.zillow-room-viewer {
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+.zillow-room-viewer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--room-bg-image);
+    background-size: cover;
+    background-position: center;
+    filter: blur(50px) brightness(2.5) saturate(0.5);
+    opacity: 0.25;
+    z-index: 0;
+}
+
+/* Mobile Main Container */
+@media (max-width: 768px) {
+    .zillow-main-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: calc(100vh - 60px);
+    }
+
+    .zillow-room-viewer {
+        min-height: 50vh;
+        padding: 15px;
+    }
+}
+
+/* Upload Overlay */
+.upload-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+}
+
+.upload-overlay.active {
+    display: flex;
+}
+
+/* Preview Overlay */
+.preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    backdrop-filter: blur(5px);
+}
+
+.preview-overlay.active {
+    display: flex;
+}
+
+.preview-overlay-content {
+    text-align: center;
+    color: white;
+    max-width: 500px;
+    padding: 40px;
+}
+
+.preview-overlay-content h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.preview-overlay-content p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 32px;
+}
+
+.btn-design-large {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.btn-design-large:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+}
+
+.btn-change-image {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.btn-change-image:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+
+    .preview-overlay-content,
+    .upload-overlay-content {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .preview-overlay-content h3,
+    .upload-overlay-content h3 {
+        font-size: 22px;
+    }
+
+    .preview-overlay-content p,
+    .upload-overlay-content p {
+        font-size: 14px;
+    }
+
+    .btn-design-large,
+    .btn-upload-large {
+        padding: 14px 32px;
+        font-size: 16px;
+    }
+
+    .upload-icon-large {
+        font-size: 60px;
+    }
+}
+
+.upload-overlay-content {
+    text-align: center;
+    color: white;
+    max-width: 500px;
+    padding: 40px;
+}
+
+.upload-icon-large {
+    font-size: 80px;
+    margin-bottom: 24px;
+}
+
+.upload-overlay-content h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.upload-overlay-content p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 32px;
+}
+
+.btn-upload-large {
+    background: #0066ff;
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-upload-large:hover {
+    background: #0052cc;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 30;
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #0066ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 24px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text-overlay {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.loading-subtext {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+
+/* Error Overlay */
+.error-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(220, 38, 38, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 25;
+}
+
+.error-overlay.active {
+    display: flex;
+}
+
+.error-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.error-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.btn-try-again {
+    background: white;
+    color: #dc2626;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Replace Image Button */
+.btn-replace-image {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.btn-replace-image.active {
+    display: flex;
+}
+
+.btn-replace-image:hover {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Empty State */
+.furniture-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.furniture-empty-state.hidden {
+    display: none;
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    opacity: 0.5;
+}
+
+.furniture-empty-state h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.furniture-empty-state p {
+    font-size: 14px;
+    color: #6b7280;
+    max-width: 300px;
+}
+
+.zillow-room-image {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .zillow-room-image {
+        max-height: 50vh;
+        max-width: 100%;
+    }
+}
+
+.zillow-furniture-sidebar {
+    background: white;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .zillow-furniture-sidebar {
+        max-height: 60vh;
+    }
+}
+
+.zillow-sidebar-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.zillow-sidebar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+}
+
+.zillow-sort-dropdown {
+    font-size: 14px;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.zillow-furniture-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 24px;
+}
+
+@media (max-width: 768px) {
+    .zillow-furniture-grid {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 12px;
+    }
+}
+
+.zillow-product-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.zillow-product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.zillow-product-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.zillow-product-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.zillow-product-info {
+    padding: 12px;
+}
+
+@media (max-width: 768px) {
+    .zillow-product-info {
+        padding: 10px;
+    }
+
+    .zillow-product-image {
+        height: 180px;
+    }
+}
+
+.zillow-product-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+.zillow-btn-buy {
+    width: 100%;
+    padding: 10px;
+    background: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.zillow-btn-buy:hover {
+    background: #0052cc;
+}
+
+/* Design Hero Section */
+.design-hero {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    padding: 100px 100px 80px 100px;
+    align-items: center;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 700px;
+    background: transparent;
+}
+
+.design-hero.design-active {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+    padding: 30px 40px 60px 40px;
+    gap: 36px;
+    min-height: auto;
+}
+
+.design-hero-content {
+    max-width: 600px;
+    transition: opacity 0.5s ease-out;
+}
+
+.design-hero.design-active .design-hero-content {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    display: none;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(139, 195, 74, 0.15);
+    border: 1px solid rgba(139, 195, 74, 0.4);
+    border-radius: 6px;
+    color: #558B2F;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    letter-spacing: 0.3px;
+}
+
+.design-hero h1 {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
+    color: #0a0e27;
+}
+
+.design-hero-description {
+    font-size: 22px;
+    color: rgba(10, 14, 39, 0.75);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.design-hero-description strong {
+    color: #0a0e27;
+    font-weight: 600;
+}
+
+.btn-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 48px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #0a0e27 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: all 0.2s;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 14px rgba(30, 58, 138, 0.4);
+}
+
+.btn-upload:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #0f1629 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.6);
+}
+
+.upload-icon {
+    font-size: 20px;
+}
+
+.upload-note {
+    font-size: 14px;
+    color: rgba(10, 14, 39, 0.5);
+    margin-top: 16px;
+    font-weight: 500;
+}
+
+/* Design Hero Image */
+.design-hero-image {
+    position: relative;
+    perspective: 1000px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+}
+
+.design-hero.design-active .design-hero-image {
+    grid-column: 1 / -1;
 }

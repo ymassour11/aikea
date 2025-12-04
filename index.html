@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dikoora - Transform Your Space with AI-Powered Room Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+
+<body class="font-sans text-gray-900 antialiased bg-gray-50">
+    <div id="interactive-background-container"></div>
+    <script src="js/interactive-background.js"></script>
+
     <!-- Navigation -->
     <nav>
         <div class="container nav-container">
@@ -21,8 +27,11 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="features.html">Features</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="design.html" class="nav-btn">Get Started</a></li>
             </ul>
+            <div class="nav-buttons">
+                <button class="btn-login" onclick="openAuthModal('login')">Log in</button>
+                <a href="design.html" class="nav-btn">Get Started</a>
+            </div>
         </div>
     </nav>
 
@@ -30,12 +39,12 @@
     <section class="hero" id="home">
         <div class="container hero-content-wrapper">
             <div class="hero-text">
-                <h1>Design Your Dream Room Instantly with AI</h1>
-                <p>Upload a photo of your empty room and get it professionally staged with real, shoppable furniture from top brands in seconds.</p>
+                <h1>REIMAGINE<br><span style="font-weight: 400;">Empty Space.</span></h1>
+                <p>Upload a photo of your empty room. Our AI interior designer stages it instantly with real, curated furniture you can actually buy.</p>
                 <div class="hero-buttons">
-                    <a href="design.html" class="btn btn-primary">
-                        <i class="fas fa-magic"></i> Design My Room
-                    </a>
+                    <button onclick="handleGetStarted()" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Get Started Free
+                    </button>
                     <a href="#how-it-works" class="btn btn-secondary">
                         See How It Works
                     </a>
@@ -166,7 +175,8 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="quote">"I couldn't visualize how to furnish my new apartment. Dikoora showed me exactly what to buy. I bought the whole room set!"</p>
+                    <p class="quote">"I couldn't visualize how to furnish my new apartment. Dikoora showed me exactly
+                        what to buy. I bought the whole room set!"</p>
                     <div class="author">
                         <img src="https://ui-avatars.com/api/?name=Sarah+J&background=e0e7ff&color=4F46E5" alt="Sarah">
                         <div class="author-info">
@@ -183,7 +193,8 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="quote">"As a realtor, this helps me sell empty homes so much faster. The virtual staging looks incredibly realistic."</p>
+                    <p class="quote">"As a realtor, this helps me sell empty homes so much faster. The virtual staging
+                        looks incredibly realistic."</p>
                     <div class="author">
                         <img src="https://ui-avatars.com/api/?name=Mike+T&background=dcfce7&color=10b981" alt="Mike">
                         <div class="author-info">
@@ -202,7 +213,7 @@
             <div class="cta-content">
                 <h2>Ready to Transform Your Space?</h2>
                 <p>Join thousands of users designing their dream homes today. No credit card required.</p>
-                <a href="design.html" class="btn-white">Start Designing for Free</a>
+                <button onclick="handleGetStarted()" class="btn-white">Start Designing for Free</button>
             </div>
         </section>
     </div>
@@ -212,47 +223,54 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <h3>
-                        <i class="fas fa-shapes"></i> Dikoora
-                    </h3>
+                    <a href="index.html" class="footer-logo">
+                        <img src="logo.png" alt="Dikoora" class="footer-logo-img">
+                    </a>
                     <p>AI-powered interior design that helps you visualize and furnish your empty spaces instantly.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
                 <div class="footer-col">
                     <h4>Product</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Showcase</a></li>
-                        <li><a href="#">For Realtors</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="design.html">Design Tool</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Company</h4>
+                    <h4>Account</h4>
                     <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="profile.html#designs">My Designs</a></li>
+                        <li><a href="subscription.html">Subscription</a></li>
+                        <li><a href="mailto:support@dikoora.com">Support</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Legal</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="cookies.html">Cookie Policy</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Dikoora. All rights reserved.</p>
+                <p class="footer-tagline">Made with AI for beautiful spaces</p>
             </div>
         </div>
     </footer>
 
     <script>
         // Comparison Slider Functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const slider = document.querySelector('.comparison-slider');
             const container = document.getElementById('comparisonContainer');
             const handle = document.querySelector('.comparison-slider-handle');
@@ -292,49 +310,62 @@
             }
 
             // Mouse events
-            handle.addEventListener('mousedown', function(e) {
+            handle.addEventListener('mousedown', function (e) {
                 isMouseDown = true;
                 initialX = e.clientX;
                 e.preventDefault();
                 document.body.style.cursor = 'col-resize';
             });
 
-            document.addEventListener('mousemove', function(e) {
+            document.addEventListener('mousemove', function (e) {
                 if (!isMouseDown) return;
                 currentX = e.clientX;
                 updateSliderPosition(currentX);
             });
 
-            document.addEventListener('mouseup', function() {
+            document.addEventListener('mouseup', function () {
                 if (!isMouseDown) return;
                 isMouseDown = false;
                 document.body.style.cursor = 'default';
             });
 
             // Touch events for mobile
-            handle.addEventListener('touchstart', function(e) {
+            handle.addEventListener('touchstart', function (e) {
                 isMouseDown = true;
                 initialX = e.touches[0].clientX;
                 e.preventDefault();
             });
 
-            document.addEventListener('touchmove', function(e) {
+            document.addEventListener('touchmove', function (e) {
                 if (!isMouseDown) return;
                 currentX = e.touches[0].clientX;
                 updateSliderPosition(currentX);
             });
 
-            document.addEventListener('touchend', function() {
+            document.addEventListener('touchend', function () {
                 if (!isMouseDown) return;
                 isMouseDown = false;
             });
 
             // Optional: Click anywhere on the slider to move handle
-            slider.addEventListener('click', function(e) {
+            slider.addEventListener('click', function (e) {
                 if (e.target === handle || handle.contains(e.target)) return;
                 updateSliderPosition(e.clientX);
             });
         });
     </script>
+    <!-- Interactive Background -->
+
+    <!-- Auth Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth-modal.js"></script>
+    <script>
+        // Handle Get Started button - always go to design page (auth check happens on Generate Design click)
+        function handleGetStarted() {
+            window.location.href = 'design.html';
+        }
+    </script>
 </body>
+
 </html>
