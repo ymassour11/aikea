@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Dikoora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            color: #1a1a2e;
+        }
+
+        nav {
+            background: white;
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .checkout-wrapper {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .checkout-header {
+            margin-bottom: 32px;
+        }
+
+        .checkout-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .checkout-header p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 32px;
+        }
+
+        .order-summary {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .order-summary h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #1a1a2e;
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .plan-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .plan-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .plan-price {
+            margin: 16px 0;
+        }
+
+        .plan-price .amount {
+            font-size: 36px;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .plan-price .period {
+            font-size: 16px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            color: #4b5563;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features li i {
+            color: #10b981;
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .order-details {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .order-row.total {
+            border-top: 2px solid #e5e7eb;
+            margin-top: 12px;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .order-row .label {
+            color: #6b7280;
+        }
+
+        .order-row.total .label,
+        .order-row.total .value {
+            color: #1a1a2e;
+        }
+
+        .savings-badge {
+            background: #ecfdf5;
+            color: #059669;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .payment-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+        }
+
+        .payment-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+
+        .payment-section .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        .payment-methods {
+            margin-bottom: 24px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .payment-method:hover {
+            border-color: #667eea;
+        }
+
+        .payment-method.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .payment-method input {
+            display: none;
+        }
+
+        .payment-method .radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .payment-method.selected .radio {
+            border-color: #667eea;
+        }
+
+        .payment-method.selected .radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #667eea;
+            border-radius: 50%;
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-name {
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .payment-method-desc {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .payment-method-icon {
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .checkout-btn i {
+            font-size: 18px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .secure-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .secure-notice i {
+            color: #10b981;
+        }
+
+        .guarantee-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .guarantee-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guarantee-box p {
+            font-size: 13px;
+            color: #15803d;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .trust-badge i {
+            color: #667eea;
+        }
+
+        @media (max-width: 900px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-section {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .checkout-wrapper {
+                margin: 20px auto;
+            }
+
+            .order-summary,
+            .payment-section {
+                padding: 24px;
+            }
+
+            .plan-price .amount {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="checkout-wrapper">
+        <div class="checkout-header">
+            <h1>Complete Your Order</h1>
+            <p>You're just one step away from unlocking unlimited AI room designs</p>
+        </div>
+
+        <div class="checkout-grid">
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+
+                <div class="plan-card">
+                    <div class="plan-card-header">
+                        <span class="plan-name" id="planName">Professional Plan</span>
+                        <span class="plan-badge">BEST VALUE</span>
+                    </div>
+
+                    <div class="plan-price">
+                        <span class="amount" id="planAmount">$14.99</span>
+                        <span class="period" id="planPeriod">/month</span>
+                    </div>
+
+                    <ul class="plan-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Unlimited room designs
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Priority AI processing
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            High-resolution exports (4K)
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Commercial usage rights
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            All design styles included
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Priority email support
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="order-details">
+                    <div class="order-row">
+                        <span class="label">Subtotal</span>
+                        <span class="value" id="subtotal">$14.99</span>
+                    </div>
+                    <div class="order-row" id="discountRow" style="display: none;">
+                        <span class="label">Annual Discount</span>
+                        <span class="value" style="color: #059669;" id="discount">-$36.00</span>
+                    </div>
+                    <div class="order-row total">
+                        <span class="label">Total</span>
+                        <span class="value" id="total">$14.99</span>
+                    </div>
+                </div>
+
+                <div class="savings-badge" id="savingsBadge" style="display: none;">
+                    <i class="fas fa-tag"></i>
+                    <span id="savingsText">You're saving $36/year!</span>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <h2>Payment Method</h2>
+                <p class="subtitle">All transactions are secure and encrypted</p>
+
+                <div id="errorMessage" class="error-message"></div>
+
+                <div class="payment-methods">
+                    <label class="payment-method selected">
+                        <input type="radio" name="payment" value="card" checked>
+                        <span class="radio"></span>
+                        <div class="payment-method-info">
+                            <div class="payment-method-name">Credit / Debit Card</div>
+                            <div class="payment-method-desc">Visa, Mastercard, American Express</div>
+                        </div>
+                        <i class="fas fa-credit-card payment-method-icon"></i>
+                    </label>
+                </div>
+
+                <button class="checkout-btn" id="checkoutBtn" onclick="startCheckout()">
+                    <i class="fas fa-lock"></i>
+                    <span id="btnText">Pay Now</span>
+                </button>
+
+                <div class="secure-notice">
+                    <i class="fas fa-shield-alt"></i>
+                    Secured by Stripe. Your payment info is encrypted.
+                </div>
+
+                <div class="guarantee-box">
+                    <h4>
+                        <i class="fas fa-check-circle"></i>
+                        30-Day Money Back Guarantee
+                    </h4>
+                    <p>Not satisfied? Get a full refund within 30 days, no questions asked.</p>
+                </div>
+
+                <a href="pricing.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Pricing
+                </a>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="fas fa-lock"></i>
+                        SSL Secure
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        256-bit Encryption
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/supabase.js"></script>
+    <script>
+        let selectedPlan = 'pro';
+        let billingCycle = 'monthly';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get plan and billing from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            selectedPlan = urlParams.get('plan') || 'pro';
+            billingCycle = urlParams.get('billing') || 'monthly';
+
+            // Update display based on billing cycle
+            updatePriceDisplay();
+
+            // Check if user is logged in
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'pricing.html';
+                return;
+            }
+        });
+
+        function updatePriceDisplay() {
+            const planName = document.getElementById('planName');
+            const planAmount = document.getElementById('planAmount');
+            const planPeriod = document.getElementById('planPeriod');
+            const subtotal = document.getElementById('subtotal');
+            const total = document.getElementById('total');
+            const discountRow = document.getElementById('discountRow');
+            const savingsBadge = document.getElementById('savingsBadge');
+            const btnText = document.getElementById('btnText');
+
+            if (billingCycle === 'annual') {
+                planName.textContent = 'Professional Plan (Annual)';
+                planAmount.textContent = '$143.88';
+                planPeriod.textContent = '/year ($11.99/mo)';
+                subtotal.textContent = '$179.88';
+                total.textContent = '$143.88';
+                discountRow.style.display = 'flex';
+                savingsBadge.style.display = 'inline-flex';
+                btnText.textContent = 'Pay $143.88/year';
+            } else {
+                planName.textContent = 'Professional Plan';
+                planAmount.textContent = '$14.99';
+                planPeriod.textContent = '/month';
+                subtotal.textContent = '$14.99';
+                total.textContent = '$14.99';
+                discountRow.style.display = 'none';
+                savingsBadge.style.display = 'none';
+                btnText.textContent = 'Pay $14.99/month';
+            }
+        }
+
+        async function startCheckout() {
+            const btn = document.getElementById('checkoutBtn');
+            const btnText = document.getElementById('btnText');
+            const originalText = btnText.textContent;
+
+            btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+            btn.disabled = true;
+
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    throw new Error('Please log in to continue');
+                }
+
+                // Create Stripe checkout session
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${session.access_token}`
+                    },
+                    body: JSON.stringify({
+                        plan: selectedPlan,
+                        billing: billingCycle
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+
+                // Redirect to Stripe Checkout
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                showError(error.message);
+                btn.innerHTML = `<i class="fas fa-lock"></i> <span id="btnText">${originalText}</span>`;
+                btn.disabled = false;
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -22,8 +22,11 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="features.html" class="active">Features</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="contact.html" class="nav-btn">Get Started</a></li>
             </ul>
+            <div class="nav-buttons">
+                <button class="btn-login" onclick="openAuthModal('login')">Log in</button>
+                <a href="design.html" class="nav-btn">Get Started</a>
+            </div>
         </div>
     </nav>
 
@@ -105,7 +108,7 @@
             <div class="cta-content">
                 <h2>Ready to See These Features in Action?</h2>
                 <p>Transform your empty room with real, shoppable furniture in seconds.</p>
-                <a href="design.html" class="btn-white">Try Dikoora Free</a>
+                <button onclick="openAuthModal('signup')" class="btn-white">Try Dikoora Free</button>
             </div>
         </section>
     </div>
@@ -152,5 +155,10 @@
             </div>
         </div>
     </footer>
+
+    <!-- Auth Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth-modal.js"></script>
 </body>
 </html>

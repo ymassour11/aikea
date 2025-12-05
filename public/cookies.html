@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Cookie Policy - Dikoora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-page {
+            padding: 120px 0 80px;
+            min-height: 100vh;
+        }
+
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .legal-header {
+            margin-bottom: 48px;
+        }
+
+        .legal-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 16px;
+        }
+
+        .legal-header .last-updated {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .legal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .legal-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 32px 0 16px;
+        }
+
+        .legal-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .legal-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin: 24px 0 12px;
+        }
+
+        .legal-content p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .legal-content ul {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .legal-content ul li {
+            margin-bottom: 8px;
+        }
+
+        .legal-content a {
+            color: #4F46E5;
+            text-decoration: none;
+        }
+
+        .legal-content a:hover {
+            text-decoration: underline;
+        }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .cookie-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .cookie-table td {
+            color: #4b5563;
+        }
+
+        .cookie-table tr:hover td {
+            background: #f9fafb;
+        }
+
+        @media (max-width: 768px) {
+            .legal-header h1 {
+                font-size: 2rem;
+            }
+
+            .legal-content {
+                padding: 32px 24px;
+            }
+
+            .cookie-table {
+                font-size: 0.8rem;
+            }
+
+            .cookie-table th,
+            .cookie-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-900 antialiased bg-gray-50">
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="btn-login" onclick="openAuthModal('login')">Log in</button>
+                <a href="design.html" class="nav-btn">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cookie Policy Content -->
+    <section class="legal-page">
+        <div class="legal-container">
+            <div class="legal-header">
+                <h1>Cookie Policy</h1>
+                <p class="last-updated">Last updated: January 2025</p>
+            </div>
+
+            <div class="legal-content">
+                <h2>1. What Are Cookies?</h2>
+                <p>Cookies are small text files that are stored on your device when you visit a website. They help websites remember your preferences, keep you logged in, and improve your overall experience.</p>
+
+                <h2>2. How We Use Cookies</h2>
+                <p>Dikoora uses cookies and similar technologies to:</p>
+                <ul>
+                    <li>Keep you signed in to your account</li>
+                    <li>Remember your preferences and settings</li>
+                    <li>Understand how you use our platform</li>
+                    <li>Improve our services and user experience</li>
+                    <li>Provide personalized content and recommendations</li>
+                    <li>Process payments securely</li>
+                </ul>
+
+                <h2>3. Types of Cookies We Use</h2>
+
+                <h3>Essential Cookies</h3>
+                <p>These cookies are necessary for the website to function properly. They enable core functionality such as security, authentication, and accessibility.</p>
+                <table class="cookie-table">
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                    <tr>
+                        <td>sb-auth-token</td>
+                        <td>Authentication and session management</td>
+                        <td>Session</td>
+                    </tr>
+                    <tr>
+                        <td>sb-refresh-token</td>
+                        <td>Maintains login state</td>
+                        <td>7 days</td>
+                    </tr>
+                </table>
+
+                <h3>Functional Cookies</h3>
+                <p>These cookies enable enhanced functionality and personalization, such as remembering your design preferences and room style choices.</p>
+                <table class="cookie-table">
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                    <tr>
+                        <td>design_preferences</td>
+                        <td>Remembers your room type and style preferences</td>
+                        <td>30 days</td>
+                    </tr>
+                    <tr>
+                        <td>color_preferences</td>
+                        <td>Stores your preferred color schemes</td>
+                        <td>30 days</td>
+                    </tr>
+                </table>
+
+                <h3>Analytics Cookies</h3>
+                <p>We use analytics cookies to understand how visitors interact with our platform. This helps us improve our services.</p>
+                <table class="cookie-table">
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                    <tr>
+                        <td>_ga</td>
+                        <td>Google Analytics - distinguishes users</td>
+                        <td>2 years</td>
+                    </tr>
+                    <tr>
+                        <td>_gid</td>
+                        <td>Google Analytics - identifies sessions</td>
+                        <td>24 hours</td>
+                    </tr>
+                </table>
+
+                <h3>Payment Cookies</h3>
+                <p>These cookies are used by our payment processor (Stripe) to enable secure transactions.</p>
+                <table class="cookie-table">
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                    <tr>
+                        <td>__stripe_mid</td>
+                        <td>Fraud prevention and detection</td>
+                        <td>1 year</td>
+                    </tr>
+                    <tr>
+                        <td>__stripe_sid</td>
+                        <td>Session identification for payments</td>
+                        <td>30 minutes</td>
+                    </tr>
+                </table>
+
+                <h2>4. Third-Party Cookies</h2>
+                <p>We may allow certain third-party services to place cookies on your device:</p>
+                <ul>
+                    <li><strong>Supabase:</strong> For authentication and database services</li>
+                    <li><strong>Stripe:</strong> For secure payment processing</li>
+                    <li><strong>Google Analytics:</strong> For website analytics (if enabled)</li>
+                </ul>
+
+                <h2>5. Managing Cookies</h2>
+                <p>You can control and manage cookies in several ways:</p>
+
+                <h3>Browser Settings</h3>
+                <p>Most web browsers allow you to manage cookies through their settings. You can:</p>
+                <ul>
+                    <li>Block all cookies</li>
+                    <li>Accept only first-party cookies</li>
+                    <li>Delete cookies when you close your browser</li>
+                    <li>Browse in "private" or "incognito" mode</li>
+                </ul>
+
+                <h3>Browser-Specific Instructions</h3>
+                <ul>
+                    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+                    <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+                    <li><a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+                    <li><a href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener">Microsoft Edge</a></li>
+                </ul>
+
+                <h2>6. Impact of Disabling Cookies</h2>
+                <p>Please note that disabling certain cookies may affect your experience on Dikoora:</p>
+                <ul>
+                    <li>You may not be able to stay logged in</li>
+                    <li>Your preferences may not be saved</li>
+                    <li>Some features may not work correctly</li>
+                    <li>Payment processing may be affected</li>
+                </ul>
+
+                <h2>7. Updates to This Policy</h2>
+                <p>We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We encourage you to review this policy periodically.</p>
+
+                <h2>8. Contact Us</h2>
+                <p>If you have any questions about our use of cookies, please contact us at:</p>
+                <p>Email: <a href="mailto:privacy@dikoora.com">privacy@dikoora.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <img src="logo.png" alt="Dikoora" class="footer-logo-img">
+                    </a>
+                    <p>AI-powered interior design that helps you visualize and furnish your empty spaces instantly.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="design.html">Design Tool</a></li>
+                        <li><a href="index.html#how-it-works">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="profile.html#designs">My Designs</a></li>
+                        <li><a href="subscription.html">Subscription</a></li>
+                        <li><a href="mailto:support@dikoora.com">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="cookies.html">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dikoora. All rights reserved.</p>
+                <p class="footer-tagline">Made with AI for beautiful spaces</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth-modal.js"></script>
+</body>
+
+</html>

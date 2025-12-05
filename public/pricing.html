@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Pricing - Dikoora | Simple, Transparent Pricing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .current-plan-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .pricing-card {
+            position: relative;
+        }
+        .plan-button button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #9ca3af !important;
+            color: #fff !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .plan-button button.subscribed {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: white !important;
+            cursor: default;
+        }
+        .user-banner {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: none;
+        }
+        .user-banner.show {
+            display: block;
+        }
+        .user-banner .current-plan {
+            color: #667eea;
+            font-weight: 600;
+        }
+        .login-prompt {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: none;
+        }
+        .login-prompt.show {
+            display: block;
+        }
+        .login-prompt a {
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html" class="active">Pricing</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="btn-login" onclick="openAuthModal('login')">Log in</button>
+                <a href="design.html" class="nav-btn">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Hero -->
+    <section class="hero hero-centered" style="padding-bottom: 40px;">
+        <div class="container hero-content-wrapper">
+            <div class="hero-text">
+                <h1>Simple, Transparent Pricing</h1>
+                <p>Start free, upgrade when you need more. Cancel anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Status Banners -->
+    <div class="container">
+        <div class="login-prompt" id="loginPrompt">
+            <i class="fas fa-info-circle"></i> Please <a href="index.html">sign in</a> to subscribe to a plan.
+        </div>
+        <div class="user-banner" id="userBanner">
+            You're currently on the <span class="current-plan" id="currentPlanName">Free Plan</span>
+        </div>
+    </div>
+
+    <!-- Pricing Toggle -->
+    <div class="container">
+        <div class="pricing-toggle">
+            <span class="toggle-label">Monthly</span>
+            <div class="toggle-switch" id="billingToggle">
+                <div class="toggle-slider"></div>
+            </div>
+            <span class="toggle-label">Annual</span>
+            <span class="save-badge">Save 20%</span>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card" data-plan="free">
+                <h3 class="plan-name">Free</h3>
+                <p class="plan-description">Perfect for homeowners designing their own space</p>
+                <div class="plan-price">$0<span>/month</span></div>
+                <p class="price-note">No credit card required</p>
+                <ul class="plan-features">
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> 5 room designs per month</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Access to all furniture brands</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Instant AI staging</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Shopping list export</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Basic email support</li>
+                </ul>
+                <div class="plan-button">
+                    <button class="btn btn-secondary" style="width: 100%" onclick="selectPlan('free', 0)">Current Plan</button>
+                </div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card popular" data-plan="pro">
+                <span class="popular-badge">Most Popular</span>
+                <h3 class="plan-name">Professional</h3>
+                <p class="plan-description">For real estate agents and property managers</p>
+                <div class="plan-price" id="proPrice" data-monthly="14.99" data-annual="11.99">$14.99<span>/month</span></div>
+                <p class="price-note">Billed monthly</p>
+                <ul class="plan-features">
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Unlimited room designs</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Priority AI processing</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Bulk upload (up to 50 rooms)</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Custom style presets</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> High-resolution exports</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Remove watermarks</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Priority support</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Commercial usage rights</li>
+                </ul>
+                <div class="plan-button">
+                    <button class="btn btn-primary" style="width: 100%" onclick="selectPlan('pro', 14.99)">Get Started</button>
+                </div>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card" data-plan="enterprise">
+                <h3 class="plan-name">Enterprise</h3>
+                <p class="plan-description">For brokerages and large teams</p>
+                <div class="plan-price">Custom</div>
+                <p class="price-note">Volume discounts available</p>
+                <ul class="plan-features">
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Everything in Professional</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Unlimited team members</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> API access</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Custom integrations</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> White-label options</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Dedicated account manager</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> Custom training</li>
+                    <li><span class="feature-check"><i class="fas fa-check"></i></span> SLA guarantee</li>
+                </ul>
+                <div class="plan-button">
+                    <button class="btn btn-secondary" style="width: 100%" onclick="contactSales()">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" style="background: #f8fafc; padding: 80px 0;">
+        <div class="container faq-container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Have questions? We have answers.</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does the affiliate commission model work?
+                    <span><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    We earn a small commission when users purchase furniture through our platform. This helps keep our service free for most users while ensuring we show real, available products from trusted retailers.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I cancel my subscription anytime?
+                    <span><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    Yes! You can cancel your subscription at any time. You'll continue to have access until the end of your billing period. No questions asked, no cancellation fees.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What payment methods do you accept?
+                    <span><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    We accept all major credit cards. All payments are processed securely through Stripe.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I upgrade or downgrade my plan?
+                    <span><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately and you'll be billed or credited the prorated amount.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do you offer discounts for annual billing?
+                    <span><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    Yes! Annual billing saves you 20% compared to monthly billing. Use the toggle above to see annual pricing.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What happens to my designs if I downgrade?
+                    <span><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    All your previous designs remain accessible even if you downgrade. You can always view and share them, but creating new designs will be subject to your new plan's limits.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>
+                        <i class="fas fa-shapes"></i> Dikoora
+                    </h3>
+                    <p>AI-powered interior design that helps you visualize and furnish your empty spaces instantly.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="designer.html">Design Tool</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="#">Showcase</a></li>
+                        <li><a href="#">For Realtors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dikoora. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script>
+        let currentUser = null;
+        let currentPlan = 'free';
+        let isAnnual = false;
+
+        // Plan configurations
+        const PLAN_NAMES = {
+            free: 'Free Plan',
+            pro: 'Professional Plan',
+            enterprise: 'Enterprise Plan'
+        };
+
+        const PLAN_LEVELS = {
+            free: 0,
+            pro: 1,
+            enterprise: 2
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize Supabase first
+            initSupabase();
+
+            await checkAuth();
+            setupBillingToggle();
+            setupFAQ();
+        });
+
+        async function checkAuth() {
+            try {
+                if (!supabase) {
+                    console.error('Supabase not initialized');
+                    document.getElementById('loginPrompt')?.classList.add('show');
+                    return;
+                }
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    currentUser = session.user;
+                    await loadCurrentPlan();
+                    document.getElementById('userBanner')?.classList.add('show');
+                } else {
+                    document.getElementById('loginPrompt')?.classList.add('show');
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                document.getElementById('loginPrompt')?.classList.add('show');
+            }
+        }
+
+        let subscriptionStatus = 'inactive';
+
+        async function loadCurrentPlan() {
+            if (!currentUser) return;
+
+            try {
+                const { data: profile } = await getProfile(currentUser.id);
+                if (profile) {
+                    currentPlan = profile.subscription_plan || 'free';
+                    subscriptionStatus = profile.subscription_status || 'inactive';
+                    document.getElementById('currentPlanName').textContent = PLAN_NAMES[currentPlan] || 'Free Plan';
+                    updateButtonStates();
+                }
+            } catch (error) {
+                console.error('Error loading plan:', error);
+            }
+        }
+
+        function updateButtonStates() {
+            const isProActive = currentPlan === 'pro' && subscriptionStatus === 'active';
+
+            document.querySelectorAll('.pricing-card').forEach(card => {
+                const plan = card.dataset.plan;
+                const btn = card.querySelector('.plan-button button');
+
+                // Remove any existing badge
+                const existingBadge = card.querySelector('.current-plan-badge');
+                if (existingBadge) existingBadge.remove();
+
+                // Remove previous classes
+                btn.classList.remove('subscribed');
+
+                if (plan === currentPlan && subscriptionStatus === 'active') {
+                    // This is the user's current active plan
+                    btn.textContent = 'Current Plan';
+                    btn.disabled = true;
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-secondary', 'subscribed');
+
+                    // Add current plan badge
+                    const badge = document.createElement('span');
+                    badge.className = 'current-plan-badge';
+                    badge.textContent = 'Active';
+                    card.appendChild(badge);
+                } else if (plan === 'pro' && isProActive) {
+                    // User already has Pro - grey out the Pro buttons
+                    btn.textContent = 'Already Subscribed';
+                    btn.disabled = true;
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-secondary');
+                } else if (plan === 'free') {
+                    btn.textContent = currentPlan === 'free' ? 'Current Plan' : 'Free Plan';
+                    btn.disabled = true;
+                } else if (PLAN_LEVELS[plan] < PLAN_LEVELS[currentPlan]) {
+                    btn.textContent = 'Downgrade';
+                    btn.disabled = false;
+                } else {
+                    btn.textContent = 'Upgrade';
+                    btn.disabled = false;
+                }
+            });
+        }
+
+        async function selectPlan(plan, price) {
+            if (!currentUser) {
+                // Store selected plan in localStorage so we can redirect after login
+                const actualPrice = isAnnual ? Math.round(price * 0.8 * 100) / 100 : price;
+                const billing = isAnnual ? 'annual' : 'monthly';
+                localStorage.setItem('pendingPlan', JSON.stringify({ plan, price: actualPrice, billing }));
+
+                // Redirect to index with login prompt
+                window.location.href = 'index.html?login=true&redirect=pricing';
+                return;
+            }
+
+            if (plan === currentPlan || plan === 'free') {
+                return;
+            }
+
+            // Get billing cycle
+            const billing = isAnnual ? 'annual' : 'monthly';
+
+            // Show loading state
+            const btn = document.querySelector(`.pricing-card[data-plan="${plan}"] .plan-button button`);
+            const originalText = btn.textContent;
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
+
+            try {
+                // Check supabase is initialized
+                if (!supabase) {
+                    throw new Error('Authentication not initialized');
+                }
+
+                // Get auth token
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    throw new Error('Not authenticated');
+                }
+
+                // Create Stripe checkout session
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${session.access_token}`
+                    },
+                    body: JSON.stringify({ plan, billing })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+
+                // Redirect to Stripe Checkout
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Failed to start checkout: ' + error.message);
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function contactSales() {
+            window.location.href = 'mailto:sales@dikoora.com?subject=Enterprise Plan Inquiry&body=Hi, I am interested in learning more about the Enterprise plan for my team.';
+        }
+
+        function setupBillingToggle() {
+            const toggle = document.getElementById('billingToggle');
+
+            toggle.addEventListener('click', () => {
+                isAnnual = !isAnnual;
+                toggle.classList.toggle('active');
+
+                // Update all prices
+                document.querySelectorAll('.plan-price[data-monthly]').forEach(priceEl => {
+                    const monthly = parseFloat(priceEl.dataset.monthly);
+                    const annual = parseFloat(priceEl.dataset.annual);
+
+                    if (isAnnual) {
+                        priceEl.innerHTML = `$${annual}<span>/month</span>`;
+                        priceEl.nextElementSibling.textContent = 'Billed annually';
+                    } else {
+                        priceEl.innerHTML = `$${monthly}<span>/month</span>`;
+                        priceEl.nextElementSibling.textContent = 'Billed monthly';
+                    }
+                });
+            });
+        }
+
+        function setupFAQ() {
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const icon = question.querySelector('span i');
+
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                        icon.className = 'fas fa-plus';
+                    } else {
+                        answer.style.display = 'block';
+                        icon.className = 'fas fa-minus';
+                    }
+                });
+            });
+        }
+    </script>
+
+    <!-- Auth Scripts -->
+    <script src="js/auth-modal.js"></script>
+</body>
+</html>

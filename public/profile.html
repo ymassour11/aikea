@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>My Profile - Dikoora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            color: #1a1a2e;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-links a.active {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-design {
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-design:hover {
+            background: #1d4ed8;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .tab:hover {
+            color: #374151;
+        }
+
+        .tab.active {
+            color: #2563eb;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #2563eb;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Subscription Card */
+        .subscription-card {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .subscription-card.free {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+        }
+
+        .subscription-card.starter {
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+        }
+
+        .subscription-card.pro {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+        }
+
+        .subscription-card.business {
+            background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%);
+        }
+
+        .subscription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .subscription-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .subscription-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .subscription-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .btn-upgrade {
+            padding: 10px 20px;
+            background: white;
+            color: #1e40af;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-upgrade:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+        }
+
+        .btn-manage {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-manage:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .subscription-features {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .feature-item svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.9;
+        }
+
+        /* Profile Section */
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .avatar-large img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group input {
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group input:disabled {
+            background: #f9fafb;
+            color: #6b7280;
+        }
+
+        .btn-save {
+            padding: 12px 24px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 24px;
+        }
+
+        .btn-save:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-save:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Designs Section */
+        .designs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .design-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .design-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .design-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+        }
+
+        .design-info {
+            padding: 16px;
+        }
+
+        .design-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .design-info p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .design-actions {
+            display: flex;
+            gap: 8px;
+            padding: 0 16px 16px;
+        }
+
+        .btn-view {
+            flex: 1;
+            padding: 10px;
+            background: #f3f4f6;
+            color: #374151;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-view:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-delete {
+            padding: 10px;
+            background: #fef2f2;
+            color: #dc2626;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: #fee2e2;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            color: #d1d5db;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        /* Account Settings */
+        .settings-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .settings-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 16px;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-label h4 {
+            font-size: 15px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .settings-label p {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background: white;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        .btn-danger {
+            padding: 10px 20px;
+            background: white;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-danger:hover {
+            background: #fef2f2;
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: #111827;
+            color: white;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success {
+            background: #059669;
+        }
+
+        .toast.error {
+            background: #dc2626;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .designs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Design Viewer Modal */
+        .design-viewer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .design-viewer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .design-viewer-modal {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 1100px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .design-viewer-overlay.active .design-viewer-modal {
+            transform: scale(1);
+        }
+
+        .design-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .design-viewer-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .design-viewer-header h2 .room-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .design-viewer-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .design-viewer-close:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .design-viewer-close svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .design-viewer-content {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .design-image-section {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            background: #f5f7fa;
+            overflow: hidden;
+        }
+
+        .design-main-image {
+            flex: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .design-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-height: 60vh;
+        }
+
+        .design-meta {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: white;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .meta-item svg {
+            width: 18px;
+            height: 18px;
+            color: #6b7280;
+        }
+
+        .meta-item strong {
+            color: #111827;
+        }
+
+        .products-section {
+            border-left: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .products-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .products-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .products-header p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .products-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .product-item:hover {
+            background: #f3f4f6;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .product-item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .product-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-item-source {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .product-item-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .product-item-arrow {
+            display: flex;
+            align-items: center;
+            color: #9ca3af;
+        }
+
+        .product-item:hover .product-item-arrow {
+            color: #2563eb;
+        }
+
+        .products-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .products-empty svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .products-empty h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .products-empty p {
+            font-size: 13px;
+        }
+
+        .products-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .products-loading .spinner {
+            width: 32px;
+            height: 32px;
+            border-width: 2px;
+        }
+
+        .products-loading p {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Mobile Design Viewer */
+        @media (max-width: 900px) {
+            .design-viewer-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+
+            .design-image-section {
+                padding: 16px;
+            }
+
+            .design-main-image img {
+                max-height: 40vh;
+            }
+
+            .products-section {
+                border-left: none;
+                border-top: 1px solid #e5e7eb;
+                max-height: 40vh;
+            }
+
+            .design-meta {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Dikoora">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="design.html">Create</a></li>
+                <li><a href="profile.html#designs" class="active">My Designs</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+            </ul>
+            <div class="nav-buttons">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1>My Account</h1>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="profile">Profile</button>
+            <button class="tab" data-tab="designs">My Designs</button>
+            <button class="tab" data-tab="settings">Settings</button>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profile" class="tab-content active">
+            <!-- Subscription Card -->
+            <div class="subscription-card" id="subscriptionCard">
+                <div class="subscription-header">
+                    <div class="subscription-info">
+                        <span class="subscription-badge" id="subscriptionBadge">Free</span>
+                        <h3 id="subscriptionPlanName">Free Plan</h3>
+                        <p id="subscriptionStatus">No active subscription</p>
+                    </div>
+                    <div class="subscription-actions" id="subscriptionActions">
+                        <a href="pricing.html" class="btn-upgrade" id="upgradeBtn">Upgrade Plan</a>
+                        <button class="btn-manage" id="manageBtn" style="display: none;" onclick="openManageSubscription()">Manage Subscription</button>
+                    </div>
+                </div>
+                <div class="subscription-features" id="subscriptionFeatures">
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                        <span>3 room designs</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                        <span>Basic exports</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar-large" id="profileAvatar">U</div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Loading...</h2>
+                        <p id="profileEmail">Loading...</p>
+                    </div>
+                </div>
+
+                <form id="profileForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" disabled>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Designs Tab -->
+        <div id="designs" class="tab-content">
+            <div id="designsContainer" class="designs-grid">
+                <!-- Designs will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div class="settings-section">
+                <h3>Password</h3>
+                <div class="settings-row">
+                    <div class="settings-label">
+                        <h4>Change Password</h4>
+                        <p>Update your password to keep your account secure</p>
+                    </div>
+                    <button class="btn-secondary" onclick="requestPasswordReset()">Change Password</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>Account</h3>
+                <div class="settings-row">
+                    <div class="settings-label">
+                        <h4>Sign Out</h4>
+                        <p>Sign out of your account on this device</p>
+                    </div>
+                    <button class="btn-secondary" onclick="handleSignOut()">Sign Out</button>
+                </div>
+                <div class="settings-row">
+                    <div class="settings-label">
+                        <h4>Delete Account</h4>
+                        <p>Permanently delete your account and all data</p>
+                    </div>
+                    <button class="btn-danger" onclick="confirmDeleteAccount()">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design Viewer Modal -->
+    <div id="designViewerOverlay" class="design-viewer-overlay" onclick="closeDesignViewer(event)">
+        <div class="design-viewer-modal" onclick="event.stopPropagation()">
+            <div class="design-viewer-header">
+                <h2>
+                    Your Design
+                    <span class="room-badge" id="viewerRoomBadge">Living Room</span>
+                </h2>
+                <button class="design-viewer-close" onclick="closeDesignViewer()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="design-viewer-content">
+                <div class="design-image-section">
+                    <div class="design-main-image">
+                        <img id="viewerDesignImage" src="" alt="Generated Design">
+                    </div>
+                    <div class="design-meta">
+                        <div class="meta-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span>Created: <strong id="viewerCreatedDate">-</strong></span>
+                        </div>
+                        <div class="meta-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <span>Color: <strong id="viewerColorTheme">-</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="products-section">
+                    <div class="products-header">
+                        <h3>Featured Products</h3>
+                        <p>Click any product to shop</p>
+                    </div>
+                    <div class="products-list" id="viewerProductsList">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/supabase.js"></script>
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Show corresponding content
+                const tabId = tab.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+
+                // Update URL hash
+                window.location.hash = tabId;
+            });
+        });
+
+        // Check URL hash on load
+        if (window.location.hash) {
+            const tabId = window.location.hash.substring(1);
+            const tab = document.querySelector(`[data-tab="${tabId}"]`);
+            if (tab) {
+                tab.click();
+            }
+        }
+
+        // Initialize page
+        let currentUser = null;
+
+        async function initProfile() {
+            // Initialize Supabase
+            if (!initSupabase()) {
+                showToast('Failed to initialize. Please refresh.', 'error');
+                return;
+            }
+
+            // Check authentication
+            currentUser = await getUser();
+
+            if (!currentUser) {
+                // Redirect to home if not logged in
+                window.location.href = 'design.html';
+                return;
+            }
+
+            // Load user data
+            await loadUserProfile();
+            await loadUserDesigns();
+
+            // Hide loading
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        // Plan configurations
+        const PLANS = {
+            free: {
+                name: 'Free Plan',
+                features: ['3 room designs', 'Basic exports', 'Community support']
+            },
+            starter: {
+                name: 'Starter Plan',
+                features: ['5 room designs per month', 'Standard resolution exports', 'Save designs for 30 days', 'Email support']
+            },
+            pro: {
+                name: 'Pro Plan',
+                features: ['Unlimited room designs', 'High-resolution exports', 'Save & access all designs', 'Priority support']
+            },
+            business: {
+                name: 'Business Plan',
+                features: ['Everything in Pro', 'Team collaboration', 'API access', 'Dedicated support']
+            }
+        };
+
+        async function loadUserProfile() {
+            const { data: profile, error } = await getProfile(currentUser.id);
+
+            if (error) {
+                console.error('Error loading profile:', error);
+            }
+
+            // Update UI
+            const displayName = profile?.full_name || currentUser.user_metadata?.full_name || currentUser.email?.split('@')[0] || 'User';
+            const avatarUrl = profile?.avatar_url || currentUser.user_metadata?.avatar_url;
+
+            document.getElementById('profileName').textContent = displayName;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('fullName').value = displayName;
+            document.getElementById('email').value = currentUser.email;
+
+            const avatarEl = document.getElementById('profileAvatar');
+            if (avatarUrl) {
+                avatarEl.innerHTML = `<img src="${avatarUrl}" alt="${displayName}">`;
+            } else {
+                avatarEl.textContent = displayName.charAt(0).toUpperCase();
+            }
+
+            // Update subscription display
+            updateSubscriptionDisplay(profile);
+        }
+
+        function updateSubscriptionDisplay(profile) {
+            const subscriptionCard = document.getElementById('subscriptionCard');
+            const subscriptionBadge = document.getElementById('subscriptionBadge');
+            const subscriptionPlanName = document.getElementById('subscriptionPlanName');
+            const subscriptionStatus = document.getElementById('subscriptionStatus');
+            const subscriptionFeatures = document.getElementById('subscriptionFeatures');
+            const upgradeBtn = document.getElementById('upgradeBtn');
+
+            const currentPlan = profile?.subscription_plan || 'free';
+            const status = profile?.subscription_status || 'inactive';
+            const planConfig = PLANS[currentPlan] || PLANS.free;
+
+            // Update card style
+            subscriptionCard.className = 'subscription-card ' + currentPlan;
+
+            // Update badge and name
+            subscriptionBadge.textContent = status === 'active' ? 'Active' : 'Free';
+            subscriptionPlanName.textContent = planConfig.name;
+
+            // Update status text
+            if (status === 'active') {
+                subscriptionStatus.textContent = 'Your subscription is active';
+            } else {
+                subscriptionStatus.textContent = 'Upgrade to unlock more features';
+            }
+
+            // Update features
+            subscriptionFeatures.innerHTML = planConfig.features.map(feature => `
+                <div class="feature-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                    <span>${feature}</span>
+                </div>
+            `).join('');
+
+            // Update buttons based on subscription status
+            const manageBtn = document.getElementById('manageBtn');
+
+            if (status === 'active' && currentPlan !== 'free') {
+                // User has an active paid subscription - show Manage button
+                upgradeBtn.style.display = 'none';
+                manageBtn.style.display = 'inline-block';
+            } else {
+                // Free user or no active subscription - show Upgrade button
+                upgradeBtn.style.display = 'inline-block';
+                manageBtn.style.display = 'none';
+                upgradeBtn.textContent = 'Upgrade Plan';
+                upgradeBtn.href = 'pricing.html';
+            }
+        }
+
+        function openManageSubscription() {
+            // Redirect to custom subscription management page
+            window.location.href = 'subscription.html';
+        }
+
+        async function loadUserDesigns() {
+            const { data: designs, error } = await getUserDesigns(currentUser.id);
+
+            // Store designs for later access
+            loadedDesigns = designs || [];
+
+            const container = document.getElementById('designsContainer');
+
+            if (error || !designs || designs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <h3>No designs yet</h3>
+                        <p>Start creating your first room design</p>
+                        <a href="design.html" class="btn-design">Design My Room</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = designs.map(design => `
+                <div class="design-card">
+                    <img src="${design.generated_image_url || 'images/placeholder.jpg'}" alt="${design.room_type}" class="design-image">
+                    <div class="design-info">
+                        <h3>${formatRoomType(design.room_type)}</h3>
+                        <p>${design.color} theme - ${formatDate(design.created_at)}</p>
+                    </div>
+                    <div class="design-actions">
+                        <button class="btn-view" onclick="viewDesign('${design.id}')">View Details</button>
+                        <button class="btn-delete" onclick="deleteDesignConfirm('${design.id}')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatRoomType(type) {
+            return type.split('-').map(word =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        // Profile Form Submit
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = e.target.querySelector('.btn-save');
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+
+            const fullName = document.getElementById('fullName').value;
+
+            const { data, error } = await updateProfile(currentUser.id, {
+                full_name: fullName
+            });
+
+            if (error) {
+                showToast('Failed to save changes', 'error');
+            } else {
+                showToast('Profile updated successfully', 'success');
+                document.getElementById('profileName').textContent = fullName;
+                document.getElementById('profileAvatar').textContent = fullName.charAt(0).toUpperCase();
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Save Changes';
+        });
+
+        async function requestPasswordReset() {
+            const { error } = await resetPassword(currentUser.email);
+
+            if (error) {
+                showToast('Failed to send reset email', 'error');
+            } else {
+                showToast('Password reset email sent!', 'success');
+            }
+        }
+
+        async function handleSignOut() {
+            await signOut();
+            window.location.href = 'index.html';
+        }
+
+        function confirmDeleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                showToast('Account deletion coming soon', 'error');
+            }
+        }
+
+        // Store loaded designs for quick access
+        let loadedDesigns = [];
+
+        async function viewDesign(designId) {
+            // Find the design in our loaded designs
+            const design = loadedDesigns.find(d => d.id === designId);
+
+            if (!design) {
+                showToast('Design not found', 'error');
+                return;
+            }
+
+            // Open the modal
+            const overlay = document.getElementById('designViewerOverlay');
+            overlay.classList.add('active');
+
+            // Set design image
+            document.getElementById('viewerDesignImage').src = design.generated_image_url || 'images/placeholder.jpg';
+
+            // Set room type badge
+            document.getElementById('viewerRoomBadge').textContent = formatRoomType(design.room_type);
+
+            // Set meta info
+            document.getElementById('viewerCreatedDate').textContent = formatDate(design.created_at);
+            document.getElementById('viewerColorTheme').textContent = design.color || 'Natural';
+
+            // Load products
+            const productsList = document.getElementById('viewerProductsList');
+
+            // Check if there are furniture products saved
+            if (design.furniture_data && design.furniture_data.length > 0) {
+                productsList.innerHTML = design.furniture_data.map(product => `
+                    <a href="${product.link || product.product_link || '#'}" target="_blank" class="product-item">
+                        <img src="${product.thumbnail || product.image || 'images/placeholder.jpg'}"
+                             alt="${product.title || 'Product'}"
+                             class="product-item-image"
+                             onerror="this.src='images/placeholder.jpg'">
+                        <div class="product-item-info">
+                            <div class="product-item-title">${product.title || 'Furniture Item'}</div>
+                            <div class="product-item-source">${product.source || 'Shop Now'}</div>
+                            <div class="product-item-price">${product.price || (product.extracted_price ? '$' + product.extracted_price : 'View Price')}</div>
+                        </div>
+                        <div class="product-item-arrow">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </div>
+                    </a>
+                `).join('');
+            } else {
+                // No products saved with this design
+                productsList.innerHTML = `
+                    <div class="products-empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                        <h4>No products saved</h4>
+                        <p>Product data wasn't saved with this design</p>
+                    </div>
+                `;
+            }
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDesignViewer(event) {
+            // If event exists and click was on overlay (not modal content)
+            if (event && event.target !== event.currentTarget) return;
+
+            const overlay = document.getElementById('designViewerOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDesignViewer();
+            }
+        });
+
+        async function deleteDesignConfirm(designId) {
+            if (confirm('Are you sure you want to delete this design?')) {
+                const { error } = await deleteDesign(designId);
+
+                if (error) {
+                    showToast('Failed to delete design', 'error');
+                } else {
+                    showToast('Design deleted', 'success');
+                    loadUserDesigns();
+                }
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Initialize on load
+        initProfile();
+    </script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth-modal.js"></script>
+</body>
+</html>

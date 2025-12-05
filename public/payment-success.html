@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Payment Successful - Dikoora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#3651cf',
+                            600: '#2d44b8',
+                            700: '#2438a0',
+                            800: '#1e2f85',
+                            900: '#1a2769',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                        'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
+                    },
+                    keyframes: {
+                        'scale-in': {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        'fade-in-up': {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Background iframe (website) */
+        .page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .page-background iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: blur(8px);
+            transform: scale(1.02);
+            pointer-events: none;
+        }
+
+        /* Dark Overlay */
+        .overlay-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+
+        /* Modal Container */
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        /* Animated Checkmark */
+        .checkmark {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #3651cf;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confetti-fall 3s linear forwards;
+            pointer-events: none;
+        }
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Loading spinner */
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Blurred Website Background -->
+    <div class="page-background">
+        <iframe src="design.html" title="Background"></iframe>
+    </div>
+
+    <!-- Dark Overlay -->
+    <div class="overlay-backdrop"></div>
+
+    <!-- Modal Container -->
+    <div class="modal-container">
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden w-full max-w-[480px]">
+        <div class="bg-white rounded-[32px] shadow-2xl shadow-brand-500/10 overflow-hidden ring-1 ring-slate-100 relative">
+            <div class="pt-8 pb-10 text-center px-8 relative z-10">
+                <div class="flex justify-center mb-6">
+                    <div class="relative flex items-center justify-center rounded-full bg-brand-50 p-6">
+                        <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#3651cf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="text-2xl sm:text-[28px] font-bold text-slate-900 mb-3 tracking-tight">Processing Payment...</h1>
+                <p class="text-slate-500 text-sm sm:text-[15px] leading-relaxed max-w-xs mx-auto">Please wait while we confirm your subscription.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success State -->
+    <div id="contentState" class="w-full max-w-[480px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] transform opacity-100 translate-y-0">
+        <div class="bg-white rounded-[32px] shadow-2xl shadow-brand-500/10 overflow-hidden ring-1 ring-slate-100 relative">
+
+            <!-- Header Section -->
+            <div class="pt-10 pb-6 text-center px-8 relative z-10">
+                <!-- Animated Checkmark -->
+                <div class="flex justify-center mb-6 scale-90 sm:scale-100">
+                    <div class="relative flex items-center justify-center rounded-full bg-brand-50 p-6 animate-scale-in">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="80" height="80">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"></circle>
+                            <path class="checkmark__check" fill="none" stroke="#3651cf" stroke-width="4" stroke-linecap="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"></path>
+                        </svg>
+                        <div class="absolute inset-0 rounded-full bg-brand-300 opacity-20 blur-xl animate-pulse"></div>
+                    </div>
+                </div>
+
+                <h1 class="text-2xl sm:text-[28px] font-bold text-slate-900 mb-3 tracking-tight">Payment Successful</h1>
+                <p class="text-slate-500 text-sm sm:text-[15px] leading-relaxed max-w-xs mx-auto">Your transaction has been completed and your subscription is now active.</p>
+            </div>
+
+            <!-- Plan Info Card -->
+            <div class="px-6 sm:px-8 mb-6">
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 flex items-center justify-between group transition-all duration-300 hover:border-brand-100 hover:shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-xl bg-brand-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/30 ring-1 ring-white/20 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap fill-brand-300 text-brand-300" aria-hidden="true">
+                                <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                            </svg>
+                        </div>
+                        <div class="overflow-hidden">
+                            <h3 class="font-bold text-slate-900 text-base leading-tight" id="planName">Professional Plan</h3>
+                            <div class="flex items-center gap-2 text-sm text-slate-500 mt-1">
+                                <span class="truncate" id="billingPeriod">Billed Monthly</span>
+                                <span class="w-1 h-1 rounded-full bg-slate-300 shrink-0"></span>
+                                <span class="text-brand-500 font-medium text-xs bg-brand-50 px-2 py-0.5 rounded-full ring-1 ring-brand-100">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right pl-4">
+                        <p class="text-lg font-bold text-slate-900 tracking-tight" id="planPrice">$9.99</p>
+                        <p class="text-xs text-slate-400 font-medium">USD</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashed Divider -->
+            <div class="relative mx-8 mb-6">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-slate-100 border-dashed"></div>
+                </div>
+            </div>
+
+            <!-- Transaction Details Grid -->
+            <div class="px-6 sm:px-8 grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Date</span>
+                    <span class="text-sm font-medium text-slate-700 flex items-center gap-2" id="transactionDate">-</span>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Payment Method</span>
+                    <div class="flex items-center gap-2 text-sm font-medium text-slate-700">
+                        <div class="w-8 h-5 bg-slate-100 rounded border border-slate-200 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card text-slate-500" aria-hidden="true">
+                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                                <line x1="2" x2="22" y1="10" y2="10"></line>
+                            </svg>
+                        </div>
+                        <span id="paymentMethod">Card</span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Reference ID</span>
+                    <button class="group flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors w-fit" title="Click to copy" onclick="copyReference()">
+                        <span class="font-mono text-xs bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200/60 text-slate-600 group-hover:border-brand-300 group-hover:text-brand-500 transition-colors" id="referenceId">-</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy text-slate-400 group-hover:text-brand-500" aria-hidden="true">
+                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Email</span>
+                    <span class="text-sm font-medium text-slate-700 truncate block" id="userEmail" title="">-</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="bg-slate-50/50 p-6 sm:px-8 flex flex-col sm:flex-row gap-3 border-t border-slate-100">
+                <a href="profile.html" class="inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus:ring-slate-200 w-full sm:flex-1 shadow-sm hover:border-slate-300">
+                    <span class="mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user text-slate-500" aria-hidden="true">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
+                    View Profile
+                </a>
+                <a href="design.html" class="inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 bg-brand-500 text-white hover:bg-brand-400 focus:ring-brand-500 shadow-lg shadow-brand-500/25 w-full sm:flex-1">
+                    <span class="mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette" aria-hidden="true">
+                            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+                            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+                            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"></path>
+                        </svg>
+                    </span>
+                    Start Designing
+                </a>
+            </div>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="flex justify-center items-center gap-1.5 text-[11px] text-slate-400 font-medium uppercase tracking-wider mt-8 opacity-60">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check" aria-hidden="true">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+            </svg>
+            <span>Encrypted & Secure</span>
+        </div>
+    </div>
+    </div> <!-- Close modal-container -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script>
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#3651cf', '#818cf8', '#10b981', '#f59e0b', '#ef4444', '#a855f7'];
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.width = (Math.random() * 8 + 6) + 'px';
+                    confetti.style.height = (Math.random() * 8 + 6) + 'px';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 40);
+            }
+        }
+
+        // Copy reference ID to clipboard
+        function copyReference() {
+            const refId = document.getElementById('referenceId').textContent;
+            navigator.clipboard.writeText(refId).then(() => {
+                // Show brief feedback
+                const btn = event.currentTarget;
+                const originalText = btn.querySelector('span').textContent;
+                btn.querySelector('span').textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.querySelector('span').textContent = originalText;
+                }, 1500);
+            });
+        }
+
+        // Format date
+        function formatDate(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+        }
+
+        // Generate random reference ID
+        function generateRefId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let ref = 'TRX-';
+            for (let i = 0; i < 4; i++) {
+                ref += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            ref += '-';
+            for (let i = 0; i < 2; i++) {
+                ref += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return ref;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize Supabase
+            if (typeof initSupabase === 'function') {
+                initSupabase();
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+
+            // Set default values
+            document.getElementById('transactionDate').textContent = formatDate(new Date());
+            document.getElementById('referenceId').textContent = generateRefId();
+
+            if (sessionId) {
+                // Show loading state
+                document.getElementById('loadingState').classList.remove('hidden');
+                document.getElementById('contentState').classList.add('hidden');
+
+                // Wait a moment for webhook to process
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Check subscription status and get user info
+                try {
+                    if (supabase) {
+                        const { data: { session } } = await supabase.auth.getSession();
+                        if (session) {
+                            // Set user email
+                            document.getElementById('userEmail').textContent = session.user.email;
+                            document.getElementById('userEmail').title = session.user.email;
+
+                            // Check plan type from URL or profile
+                            const { data: profile } = await getProfile(session.user.id);
+                            if (profile) {
+                                // Determine if monthly or yearly based on some logic
+                                // For now, check URL params or default
+                                const plan = urlParams.get('plan') || 'monthly';
+                                if (plan === 'yearly' || plan === 'annual') {
+                                    document.getElementById('billingPeriod').textContent = 'Billed Yearly';
+                                    document.getElementById('planPrice').textContent = '$79.99';
+                                } else {
+                                    document.getElementById('billingPeriod').textContent = 'Billed Monthly';
+                                    document.getElementById('planPrice').textContent = '$9.99';
+                                }
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error checking subscription:', error);
+                }
+
+                // Show success state
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('contentState').classList.remove('hidden');
+            }
+
+            // Create confetti
+            createConfetti();
+        });
+    </script>
+</body>
+</html>
